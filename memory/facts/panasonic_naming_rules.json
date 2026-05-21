@@ -1,0 +1,24 @@
+{
+  "rules": [
+    "KIT-* = kompletny zestaw (indoor + outdoor + ewentualnie zasobnik)",
+    "WH-SDC/SXC/SQC = jednostka wewnetrzna hydrosplit",
+    "WH-ADC/ADF = jednostka wewnetrzna all-in-one ze zasobnikiem",
+    "WH-MDC/MXC = monoblok",
+    "WH-WDG/WXG/UDZ/UXZ/UQZ = jednostka zewnetrzna",
+    "WH-CME = modul sterowania (bez jednostki wewn.)",
+    "PAW-TD = zasobnik nierdzewny (TD20=200l TD30=300l)",
+    "PAW-TA = zasobnik emaliowany",
+    "SSWT- = zasobnik nierdzewny Termaco",
+    "PAW-BTANK = bufor CO",
+    "SSB- = bufor CO SSWT",
+    "P-DHW = pompa ciepla CWU",
+    "CZ-RTW/PAW-A2W-RTW = sterownik/termostat",
+    "CZ-NS/NV = rozszerzenia i plytki",
+    "CZ-NE = grzałki tacy ociekowej",
+    "PAW-A2W-TS/PAW-TS/CZ-TK = czujniki",
+    "PAW-AZAW-MBS/KNX/CZ-TAW = komunikacja",
+    "P-VEN/PAW-VEN/PCZ-AHRP = rekuperacja",
+    "P-FAL/PCZ- = klimakonwektory i akcesoria"
+  ],
+  "confidence": "high"
+}

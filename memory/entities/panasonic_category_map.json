@@ -1,0 +1,13 @@
+{
+  "heat_pumps": "glowne pompy ciepla Aquarea (split, monoblok, hydraulic split, AIO)",
+  "tanks": "zasobniki CWU nierdzewne i emaliowane",
+  "buffers": "bufory CO instalacyjne",
+  "dhw_heat_pumps": "pompy ciepla do CWU",
+  "controllers_thermostats": "sterowniki i termostaty",
+  "sensors_expansion_boards": "czujniki, rozszerzenia, grzałki",
+  "hydraulic_accessories": "hydraulika, zawory, filtry",
+  "communication_modules": "modul WiFi, Modbus, KNX",
+  "other_accessories": "pozostale akcesoria i grzałki",
+  "ventilation": "rekuperacja VENTA / AQUAREA VENT i akcesoria",
+  "fan_coils": "klimakonwektory i akcesoria"
+}

@@ -1,0 +1,43 @@
+﻿# Index hygiene only; not project truth governance.
+# Keeps local/generated/heavy/private artifacts out of Cursor indexing.
+# Does not replace .gitignore.
+
+.git/**
+.vscode/**
+.cursor/plans/**
+!.cursor/plans/README.md
+.playwright-mcp/**
+.serena/**
+.claude/**
+.gitnexus/**
+**/.gitnexus/**
+
+.pytest_cache/**
+**/.pytest_cache/**
+__pycache__/**
+**/__pycache__/**
+
+.runtime-wp/**
+
+node_modules/**
+dist/**
+build/**
+.cache/**
+
+test-results/**
+tmp/**
+temp/**
+*.tmp
+*.bak
+
+docs/archive/**
+
+.env
+.env.*
+!**/.env.example
+*.pem
+*.key
+*credentials*
+credentials.json
+
+!.cursor/rules/**

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://topinstal.local/schemas/panasonic_catalog_family.schema.json",
+  "title": "Panasonic Catalog Family",
+  "type": "object",
+  "required": ["family", "categories", "models", "generations"],
+  "properties": {
+    "family": { "type": "string" },
+    "categories": { "type": "array", "items": { "type": "string" } },
+    "models": { "type": "array", "items": { "type": "string" } },
+    "generations": { "type": "array", "items": { "type": "string" } },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": true
+}

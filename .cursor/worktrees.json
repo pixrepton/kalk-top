@@ -1,0 +1,10 @@
+{
+  "setup-worktree-windows": [
+    "Write-Host \"Cursor worktree ready for kalk-top\"",
+    "if (Test-Path \"$env:ROOT_WORKTREE_PATH\\.env\") { Copy-Item \"$env:ROOT_WORKTREE_PATH\\.env\" \".env\" -ErrorAction SilentlyContinue }"
+  ],
+  "setup-worktree-unix": [
+    "echo \"Cursor worktree ready for kalk-top\"",
+    "if [ -f \"$ROOT_WORKTREE_PATH/.env\" ]; then cp \"$ROOT_WORKTREE_PATH/.env\" .env; fi"
+  ]
+}

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="warm">
+
+<head>
+    <meta charset="utf-8">
+    <title>Ciepło Właściwie - jak i za ile ogrzewać</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Prosty szacunkowy audyt energetyczny twojego domu. Dowiesz się, czym najlepiej ogrzewać i jak oszczędzić na ogrzewaniu bez ubierania kalesonów.">
+    <meta name="author" content="CzysteOgrzewanie.pl">
+    <meta property="og:title" content="Ciepło Właściwie" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://cieplo.app/?id=60627116678" />
+    <meta property="og:image" content="https://cieplo.app//images/promo.jpg" />
+    <meta property="og:description" content="Prosty szacunkowy audyt energetyczny twojego domu. Dowiesz się, czym najlepiej ogrzewać i jak oszczędzić na ogrzewaniu bez ubierania kalesonów." />
+    <meta property="og:locale" content="pl_PL" />
+    <meta property="og:site_name" content="cieplo.app" />
+
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css" rel="stylesheet">
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            <link rel="stylesheet" href="/bower/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/bower/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
+        <link rel="stylesheet" href="/bower/bootstrap-material-design/dist/css/ripples.css">
+        <link rel="stylesheet" href="/assets/scss/app-77c65d08ee79fe30a2138b248284a2a4.css">
+        </head>
+
+<body data-spy="scroll" data-target=".bs-docs-sidebar" ng-controller="WarmCtrl">
+
+    <header class="navbar navbar-inverse navbar-fixed-top" id="top" role="banner">
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+            <span class="sr-only">Pokaż menu</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand navbar-brand" href="/">Ciepło Właściwie</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation" style="float:left">
+                  <ul class="nav navbar-nav">
+            
+                <li class="first">        <a href="/panel/wyniki" class="visible-xs">Panel Użytkownika</a>        
+    </li>
+
+    
+                <li>        <a href="/start">Start</a>        
+    </li>
+
+    
+                <li>        <a href="/jak-to-dziala">Jak to działa</a>        
+    </li>
+
+    
+                <li>        <a href="/czemu-nie-dziala">Czemu nie działa</a>        
+    </li>
+
+    
+                <li>        <a href="/cennik">Cennik</a>        
+    </li>
+
+    
+                <li>        <a href="/uslugi">Usługi</a>        
+    </li>
+
+    
+                <li>        <a href="/zasady">Zasady</a>        
+    </li>
+
+    
+                <li>        <a href="/moje-wyniki">Moje wyniki</a>        
+    </li>
+
+    
+                <li>        <a href="/opis-api">API</a>        
+    </li>
+
+    
+                <li>        <a href="/ets2">ETS2</a>        
+    </li>
+
+    
+                <li class="last">        <a href="/kontakt">Kontakt</a>        
+    </li>
+
+
+    </ul>
+
+        </nav>
+          <a href="/panel" class="btn btn-warning btn-raised hidden-xs" style="float:right">Panel</a>
+      </div>
+    </header>
+
+    
+<div class="container">
+    <div class="jumbotron">
+        <h1>Czym i za ile ogrzewać dom?</h1>
+        <h2>Nie musisz już mieć specjalistycznej wiedzy,<br>by oszacować to profesjonalnymi metodami.</h2>
+        <a class="btn btn-raised btn-warning btn-large" href="https://cieplo.app/start">Sprawdź swój dom!</a>
+        <span class="copy"><a href="http://www.flickr.com/photos/47405720@N07/4564053866/" target="_blank">fot. Irina Alice, flickr.com</a></span>
+    </div>
+        <div class="well bs-component">
+      <div id="meanwhile" style="font-size: 16px">
+        <div class="page-header">
+          <h2>Nie powiemy ci jak żyć, ale dowiesz się, jak najlepiej ogrzać dom</h2>
+        </div>
+        <p>Oto pierwsze <strong>przyjazne zwykłym ludziom</strong> narzędzie do szacowania potrzeb grzewczych budynku lub mieszkania.
+       <br>W kilka minut, odpowiadając na proste pytania, oszacujesz:</p>
+        <ul>
+            <li><strong>jakiej mocy grzewczej potrzebuje twój dom</strong> &mdash; unikniesz przykrych skutków zakupu dwa-trzy razy za dużego kotła lub pompy ciepła – bo niestety wielu fachowców nie potrafi poprawnie dobrać ich mocy i co gorsza mylą się w kierunku urządzenia za dużego i za drogiego</li>
+            <li><strong>jakie jest zapotrzebowanie budynku na energię użytkową</strong> – od tego zależy, na jakie warunki możesz liczyć w nowym programie <em>Czyste Powietrze</em></li>
+            <li><strong>jaki rodzaj ogrzewania wybrać</strong> &mdash; dostaniesz porównanie kosztów instalacji i bieżących rachunków dla różnych źródeł ciepła</li>
+          <li><strong>jak najtaniej obniżyć koszty ogrzewania</strong> &mdash; gdzie najpierw poprawić docieplenie budynku, aby najwięcej zyskać</li>
+        </ul>
+          <p>To jest oszacowanie. Nie jest tak dokładne jak audyt energetyczny (OZC) wykonany przez fachowca – ale <b>darmowe</b> i o niebo dokładniejsze niż przybliżenia z tabelek albo wróżby z rękawa na podstawie samego metrażu.</p>
+                    <div class="page-header">
+        <h2>Zapytaj firmy z okolicy o wycenę twojej inwestycji</h2>
+          </div>
+          <p>Szukasz wykonawcy inwestycji w temacie ogrzewania? Tutaj możesz <b>wysłać zapytania o wycenę do firm z okolicy</b> wraz z uzyskanym wynikiem.</p>
+                    <div style="text-align:center">
+            <a class="btn btn-raised btn-warning btn-large" href="https://cieplo.app/start">Sprawdź swój dom!</a>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+    <footer class="footer hidden-print">
+      <p class="container">
+        <p>Coś nie działa jak powinno, jest niezrozumiałe albo czegoś brakuje? <a href="/kontakt" target="_blank"><strong>Daj znać!</strong></a></p>
+        <p>---</p>
+        <p>Wyprodukowano we Wrocławiu | <a href="/regulamin">Regulamin</a> | <a href="/prywatnosc">Polityka prywatności</a></p>
+        <p>Aplikacja jest częścią serwisu <a href="https://czysteogrzewanie.pl" target="_blank">Czyste Ogrzewanie</a>, którego misją jest cywilizowanie ogrzewania zwykłych polskich domów w ramach możliwości jakie daje zwykła polska pensja.</p>
+    </footer>
+            
+<script type="importmap">
+{
+    "imports": {
+        "app": "/assets/app-2d4482e51c30c1ae3ce68fc8e0edcdd7.js",
+        "/assets/bootstrap.js": "/assets/bootstrap-2c4bff9577513da58b827205af0e27b2.js",
+        "/assets/jquery.min.js": "/assets/jquery.min-32e32a8097f762b4294b397c92d13038.js",
+        "/assets/js/bootstrap.min.js": "/assets/js/bootstrap.min-872868dcd89c7e3601b8f566a9a1d348.js",
+        "/assets/js/material.min.js": "/assets/js/material.min-cb33b4f2c40ea2853917f6cdd8ba2b22.js",
+        "/assets/js/ripples.js": "/assets/js/ripples-b0390027a7d7ce0084baefeea042588c.js",
+        "/assets/mopabootstrap-collection.js": "/assets/mopabootstrap-collection-8ece13a2fbf29e286f02b33ce2585dce.js",
+        "/assets/js/app.js": "/assets/js/app-89cf92b5b55effabdc0a1c23e1eebf90.js",
+        "@symfony/stimulus-bundle": "/assets/@symfony/stimulus-bundle/loader-5751ad1ee2975e725a94d8121d153d17.js",
+        "@hotwired/stimulus": "/assets/vendor/@hotwired/stimulus/stimulus.index-4b8ccd71e6b1c4ddba22853d5a50a26c.js",
+        "/assets/@symfony/stimulus-bundle/controllers.js": "/assets/@symfony/stimulus-bundle/controllers-65458285325936d3729bdeffb8b1801e.js",
+        "/assets/controllers/payments-controller.js": "/assets/controllers/payments-controller-ceb6decf0ba68cbe28bbb87285f7382d.js",
+        "/assets/controllers/inquiry-controller.js": "/assets/controllers/inquiry-controller-3364d4c664000e85143a706acb7bb369.js",
+        "/assets/controllers/location-controller.js": "/assets/controllers/location-controller-2df593779a7a97704890d6d7dbab3a00.js",
+        "ol": "/assets/vendor/ol/ol.index-6f19387679186e3814e625585587e03c.js",
+        "ol/source/OSM": "/assets/vendor/ol/source/OSM-1f5b32a9a8f72ebd1e8bd7b0976709f2.js",
+        "ol/source/Vector": "/assets/vendor/ol/source/Vector-309433605c6ccfb7417e82337dfea683.js",
+        "ol/layer/Tile": "/assets/vendor/ol/layer/Tile-b86a65f06d1c30e907428061a6152b87.js",
+        "ol/layer/Vector": "/assets/vendor/ol/layer/Vector-596d1b5949741ab498631834b2ac9a80.js",
+        "ol/proj": "/assets/vendor/ol/proj-c9ec8a5428894ebc69b1e09a5a14947b.js",
+        "ol/geom/Point": "/assets/vendor/ol/geom/Point-cd38a7e38feafd640fe5da6b3ac78f48.js",
+        "ol/interaction/Translate": "/assets/vendor/ol/interaction/Translate-e8599b180080f424581e78bbfb801d6e.js",
+        "ol/style": "/assets/vendor/ol/style-391e53756b922bd415c4d46e82bc8156.js",
+        "color-space/lchuv.js": "/assets/vendor/color-space/lchuv-dcff7ae3b79811510cef9754a18e5463.js",
+        "color-rgba": "/assets/vendor/color-rgba/color-rgba.index-b664158fcdc59b65c6b87ae3a673df0e.js",
+        "color-space/rgb.js": "/assets/vendor/color-space/rgb-d4562afedc1e94da2c217376673999f5.js",
+        "color-space/xyz.js": "/assets/vendor/color-space/xyz-82bb5569adc7d828fb02d7d44dd5aa44.js",
+        "rbush": "/assets/vendor/rbush/rbush.index-b116e2a04890fcc4be13a8ae65c370e8.js",
+        "color-parse": "/assets/vendor/color-parse/color-parse.index-2652e1f68005db53d63d8a55a9b2e3ad.js",
+        "color-space/hsl.js": "/assets/vendor/color-space/hsl-b94cadc1de59ba054f352aed46ef7e52.js",
+        "quickselect": "/assets/vendor/quickselect/quickselect.index-dffeda524a4a98d818ed2831c9a15947.js",
+        "color-name": "/assets/vendor/color-name/color-name.index-711760191eae1bb777f52d876a0b0fc3.js",
+        "result": "/assets/result_all-3630fcbe026ddbb0221bf0dc5af33719.js",
+        "/assets/raphael.min.js": "/assets/raphael.min-7ab826fc81a1728f1708a076399e5719.js",
+        "/assets/vendor/angular-1.6.min.js": "/assets/vendor/angular-1.6.min-1f869ed647524d86548a1642ee9b5899.js",
+        "/assets/vendor/angular-1.6-pl.min.js": "/assets/vendor/angular-1.6-pl.min-a2641b1eefad09dddbf2016b2de49046.js",
+        "/assets/vendor/highcharts.js": "/assets/vendor/highcharts-b851def56d4e2c0475cc9031bb9514ad.js",
+        "/assets/result.js": "/assets/result-cd09cd6f45c26e4989423d369177851d.js",
+        "/assets/house_preview.js": "/assets/house_preview-bf1ccc16ca64b63f6a02edc73cf7e085.js",
+        "dashboard": "/assets/dashboard_index_page-e20420f40e061359475f3acf094bb44a.js",
+        "dashboard_radar": "/assets/dashboard_radar_page-1f3a540872e247e8290d8f28305e379c.js",
+        "/assets/dashboard_radar.js": "/assets/dashboard_radar-238531a815c7f147910a4d37a10a4f6e.js",
+        "dimensions": "/assets/dimensions_page-7bdcc18d5d4a67c7859c7de316f3d89c.js",
+        "/assets/dimensions.js": "/assets/dimensions-e444ffc79849378a4bee3718cb7ab166.js",
+        "/assets/app.js": "/assets/app-2d4482e51c30c1ae3ce68fc8e0edcdd7.js",
+        "dimensions_apartment": "/assets/dimensions_apartment_page-4f17a15286d8a5625f5715d68c32aa66.js",
+        "/assets/dimensions_apartment.js": "/assets/dimensions_apartment-6f61d5c6792a0d70be9ad2147cab2f83.js",
+        "walls": "/assets/walls_page-d52015083c5911f087c5dd586ce383fd.js",
+        "/assets/walls.js": "/assets/walls-45154d3672742712d88bfd1f30d0e85b.js",
+        "ceiling": "/assets/ceiling_page-354b675392de1e6f8859feaeba7bf7ea.js",
+        "/assets/ceiling.js": "/assets/ceiling-9e39b3f7c46f0ed0b6230518dbbb988c.js",
+        "ceiling_apartment": "/assets/ceiling_apartment_page-50dd8171bdc7b7b6f5a684cbcb0fdcc8.js",
+        "/assets/ceiling_apartment.js": "/assets/ceiling_apartment-054789d5664f0cced5b5c4d80272a34a.js",
+        "heating": "/assets/heating_page-83a5fb8421c88854541c42b8d8d4faf2.js",
+        "/assets/heating.js": "/assets/heating-a67ef5ee057c9547db6d018f60418e90.js",
+        "ultimate_step_public": "/assets/ultimate_step_public_page-01965f09793a375f7657e7f7a0b930b6.js"
+    }
+}
+</script>
+<!-- ES Module Shims: Import maps polyfill for modules browsers without import maps support -->
+<script async src="https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js"></script>
+<link rel="modulepreload" href="/assets/app-2d4482e51c30c1ae3ce68fc8e0edcdd7.js">
+<link rel="modulepreload" href="/assets/bootstrap-2c4bff9577513da58b827205af0e27b2.js">
+<link rel="modulepreload" href="/assets/jquery.min-32e32a8097f762b4294b397c92d13038.js">
+<link rel="modulepreload" href="/assets/js/bootstrap.min-872868dcd89c7e3601b8f566a9a1d348.js">
+<link rel="modulepreload" href="/assets/js/material.min-cb33b4f2c40ea2853917f6cdd8ba2b22.js">
+<link rel="modulepreload" href="/assets/js/ripples-b0390027a7d7ce0084baefeea042588c.js">
+<link rel="modulepreload" href="/assets/mopabootstrap-collection-8ece13a2fbf29e286f02b33ce2585dce.js">
+<link rel="modulepreload" href="/assets/js/app-89cf92b5b55effabdc0a1c23e1eebf90.js">
+<link rel="modulepreload" href="/assets/@symfony/stimulus-bundle/loader-5751ad1ee2975e725a94d8121d153d17.js">
+<link rel="modulepreload" href="/assets/vendor/@hotwired/stimulus/stimulus.index-4b8ccd71e6b1c4ddba22853d5a50a26c.js">
+<link rel="modulepreload" href="/assets/@symfony/stimulus-bundle/controllers-65458285325936d3729bdeffb8b1801e.js">
+<link rel="modulepreload" href="/assets/controllers/payments-controller-ceb6decf0ba68cbe28bbb87285f7382d.js">
+<link rel="modulepreload" href="/assets/controllers/inquiry-controller-3364d4c664000e85143a706acb7bb369.js">
+<link rel="modulepreload" href="/assets/controllers/location-controller-2df593779a7a97704890d6d7dbab3a00.js">
+<link rel="modulepreload" href="/assets/vendor/ol/ol.index-6f19387679186e3814e625585587e03c.js">
+<link rel="modulepreload" href="/assets/vendor/ol/source/OSM-1f5b32a9a8f72ebd1e8bd7b0976709f2.js">
+<link rel="modulepreload" href="/assets/vendor/ol/source/Vector-309433605c6ccfb7417e82337dfea683.js">
+<link rel="modulepreload" href="/assets/vendor/ol/layer/Tile-b86a65f06d1c30e907428061a6152b87.js">
+<link rel="modulepreload" href="/assets/vendor/ol/layer/Vector-596d1b5949741ab498631834b2ac9a80.js">
+<link rel="modulepreload" href="/assets/vendor/ol/proj-c9ec8a5428894ebc69b1e09a5a14947b.js">
+<link rel="modulepreload" href="/assets/vendor/ol/geom/Point-cd38a7e38feafd640fe5da6b3ac78f48.js">
+<link rel="modulepreload" href="/assets/vendor/ol/interaction/Translate-e8599b180080f424581e78bbfb801d6e.js">
+<link rel="modulepreload" href="/assets/vendor/ol/style-391e53756b922bd415c4d46e82bc8156.js">
+<link rel="modulepreload" href="/assets/vendor/color-space/lchuv-dcff7ae3b79811510cef9754a18e5463.js">
+<link rel="modulepreload" href="/assets/vendor/color-rgba/color-rgba.index-b664158fcdc59b65c6b87ae3a673df0e.js">
+<link rel="modulepreload" href="/assets/vendor/color-space/rgb-d4562afedc1e94da2c217376673999f5.js">
+<link rel="modulepreload" href="/assets/vendor/color-space/xyz-82bb5569adc7d828fb02d7d44dd5aa44.js">
+<link rel="modulepreload" href="/assets/vendor/rbush/rbush.index-b116e2a04890fcc4be13a8ae65c370e8.js">
+<link rel="modulepreload" href="/assets/vendor/color-parse/color-parse.index-2652e1f68005db53d63d8a55a9b2e3ad.js">
+<link rel="modulepreload" href="/assets/vendor/color-space/hsl-b94cadc1de59ba054f352aed46ef7e52.js">
+<link rel="modulepreload" href="/assets/vendor/quickselect/quickselect.index-dffeda524a4a98d818ed2831c9a15947.js">
+<link rel="modulepreload" href="/assets/vendor/color-name/color-name.index-711760191eae1bb777f52d876a0b0fc3.js">
+<script type="module">import 'app';</script>    </body>
+</html>

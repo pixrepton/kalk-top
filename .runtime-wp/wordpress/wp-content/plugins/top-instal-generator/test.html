@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top-Instal Generator — Test</title>
+    <link rel="stylesheet" href="generator.css">
+    <style>
+      body { padding: 16px; background: #c0c0c0; }
+    </style>
+  </head>
+  <body>
+    <div class="top-instal-wp-container">
+      <div class="win95-window" id="mainWindow">
+        <div class="win95-title-bar">
+          <div class="win95-title-text">🏠 Generator Ofert HVAC - Tryb Testowy</div>
+          <div class="win95-window-controls">
+            <button class="win95-btn-minimize">_</button>
+            <button class="win95-btn-maximize">□</button>
+            <button class="win95-btn-close">×</button>
+          </div>
+        </div>
+
+        <div class="win95-content">
+          <div class="win95-form">
+            <form id="generatorForm" class="win95-form">
+              <!-- Wybór typu instalacji -->
+<div class="win95-group group-installation">
+  <label class="win95-label">🏠 Typ instalacji:</label>
+  <div class="win95-button-group">
+      <label class="win95-label">
+          <input type="radio" name="installation_type" value="heat_pump" checked>
+          <span>Pompa ciepła</span>
+      </label>
+      <label class="win95-label">
+          <input type="radio" name="installation_type" value="floor_heating" disabled>
+          <span>Podłogówka (niedostępne)</span>
+      </label>
+  </div>
+</div>
+
+<div class="win95-separator"></div>
+
+<!-- Moc pompy ciepła -->
+<div class="win95-group group-power">
+  <label class="win95-label">⚡ Moc pompy ciepła:</label>
+  <div class="win95-button-group">
+      <label class="win95-label"><input type="radio" name="power_kw" value="3"> 3 kW</label>
+      <label class="win95-label"><input type="radio" name="power_kw" value="5"> 5 kW</label>
+      <label class="win95-label"><input type="radio" name="power_kw" value="7" checked> 7 kW</label>
+      <label class="win95-label"><input type="radio" name="power_kw" value="9"> 9 kW</label>
+      <label class="win95-label"><input type="radio" name="power_kw" value="12"> 12 kW</label>
+      <label class="win95-label"><input type="radio" name="power_kw" value="16"> 16 kW</label>
+  </div>
+</div>
+
+
+              <!-- Zbiornik CWU: checkbox + select -->
+              <div class="win95-group">
+                <label class="win95-label" for="has_cwu">💧 Zbiornik CWU:</label>
+                <div class="win95-button-group">
+                  <label class="win95-label">
+                    <input type="checkbox" id="has_cwu" name="has_cwu" checked>
+                  </label>
+                  <select id="tank_capacity" name="tank_capacity" class="win95-select" required>
+                    <option value="150">150 litrów</option>
+                    <option value="200">200 litrów</option>
+                    <option value="250">250 litrów</option>
+                    <option value="300">300 litrów</option>
+                    <option value="400">400 litrów</option>
+                    <option value="185-aio">ALL-IN-ONE 185L</option>
+                    <option value="260-aio">ALL-IN-ONE 260L</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="win95-group inline-field" id="tankManufacturerGroup">
+                <label for="tank-manufacturer-select" class="win95-label">Producent zbiornika:</label>
+                <select id="tank-manufacturer-select" name="tank_manufacturer" class="win95-select">
+                  <option value=" ">Nie wpisuj</option>
+                  <option value="THERMATEC">THERMATEC</option>
+                  <option value="VIQTIS">VIQTIS</option>
+                  <option value="ECLIS Puretherm">ECLIS Puretherm</option>
+                  <option value="Trinnity" selected>Trinnity</option>
+                  <option value="Galmet">Galmet</option>
+                </select>
+              </div>
+
+              <div class="win95-group">
+                <label class="win95-label" for="has_buffer">🔄 Bufor:</label>
+                <div class="win95-button-group">
+                  <label class="win95-label">
+                    <input type="checkbox" id="has_buffer" name="has_buffer">
+                  </label>
+                  <select id="buffer_capacity" name="buffer_capacity" class="win95-select" required>
+                    <option value="60">60 litrów</option>
+                    <option value="80">80 litrów</option>
+                    <option value="100">100 litrów</option>
+                    <option value="120">120 litrów</option>
+                    <option value="150">150 litrów</option>
+                    <option value="200">200 litrów</option>
+                    <option value="60-80">60-80 L</option>
+                    <option value="80-100">80-100 L</option>
+                    <option value="100-120">100-120 L</option>
+                    <option value="100-150">100-150 L</option>
+                    <option value="120-150">120-150 L</option>
+                    <option value="150-200">150-200 L</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="win95-group inline-field">
+                <label class="win95-label" for="kit_model">🎯 Model zestawu pompy ciepła:</label>
+                <select id="kit_model" name="kit_model" class="win95-select" required>
+                  <option value="">Wybierz zestaw...</option>
+                </select>
+                <div id="kit-loading" class="win95-status loading" style="display: none;">⏳ Ładowanie zestawów...</div>
+              </div>
+
+              <div class="win95-group">
+                <label class="win95-label" for="custom_price">💰 Cena (zł brutto):</label>
+                <input type="number" id="custom_price" name="custom_price" class="win95-input" value="41000" min="1000" required>
+              </div>
+
+
+              <div class="win95-group">
+                <label class="win95-label" for="output_format">📄 Format wyjściowy:</label>
+                <div class="win95-button-group">
+                  <label class="win95-label"><input type="radio" name="output_format" value="pdf" checked> <span>PDF (.pdf)</span></label>
+                  <label class="win95-label"><input type="radio" name="output_format" value="docx"> <span>Word (.docx)</span></label>
+                </div>
+              </div> <!-- Koniec sekcji heat-pump-section -->
+
+              <div class="win95-separator"></div>
+
+              <!-- Sekcja Podłogówka -->
+              <div id="floor-heating-section" style="display: none;">
+                <div class="win95-group">
+                  <label class="win95-label">📐 Powierzchnia podłogówki (m²):</label>
+                  <input type="number" id="floor_area" name="floor_area" class="win95-input" value="100" min="10" max="500">
+                </div>
+
+                <div class="win95-group">
+                  <label class="win95-label">🌡️ Typ ogrzewania:</label>
+                  <div class="win95-button-group">
+                    <label class="win95-label">
+                      <input type="radio" name="heating_type" value="water" checked>
+                      <span>Wodne</span>
+                    </label>
+                    <label class="win95-label">
+                      <input type="radio" name="heating_type" value="electric">
+                      <span>Elektryczne</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="win95-group inline-field">
+                  <label class="win95-label">🏠 Typ budynku:</label>
+                  <select id="building_type" name="building_type" class="win95-select">
+                    <option value="house">Dom jednorodzinny</option>
+                    <option value="apartment">Mieszkanie</option>
+                    <option value="office">Biuro</option>
+                    <option value="commercial">Lokal użytkowy</option>
+                  </select>
+                </div>
+
+                <div class="win95-group">
+                  <label class="win95-label">💰 Cena (zł brutto):</label>
+                  <input type="number" id="custom_price_floor" name="custom_price_floor" class="win95-input" value="15000" min="1000" required>
+                </div>
+              </div> <!-- Koniec sekcji floor-heating-section -->
+
+              <div class="win95-separator"></div>
+
+              <div class="win95-group">
+                <button type="submit" id="generateBtn" class="win95-button win95-button-primary">🔄 Generuj Ofertę</button>
+              </div>
+            </form>
+
+            <div id="results" style="display: none;">
+              <div class="win95-status success">
+                <strong>✅ Oferta wygenerowana!</strong><br>
+                <span id="resultText"></span><br>
+                <div id="documentInfo" style="margin: 10px 0; padding: 10px; background: #f0f0f0; border: 1px solid #ccc; font-size: 12px;">
+                  <strong>📄 Informacje o dokumencie:</strong><br>
+                  <span id="templateInfo"></span><br>
+                  <span id="placeholdersInfo"></span>
+                </div>
+                <a id="downloadLink" href="#" class="win95-button" target="_blank">⬇️ Pobierz ofertę</a>
+                <button id="viewDetailsBtn" class="win95-button" style="margin-left: 10px;">🔍 Zobacz szczegóły</button>
+              </div>
+            </div>
+
+            <div id="error" style="display: none;">
+              <div class="win95-status error">
+                <strong>❌ Błąd</strong><br>
+                <span id="errorText"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="win95-status">
+          <span>Ready</span> | <span>Top-Instal Generator — Test</span> | <span id="currentTime"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inline kits data for mock API -->
+    <script id="kits-data" type="application/json">{
+  "1fazowe": {
+    "KIT-WC03K3E5": {"name": "KIT-WC03K3E5", "power": "3kW", "voltage": "230V", "indoor_unit": "WH-SDC0309K3E5", "outdoor_unit": "WH-UDZ03KES", "price": 11939},
+    "KIT-WC05K3E5": {"name": "KIT-WC05K3E5", "power": "5kW", "voltage": "230V", "indoor_unit": "WH-SDC0309K3E5", "outdoor_unit": "WH-UDZ05KES", "price": 12434},
+    "KIT-WC07K3E5": {"name": "KIT-WC07K3E5", "power": "7kW", "voltage": "230V", "indoor_unit": "WH-SDC0309K3E5", "outdoor_unit": "WH-UDZ07KES", "price": 13184},
+    "KIT-WC09K3E5": {"name": "KIT-WC09K3E5", "power": "9kW", "voltage": "230V", "indoor_unit": "WH-SDC0309K3E5", "outdoor_unit": "WH-UDZ09KES", "price": 14397}
+  },
+  "3fazowe": {
+    "KIT-WC09K3E8": {"name": "KIT-WC09K3E8", "power": "9kW", "voltage": "400V", "indoor_unit": "WH-SDC09K3E8", "outdoor_unit": "WH-UDZ09KES", "price": 15253},
+    "KIT-WC09K9E8": {"name": "KIT-WC09K9E8", "power": "9kW", "voltage": "400V", "indoor_unit": "WH-SDC09K3E8", "outdoor_unit": "WH-UDZ09KE8", "price": 15476},
+    "KIT-WC12K9E8": {"name": "KIT-WC12K9E8", "power": "12kW", "voltage": "400V", "indoor_unit": "WH-SDC12K3EB", "outdoor_unit": "WH-UDZ12KES", "price": 17400},
+    "KIT-WC16K9E8": {"name": "KIT-WC16K9E8", "power": "16kW", "voltage": "400V", "indoor_unit": "WH-SDC16K3E8", "outdoor_unit": "WH-UDZ16KES", "price": 20871}
+  },
+  "all_in_one_185": {
+    "KIT-ADC03K3E5": {"name": "All-in-One 3kW 185L", "power": "3kW", "voltage": "230V", "indoor_unit": "WH-ADC0309K3E5", "outdoor_unit": "WH-UDZ03KES", "price": 17179},
+    "KIT-ADC05K3E5": {"name": "All-in-One 5kW 185L", "power": "5kW", "voltage": "230V", "indoor_unit": "WH-ADC0309K3E5", "outdoor_unit": "WH-UDZ05KES", "price": 17674},
+    "KIT-ADC07K3E5": {"name": "All-in-One 7kW 185L", "power": "7kW", "voltage": "230V", "indoor_unit": "WH-ADC0309K3E5", "outdoor_unit": "WH-UDZ07KES", "price": 18424},
+    "KIT-ADC09K3E5": {"name": "All-in-One 9kW 185L", "power": "9kW", "voltage": "230V", "indoor_unit": "WH-ADC0309K3E5", "outdoor_unit": "WH-UDZ09KES", "price": 19637},
+    "KIT-ADC09K9E8": {"name": "All-in-One 9kW 185L", "power": "9kW", "voltage": "400V", "indoor_unit": "WH-ADC0912K9E8", "outdoor_unit": "WH-UDZ09KE8", "price": 22391},
+    "KIT-ADC12K9E8": {"name": "All-in-One 12kW 185L", "power": "12kW", "voltage": "400V", "indoor_unit": "WH-ADC0912K9E8", "outdoor_unit": "WH-UDZ12KE8", "price": 23706},
+    "KIT-ADC16K9E8": {"name": "All-in-One 16kW 185L", "power": "16kW", "voltage": "400V", "indoor_unit": "WH-ADC16K9E8", "outdoor_unit": "WH-UDZ16KES", "price": 25366}
+  },
+  "all_in_one_260": {
+    "KIT-ADC09K9E83": {"name": "All-in-One 9kW 260L", "power": "9kW", "voltage": "400V", "indoor_unit": "WH-ADC0912K9E83", "outdoor_unit": "WH-UDZ09KE8", "price": 23124},
+    "KIT-ADC12K9E83": {"name": "All-in-One 12kW 260L", "power": "12kW", "voltage": "400V", "indoor_unit": "WH-ADC0912K9E83", "outdoor_unit": "WH-UDZ12KE8", "price": 24438},
+    "KIT-ADC16K9E83": {"name": "All-in-One 16kW 260L", "power": "16kW", "voltage": "400V", "indoor_unit": "WH-ADC16K9E83", "outdoor_unit": "WH-UDZ16KES", "price": 26108}
+  },
+  "all_in_one_2strefowy": {
+    "KIT-ADC03K3E5B": {"name": "All-in-One 2-strefowy 3kW", "power": "3kW", "voltage": "230V", "indoor_unit": "WH-ADC0309K3E5B", "outdoor_unit": "WH-UDZ03KES", "price": 19025},
+    "KIT-ADC05K3E5B": {"name": "All-in-One 2-strefowy 5kW", "power": "5kW", "voltage": "230V", "indoor_unit": "WH-ADC0309K3E5B", "outdoor_unit": "WH-UDZ05KES", "price": 19520},
+    "KIT-ADC07K3E5B": {"name": "All-in-One 2-strefowy 7kW", "power": "7kW", "voltage": "230V", "indoor_unit": "WH-ADC0309K3E5B", "outdoor_unit": "WH-UDZ07KES", "price": 20270},
+    "KIT-ADC09K3E5B": {"name": "All-in-One 2-strefowy 9kW", "power": "9kW", "voltage": "230V", "indoor_unit": "WH-ADC0309K3E5B", "outdoor_unit": "WH-UDZ09KES", "price": 21483}
+  },
+  "tcap_1fazowe": {
+    "KIT-WXC09K3E5": {"name": "T-CAP 9kW 1-fazowy", "power": "9kW", "voltage": "230V", "indoor_unit": "WH-SXC09K3E5", "outdoor_unit": "WH-UX09KE5", "price": 17146},
+    "KIT-WXC12K6E5": {"name": "T-CAP 12kW 1-fazowy", "power": "12kW", "voltage": "230V", "indoor_unit": "WH-SXC12K6E5", "outdoor_unit": "WH-UX12KE5", "price": 19995}
+  },
+  "tcap_3fazowe": {
+    "KIT-WXC09K3E8": {"name": "T-CAP 9kW 3-fazowy", "power": "9kW", "voltage": "400V", "indoor_unit": "WH-SXC09K3EB", "outdoor_unit": "WH-UX09KE5", "price": 18971},
+    "KIT-WXC12K9E8": {"name": "T-CAP 12kW 3-fazowy", "power": "12kW", "voltage": "400V", "indoor_unit": "WH-SXC12K9EB", "outdoor_unit": "WH-UX12KE8", "price": 21715},
+    "KIT-WXC16K9E8": {"name": "T-CAP 16kW 3-fazowy", "power": "16kW", "voltage": "400V", "indoor_unit": "WH-SXC16K9EB", "outdoor_unit": "WH-UX16KE8", "price": 23484}
+  },
+  "tcap_aio_185": {
+    "KIT-AXC9KE5": {"name": "T-CAP All-in-One 9kW 185L", "power": "9kW", "voltage": "230V", "indoor_unit": "WH-ADC0912K6E5", "outdoor_unit": "WH-UX09KE5", "price": 23330},
+    "KIT-AXC12KE5": {"name": "T-CAP All-in-One 12kW 185L", "power": "12kW", "voltage": "230V", "indoor_unit": "WH-ADC0912K6E5", "outdoor_unit": "WH-UX12KE5", "price": 24905},
+    "KIT-AXC9KE8": {"name": "T-CAP All-in-One 9kW 185L", "power": "9kW", "voltage": "400V", "indoor_unit": "WH-ADC0912K9E8", "outdoor_unit": "WH-UX09KE5", "price": 24530},
+    "KIT-AXC12KE8": {"name": "T-CAP All-in-One 12kW 185L", "power": "12kW", "voltage": "400V", "indoor_unit": "WH-ADC0912K9E8", "outdoor_unit": "WH-UX12KES", "price": 25770},
+    "KIT-AXC16KE9E8": {"name": "T-CAP All-in-One 16kW 185L", "power": "16kW", "voltage": "400V", "indoor_unit": "WH-ADC0916K9E8", "outdoor_unit": "WH-UX16KES", "price": 27125}
+  },
+  "tcap_aio_260": {
+    "KIT-AXC9K9E83": {"name": "T-CAP All-in-One 9kW 260L", "power": "9kW", "voltage": "400V", "indoor_unit": "WH-ADC0912K9E83", "outdoor_unit": "WH-UX09KES", "price": 25262},
+    "KIT-AXC12K9E83": {"name": "T-CAP All-in-One 12kW 260L", "power": "12kW", "voltage": "400V", "indoor_unit": "WH-ADC0912K9E83", "outdoor_unit": "WH-UX12KEB", "price": 26502},
+    "KIT-AXC16K9E83": {"name": "T-CAP All-in-One 16kW 260L", "power": "16kW", "voltage": "400V", "indoor_unit": "WH-ADC0916K9E83", "outdoor_unit": "WH-UX16KEB", "price": 27867}
+  }
+}</script>
+
+    <!-- jQuery + config + mock admin-ajax + app scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+      // Status bar clock
+      (function(){
+        function updateTime(){
+          var now = new Date();
+          var el = document.getElementById('currentTime');
+          if (el) el.textContent = now.toLocaleTimeString('pl-PL');
+        }
+        updateTime(); setInterval(updateTime, 1000);
+      })();
+
+      // App config expected by generator.js
+      window.topInstal = { ajaxurl: 'mock://admin-ajax', nonce: 'dev' };
+
+      // Mock admin-ajax endpoint for testing without WordPress
+      (function(){
+        var originalFetch = window.fetch.bind(window);
+        function parseBody(body){
+          if (!body) return {};
+          if (typeof body === 'string') return Object.fromEntries(new URLSearchParams(body));
+          if (body instanceof URLSearchParams) return Object.fromEntries(body.entries());
+          return {};
+        }
+        function buildJson(data){
+          return new Response(JSON.stringify(data), { headers: { 'Content-Type': 'application/json' } });
+        }
+        window.fetch = function(url, options){
+          if (url === window.topInstal.ajaxurl){
+            var params = parseBody(options && options.body);
+            var action = params.action;
+            if (action === 'get_kits'){
+              var kits = {};
+              try { kits = JSON.parse(document.getElementById('kits-data').textContent || '{}'); } catch(e){}
+              var power_type = params.power_type || '1fazowe';
+              var tank_capacity = params.tank_capacity || '200';
+              var power_kw = parseInt(params.power_kw || '', 10);
+              
+              var merge_aio_260 = (tank_capacity === '260-aio' || tank_capacity === '260-tcap');
+              var merge_aio_185 = (tank_capacity === '185-aio');
+              var data_key;
+              if (tank_capacity === 'none') {
+                // Bez CWU - pokazuj tylko pompy split (KIT-WC...)
+                data_key = 'all';
+              } else if (merge_aio_185) data_key = 'all_in_one_185';
+              else if (merge_aio_260) data_key = 'all_in_one_260';
+              else if (['150', '200', '250', '300', '400'].indexOf(tank_capacity) !== -1) {
+                // Standardowe zbiorniki - pokazuj tylko pompy split (KIT-WC...)
+                data_key = 'all';
+              } else if (power_type === 'all') data_key = 'all';
+              else data_key = power_type;
+
+              var result = {};
+              if (merge_aio_260) {
+                Object.assign(result, kits['all_in_one_260'] || {});
+                Object.assign(result, kits['tcap_aio_260'] || {});
+              } else if (merge_aio_185) {
+                Object.assign(result, kits['all_in_one_185'] || {});
+                Object.assign(result, kits['tcap_aio_185'] || {});
+                Object.assign(result, kits['all_in_one_2strefowy'] || {});
+              } else if (data_key === 'all'){
+                Object.keys(kits).forEach(function(group){
+                  Object.keys(kits[group]||{}).forEach(function(key){ result[key] = kits[group][key]; });
+                });
+              } else {
+                if (!kits[data_key]) return Promise.resolve(buildJson({ success:false, data:'Nie znaleziono zestawów' }));
+                result = kits[data_key];
+              }
+              if (!isNaN(power_kw)){
+                var filtered = {};
+                Object.keys(result).forEach(function(key){
+                  var m = /(\d+)/.exec((result[key].power||''));
+                  var kw = m ? parseInt(m[1],10) : NaN;
+                  if (isNaN(kw) || kw === power_kw) filtered[key] = result[key];
+                });
+                result = filtered;
+              }
+              
+              // Filtr dla różnych typów zbiorników
+              if (tank_capacity === 'none' || ['150', '200', '250', '300', '400'].indexOf(tank_capacity) !== -1) {
+                // Bez CWU lub standardowe zbiorniki - ukryj tylko All-in-One (KIT-ADC... i KIT-AXC...)
+                var filtered = {};
+                Object.keys(result).forEach(function(key){
+                  if (!/^KIT-(ADC|AXC)/.test(key)) filtered[key] = result[key];
+                });
+                result = filtered;
+              } else if (['185-aio', '260-aio', '260-tcap'].indexOf(tank_capacity) !== -1) {
+                // All-in-One zbiorniki - pokazuj tylko pompy AIO (KIT-ADC... lub KIT-AXC...)
+                var filtered = {};
+                Object.keys(result).forEach(function(key){
+                  if (/^KIT-(ADC|AXC)/.test(key)) filtered[key] = result[key];
+                });
+                result = filtered;
+              }
+              return Promise.resolve(buildJson({ success:true, data: result }));
+            }
+            if (action === 'simple_generate'){
+              // Prawdziwe generowanie dokumentu - symulacja logiki z PHP
+              var formData = JSON.parse(params.data || '{}');
+              console.log('🔍 Generowanie dokumentu z danymi:', formData);
+              
+              var installation_type = formData.installation_type || 'heat_pump';
+              var template_name;
+              
+              if (installation_type === 'floor_heating') {
+                // Logika dla podłogówki
+                template_name = 'szablon-podloga-parter-poddasze-garaz.docx';
+                console.log('📄 Wybrany szablon podłogówki:', template_name);
+              } else {
+                // Logika wyboru szablonu dla pompy ciepła (dokładnie jak w PHP)
+                var power_kw = parseInt(formData.power_kw || '7', 10);
+                var tank_capacity = formData.tank_capacity || 'none';
+                var buffer_capacity = formData.buffer_capacity || 'none';
+                var kit_model = formData.kit_model || '';
+                
+                // Znajdź informacje o zestawie
+                var kit_info = null;
+                var kit_group = '';
+                var kits = {};
+                try { kits = JSON.parse(document.getElementById('kits-data').textContent || '{}'); } catch(e){}
+                
+                // Znajdź zestaw w danych
+                Object.keys(kits).forEach(function(group) {
+                  if (kits[group] && kits[group][kit_model]) {
+                    kit_info = kits[group][kit_model];
+                    kit_group = group;
+                  }
+                });
+                
+                // Określ typ pompy
+                var isAllInOne = kit_info ? (kit_group.indexOf('all_in_one') !== -1) : false;
+                var isTCAP = kit_info ? (kit_group.indexOf('tcap') !== -1) : false;
+                var is3Phase = kit_info ? (kit_info.voltage === '400V') : false;
+                var hasCWU = (tank_capacity !== 'none');
+                var hasBuffer = (buffer_capacity !== 'none');
+                
+                console.log('🔍 DEBUG - Logika wyboru szablonu:');
+                console.log('kit_group:', kit_group);
+                console.log('isAllInOne:', isAllInOne);
+                console.log('isTCAP:', isTCAP);
+                console.log('is3Phase:', is3Phase);
+                console.log('hasCWU:', hasCWU);
+                console.log('hasBuffer:', hasBuffer);
+                
+                // Logika wyboru szablonu (dokładnie jak w PHP)
+                if (isAllInOne) {
+                  // AIO ma zawsze wbudowane CWU, sprawdzamy tylko bufor i pojemność
+                  if (kit_group === 'all_in_one_185') {
+                    // AIO 185L (1F i 3F)
+                    if (is3Phase) {
+                      template_name = hasBuffer ? 'szablon-3f-aio-cwu185-bufor.docx' : 'szablon-3f-aio-cwu185.docx';
+                    } else {
+                      template_name = hasBuffer ? 'szablon-1f-aio-cwu-bufor.docx' : 'szablon-1f-aio-cwu.docx';
+                    }
+                  } else if (kit_group === 'all_in_one_260') {
+                    // AIO 260L (tylko 3F)
+                    template_name = hasBuffer ? 'szablon-3f-aio-cwu260-bufor.docx' : 'szablon-3f-aio-cwu260.docx';
+                  } else if (kit_group === 'all_in_one_2strefowy') {
+                    // AIO 2-strefowy 185L (tylko 1F)
+                    template_name = hasBuffer ? 'szablon-1f-aio-cwu-bufor.docx' : 'szablon-1f-aio-cwu.docx';
+                  } else if (kit_group.indexOf('tcap_aio') !== -1) {
+                    // T-CAP AIO - sprawdź pojemność
+                    if (kit_group === 'tcap_aio_185') {
+                      // T-CAP AIO 185L (1F i 3F)
+                      if (is3Phase) {
+                        template_name = hasBuffer ? 'szablon-3f-aio-cwu185-bufor.docx' : 'szablon-3f-aio-cwu185.docx';
+                      } else {
+                        template_name = hasBuffer ? 'szablon-1f-aio-cwu-bufor.docx' : 'szablon-1f-aio-cwu.docx';
+                      }
+                    } else if (kit_group === 'tcap_aio_260') {
+                      // T-CAP AIO 260L (tylko 3F)
+                      template_name = hasBuffer ? 'szablon-3f-aio-cwu260-bufor.docx' : 'szablon-3f-aio-cwu260.docx';
+                    }
+                  } else {
+                    // Fallback dla innych grup AIO
+                    if (is3Phase) {
+                      template_name = hasBuffer ? 'szablon-3f-aio-cwu185-bufor.docx' : 'szablon-3f-aio-cwu185.docx';
+                    } else {
+                      template_name = hasBuffer ? 'szablon-1f-aio-cwu-bufor.docx' : 'szablon-1f-aio-cwu.docx';
+                    }
+                  }
+                } else {
+                  // SPLIT - uwzględnij bufor i CWU
+                  if (is3Phase) {
+                    // 3F Split - różne szablony w zależności od CWU i bufora
+                    if (hasCWU && hasBuffer) {
+                      template_name = 'szablon-3f-split-cwu-bufor.docx';
+                    } else if (hasCWU && !hasBuffer) {
+                      template_name = 'szablon-3f-split-cwu.docx';
+                    } else if (!hasCWU && hasBuffer) {
+                      template_name = 'szablon-3f-split-bufor.docx';
+                    } else {
+                      template_name = 'szablon-3f-split.docx'; // bez CWU i bufora
+                    }
+                  } else {
+                    // 1F Split - różne szablony w zależności od CWU i bufora
+                    if (hasCWU && hasBuffer) {
+                      template_name = 'szablon-1f-split-cwu-bufor.docx';
+                    } else if (hasCWU && !hasBuffer) {
+                      template_name = 'szablon-1f-split-cwu.docx';
+                    } else if (!hasCWU && hasBuffer) {
+                      template_name = 'szablon-1f-split-bufor.docx';
+                    } else {
+                      template_name = 'szablon-1f-split.docx'; // bez CWU i bufora
+                    }
+                  }
+                }
+              }
+              
+              console.log('📄 Wybrany szablon:', template_name);
+              
+              // Generuj nazwę pliku
+              var ts = new Date().toISOString().replace(/[:T]/g,'-').slice(0,19);
+              var output_format = formData.output_format || 'docx';
+              var filename;
+              var mockDocument;
+              
+              if (installation_type === 'floor_heating') {
+                filename = 'Oferta-Podlogowka_' + ts + '.' + output_format;
+                mockDocument = {
+                  template: template_name,
+                  placeholders: {
+                    '{{MOC}}': 'Podłogówka',
+                    '{{KIT}}': '',
+                    '{{INDOOR}}': 'System podłogowy',
+                    '{{OUTDOOR}}': 'Instalacja ' + (formData.heating_type || 'water'),
+                    '{{CWU}}': 'Podłogówka ' + (formData.floor_area || '100') + ' m²',
+                    '{{TANK}}': (formData.heating_type || 'water').charAt(0).toUpperCase() + (formData.heating_type || 'water').slice(1) + ' - ' + (formData.building_type || 'house').charAt(0).toUpperCase() + (formData.building_type || 'house').slice(1),
+                    '{{BFR}}': 'System ' + (formData.heating_type || 'water'),
+                    '{{PRC}}': new Intl.NumberFormat('pl-PL').format(parseInt(formData.custom_price_floor || '15000'))
+                  },
+                  filename: filename,
+                  format: output_format
+                };
+              } else {
+                filename = 'Oferta-PC-Panasonic_' + ts + '.' + output_format;
+                
+                // Przygotowanie placeholderów (dokładnie jak w PHP)
+                var kw_value = '9';
+                if (kit_info && kit_info.power) {
+                  var m = kit_info.power.match(/(\d+)/);
+                  if (m) kw_value = m[1];
+                }
+                
+                var elektro_value = (kit_info && kit_info.voltage === '400V') ? '3-FAZOWA | 400 V' : '1-FAZOWA | 230 V';
+                var indoor_unit = kit_info ? (kit_info.indoor_unit || 'WH-SDC09K3E8') : 'WH-SDC09K3E8';
+                var outdoor_unit = kit_info ? (kit_info.outdoor_unit || 'WH-UDZ09KE8') : 'WH-UDZ09KE8';
+                var voltage = kit_info ? (kit_info.voltage || '230V') : '230V';
+                
+                var tank_map = {
+                  'none': 'BRAK - BEZ CWU',
+                  '150': '150 litrów',
+                  '200': '200 litrów',
+                  '250': '250 litrów', 
+                  '300': '300 litrów',
+                  '400': '400 litrów',
+                  '185-aio': 'ALL-IN-ONE 185 litrów',
+                  '260-aio': 'ALL-IN-ONE 260 litrów',
+                  '260-tcap': 'T-CAP 260 litrów'
+                };
+                var tank_capacity_text = tank_map[tank_capacity] || 'BRAK - BEZ CWU';
+                var tank_manufacturer_text = formData.tank_manufacturer || '';
+                var buffer_capacity_text = (buffer_capacity === 'none') ? 'brak - nie rekomendowany' : buffer_capacity + ' litrów';
+                var cwu_info = (tank_capacity === 'none') ? 'Bez c.w.u.' : tank_capacity_text;
+                var formatted_price_with_spaces = new Intl.NumberFormat('pl-PL').format(parseInt(formData.custom_price || '41000'));
+                
+                mockDocument = {
+                  template: template_name,
+                  placeholders: {
+                    '{{MOC}}': kw_value,
+                    '{{KIT}}': kit_model,
+                    '{{INDOOR}}': indoor_unit,
+                    '{{OUTDOOR}}': outdoor_unit,
+                    '{{CWU}}': cwu_info,
+                    '{{TANK}}': tank_manufacturer_text,
+                    '{{BFR}}': buffer_capacity_text,
+                    '{{PRC}}': formatted_price_with_spaces
+                  },
+                  filename: filename,
+                  format: output_format
+                };
+              }
+              
+              console.log('📋 Wygenerowany dokument:', mockDocument);
+              
+              // Zwróć dane do pobrania
+              return Promise.resolve(buildJson({ 
+                success: true, 
+                data: { 
+                  filename: filename, 
+                  download_url: 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(mockDocument, null, 2)),
+                  template_used: template_name,
+                  placeholders_replaced: Object.keys(mockDocument.placeholders).length
+                } 
+              }));
+            }
+            return Promise.resolve(buildJson({ success:false, data:'Unknown action' }));
+          }
+          return originalFetch(url, options);
+        };
+      })();
+
+      // Dodatkowa obsługa automatycznego uzupełniania ceny dla pliku testowego
+      $(document).ready(function(){
+        // Obsługa przełączania między sekcjami (Pompa ciepła / Podłogówka)
+        $('input[name="installation_type"]').on('change', function() {
+          var selectedType = $(this).val();
+          var $heatPumpSection = $('#heat-pump-section');
+          var $floorHeatingSection = $('#floor-heating-section');
+          
+          if (selectedType === 'heat_pump') {
+            $heatPumpSection.show();
+            $floorHeatingSection.hide();
+          } else if (selectedType === 'floor_heating') {
+            $heatPumpSection.hide();
+            $floorHeatingSection.show();
+          }
+        });
+
+        $('#kit_model').on('change', function(){
+          var selectedKit = $(this).val();
+          if (selectedKit) {
+            // Pobierz zestawy z danych JSON
+            var kits = {};
+            try { kits = JSON.parse(document.getElementById('kits-data').textContent || '{}'); } catch(e){}
+            
+            // Znajdź cenę w wszystkich grupach
+            var kitPrice = null;
+            Object.keys(kits).forEach(function(group){
+              if (kits[group] && kits[group][selectedKit]) {
+                kitPrice = kits[group][selectedKit].price;
+              }
+            });
+            
+            if (kitPrice) {
+              $('#custom_price').val(kitPrice);
+            }
+          }
+        });
+        
+        // Obsługa przycisku "Zobacz szczegóły"
+        $('#viewDetailsBtn').on('click', function(){
+          var downloadUrl = $('#downloadLink').attr('href');
+          if (downloadUrl && downloadUrl.startsWith('data:')) {
+            var data = downloadUrl.split(',')[1];
+            var decoded = decodeURIComponent(data);
+            try {
+              var documentData = JSON.parse(decoded);
+              var details = '📋 SZCZEGÓŁY DOKUMENTU:\n\n';
+              details += '📄 Szablon: ' + documentData.template + '\n';
+              details += '📁 Plik: ' + documentData.filename + '\n';
+              details += '📝 Format: ' + documentData.format + '\n\n';
+              details += '🔄 ZASTĄPIONE PLACEHOLDERY:\n';
+              Object.keys(documentData.placeholders).forEach(function(key){
+                details += key + ' → ' + documentData.placeholders[key] + '\n';
+              });
+              alert(details);
+            } catch(e) {
+              alert('Błąd podczas odczytywania szczegółów dokumentu');
+            }
+          }
+        });
+      });
+    </script>
+    <script src="generator.js"></script>
+  </body>
+  </html>
+
+

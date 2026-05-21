@@ -1,0 +1,284 @@
+{
+  "schema_version": "configurator_presentation_v1",
+  "data_version": "2026-03-26-presentation-v2",
+  "_meta": {
+    "purpose": "Jedno źródło treści i metadanych prezentacyjnych warstwy konfiguratora (karty, copy, nazwy plików graficznych). Bez cen oferty i bez kopii panasonic.json.",
+    "not_canonical_pricing": "Ceny końcowej oferty wyłącznie w core/infrastructure/master-data/equipment-catalog.json oraz PricingEngine. Ten plik nie zawiera kwot cenowych.",
+    "technical_specs": "Dane techniczne pomp: wyłącznie konfigurator/panasonic.json w runtime (fetch). Pole technical_specs_ref wskazuje ścieżkę w paczce wtyczki.",
+    "runtime_note": "Konfigurator ładuje ten plik przez loadPresentationData() w configurator-unified.js; przy błędzie sieci używany jest fallback inline.",
+    "coverage": "Copy kart (CWU, bufor, cyrkulacja, Service Cloud, posadowienie, reduktor, woda), schematy bufora, etykiety wykresu. Bez duplikatu panasonic_kits i bez pól display_price.",
+    "related_files": [
+      "konfigurator/configurator-unified.js",
+      "konfigurator/panasonic.json",
+      "core/infrastructure/master-data/equipment-catalog.json",
+      "heatpump-calculator.php"
+    ],
+    "technical_specs_ref": "konfigurator/panasonic.json"
+  },
+  "images": {
+    "base": "HEATPUMP_CONFIG.imgUrl (WordPress) lub ../img — sufiks katalogu /img wtyczki",
+    "files": {
+      "splitK1f.png": "Split seria K (wspólny asset 1f/3f w pakiecie)",
+      "allinoneK1f.png": "All-in-one 1-fazowy",
+      "allinoneK3f.png": "All-in-one 3-fazowy",
+      "aioK.png": "Fallback AIO w podglądzie",
+      "split-k.png": "Fallback / podgląd typu split",
+      "dom.png": "Fallback buforów, CWU onerror, brak bufora",
+      "cwu-emalia.png": "Karta CWU emalia",
+      "cwu-nierdzewka.png": "Karta CWU stal nierdzewna",
+      "service-cloud-adapter.png": "Karta Service Cloud"
+    },
+    "pump_image_rules": {
+      "split": {
+        "filename": "splitK1f.png",
+        "note": "1f i 3f — ten sam plik do czasu osobnego splitK3f w pakiecie"
+      },
+      "all-in-one_1ph": {
+        "filename": "allinoneK1f.png"
+      },
+      "all-in-one_3ph": {
+        "filename": "allinoneK3f.png"
+      },
+      "fallback": {
+        "filename": "splitK1f.png"
+      }
+    }
+  },
+  "cwu_cards": {
+    "card_subtitles": {
+      "emalia": "Zasobnik z powłoką emaliowaną",
+      "inox": "Zasobnik ze stali nierdzewnej"
+    },
+    "types": {
+      "emalia": {
+        "product_name": "Galmet SG(S)",
+        "material_label": "Powłoka",
+        "material": "Emalia",
+        "anode": "Magnezowa",
+        "warranty": "5 lat",
+        "description": "Zasobnik z wewnętrzną powłoką emaliowaną. Rozwiązanie ekonomiczne z 5-letnią gwarancją.",
+        "image_file": "cwu-emalia.png"
+      },
+      "inox": {
+        "product_name": "Viqtis",
+        "material_label": "Materiał",
+        "material": "AISI 316L",
+        "anode": "Nie wymaga",
+        "warranty": "10 lat",
+        "description": "Zasobnik ze stali nierdzewnej AISI 316L. Maksymalna trwałość, bez konieczności wymiany anody magnezowej. Gwarancja 10 lat.",
+        "image_file": "cwu-nierdzewka.png"
+      }
+    }
+  },
+  "buffer_cards": {
+    "fallback_image_file": "dom.png",
+    "by_capacity_liters": {
+      "50": {
+        "title": "Bufor 50L",
+        "description": "Zbiornik buforowy 50L. Przeznaczony dla mniejszych instalacji z ograniczoną przestrzenią maszynowni.",
+        "dimensions": "Ø400×600"
+      },
+      "80": {
+        "title": "Bufor 80L",
+        "description": "Zbiornik buforowy 80L. Kompaktowa pojemność dla małych i średnich instalacji.",
+        "dimensions": "Ø450×650"
+      },
+      "100": {
+        "title": "Bufor 100L",
+        "description": "Zbiornik buforowy 100L. Standardowa pojemność dla większości instalacji domowych.",
+        "dimensions": "Ø500×800"
+      },
+      "120": {
+        "title": "Bufor 120L",
+        "description": "Zbiornik buforowy 120L. Optymalny kompromis między pojemnością a wymaganą przestrzenią.",
+        "dimensions": "Ø500×900"
+      },
+      "150": {
+        "title": "Bufor 150L",
+        "description": "Zbiornik buforowy 150L. Dla instalacji o średnim zapotrzebowaniu.",
+        "dimensions": "Ø550×900"
+      },
+      "200": {
+        "title": "Bufor 200L",
+        "description": "Zbiornik buforowy 200L. Przeznaczony dla większych instalacji. Zapewnia dłuższe cykle pracy pompy.",
+        "dimensions": "Ø600×1000"
+      },
+      "300": {
+        "title": "Bufor 300L",
+        "description": "Zbiornik buforowy 300L. Dla większych budynków i systemów z dużym obciążeniem.",
+        "dimensions": "Ø700×1100"
+      },
+      "400": {
+        "title": "Bufor 400L",
+        "description": "Zbiornik buforowy 400L. Dla rozbudowanych instalacji grzewczych.",
+        "dimensions": "Ø750×1200"
+      },
+      "500": {
+        "title": "Bufor 500L",
+        "description": "Zbiornik buforowy 500L. Duża pojemność dla budynków o wysokim zapotrzebowaniu.",
+        "dimensions": "Ø800×1300"
+      },
+      "800": {
+        "title": "Bufor 800L",
+        "description": "Zbiornik buforowy 800L. Dla obiektów wielorodzinnych lub przemysłowych.",
+        "dimensions": "Ø900×1500"
+      },
+      "1000": {
+        "title": "Bufor 1000L",
+        "description": "Zbiornik buforowy 1000L. Maksymalna pojemność dla wymagających instalacji.",
+        "dimensions": "Ø1000×1600"
+      }
+    },
+    "installation_copy": {
+      "SERIES_BYPASS": "System rekomenduje wpięcie w instalację szeregowo - podłączenie na powrocie z instalacji + by-pass \"krótki obieg\" z zaworem różnicy ciśnień.",
+      "PARALLEL_CLUTCH": "System wskazuje na wpięcie bufora równolegle między pompą ciepła a odbiornikami ciepła - tzw. sprzęgło hydrauliczne. Wymagany dodatkowy zespół pompowy/pompowo-mieszający zostanie uwzględniony w wycenie."
+    },
+    "section_descriptions_template": {
+      "BUFOR_SZEREGOWO": "Ze względu na ryzyko automatycznego zamknięcia obiegu przez sterowniki pokojowe wymagany jest zbiornik buforowy. Rekomendacja: bufor wpięty szeregowo — podłączenie na powrocie z instalacji z by-passem i zaworem różnicy ciśnienia.",
+      "BUFOR_RÓWNOLEGLE": "System rekomenduje zbiornik buforowy {capacity} L — separacja obiegów/źródeł + magazyn energii.",
+      "none": "Zbiornik buforowy nie jest wymagany. Zapas wody w instalacji zapewnia stabilną pracę pompy ciepła i prawidłowy defrost."
+    },
+    "diagram": {
+      "series_bypass_title": "Schemat montażu szeregowego",
+      "parallel_clutch_title": "Schemat montażu równoległego"
+    },
+    "breakdown_chart_labels": {
+      "antiCycling": "Anti-cycling",
+      "bivalent": "Biwalentne",
+      "hydraulic": "Hydrauliczne"
+    }
+  },
+  "circulation_cwu": {
+    "tak": {
+      "title": "Z cyrkulacją CWU",
+      "description": "System cyrkulacji zapewnia natychmiastowy dostęp do ciepłej wody w punktach czerpalnych. Wymaga dodatkowego zużycia energii.",
+      "option_id": "cyrkulacja-tak"
+    },
+    "nie": {
+      "title": "Bez cyrkulacji",
+      "description": "Instalacja bez cyrkulacji. Niższe koszty eksploatacji, wymaga krótkiego czasu oczekiwania na ciepłą wodę.",
+      "option_id": "cyrkulacja-nie"
+    }
+  },
+  "service_cloud": {
+    "card": {
+      "subtitle": "Monitoring i opieka serwisowa",
+      "title": "Service Cloud",
+      "image_file": "service-cloud-adapter.png",
+      "alt": "Service Cloud Adapter"
+    },
+    "animation_text": "Moduł WiFi w standardzie. Zdalny dostęp serwisu do parametrów instalacji oraz aplikacja Comfort Cloud do sterowania z urządzenia mobilnego.",
+    "rules_engine": {
+      "enabled": true,
+      "ai_diagnostics_enabled": true,
+      "note": "Logika w rulesEngine.serviceCloud() w configurator-unified.js"
+    }
+  },
+  "foundation": {
+    "cards": {
+      "grunt": {
+        "subtitle": "Fundament po stronie inwestora",
+        "title": "Fundament przygotowany samodzielnie",
+        "description": "Montaż jednostki zewnętrznej na przygotowanym fundamencie klienta. Oferta nie dolicza osobnej pozycji za podstawę.",
+        "specs": [
+          {
+            "label": "Przygotowanie",
+            "value": "Po stronie inwestora"
+          }
+        ],
+        "option_id": "posadowienie-grunt"
+      },
+      "sciana": {
+        "subtitle": "Montaż na ścianie",
+        "title": "Montaż na konsoli ściennej",
+        "description": "Montaż jednostki zewnętrznej na konsoli ściennej z elementami antywibracyjnymi. Wymaga odpowiedniej ściany nośnej.",
+        "specs": [
+          {
+            "label": "Wymaganie",
+            "value": "Stabilna ściana nośna"
+          }
+        ],
+        "option_id": "posadowienie-sciana"
+      },
+      "eko": {
+        "subtitle": "Montaż naziemny",
+        "title": "Montaż na stojaku",
+        "description": "Montaż jednostki zewnętrznej na stojaku z gumową podstawą antywibracyjną.",
+        "specs": [
+          {
+            "label": "Wymiary stopy",
+            "value": "80×80 cm"
+          }
+        ],
+        "option_id": "posadowienie-eko"
+      }
+    }
+  },
+  "pressure_reducer": {
+    "with": {
+      "subtitle": "Zalecane przy ciśnieniu wody sieciowej powyżej 4 bar",
+      "title": "Z reduktorem ciśnienia",
+      "description": "Reduktor ciśnienia nastawny z manometrem i filtrem mechanicznym.",
+      "specs": [
+        {
+          "label": "Zakres",
+          "value": "1-6 bar"
+        }
+      ],
+      "option_id": "reduktor-tak",
+      "badge_recommended": "✓ Rekomendowane"
+    },
+    "without": {
+      "subtitle": "Dla niskiego i stabilnego ciśnienia wody",
+      "title": "Bez reduktora ciśnienia",
+      "description": "Instalacja bez dodatkowego reduktora. To wariant dla stabilnego ciśnienia zasilania i prostych warunków pracy.",
+      "specs": [
+        {
+          "label": "Warunek",
+          "value": "Stabilne cisnienie < 3 bar"
+        }
+      ],
+      "option_id": "reduktor-nie"
+    }
+  },
+  "water_treatment": {
+    "stations": {
+      "kompleksowa": {
+        "subtitle": "Filtracja + zmiękczanie",
+        "title": "Stacja kompleksowa",
+        "description": "Kompleksowe uzdatnianie wody: zmiękczanie i filtracja mechaniczna.",
+        "specs": [
+          {
+            "label": "Funkcje",
+            "value": "Zmiękczanie + filtracja"
+          }
+        ],
+        "option_id": "woda-tak"
+      },
+      "podstawowa": {
+        "subtitle": "Filtr mechaniczny",
+        "title": "Filtracja podstawowa",
+        "description": "Filtracja mechaniczna — podstawowa ochrona przed zanieczyszczeniami stałymi.",
+        "specs": [
+          {
+            "label": "Filtracja",
+            "value": "50 μm"
+          }
+        ],
+        "option_id": "woda-filtr"
+      },
+      "brak": {
+        "subtitle": "Przy dobrej jakości wody",
+        "title": "Bez uzdatniania",
+        "description": "Brak uzdatniania — wymaga analizy parametrów wody sieciowej.",
+        "specs": [
+          {
+            "label": "Wymaga",
+            "value": "Analizy wody"
+          }
+        ],
+        "option_id": "woda-nie"
+      }
+    }
+  }
+}

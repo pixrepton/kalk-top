@@ -1,0 +1,38 @@
+---
+description: "kalk-top: decision layer, source of truth for CalcRequestDTO→OfferDTO. Does NOT render documents, parse mail, or own RAG. Cross-repo impact check required."
+alwaysApply: true
+---
+
+# kalk-top — Repo Role
+
+## Role in ecosystem
+
+**Decision layer.** Source of truth for HVAC calculation, pump selection, buffer, pricing, and offer. Produces `OfferDTO` from `CalcRequestDTO`. Downstream: top-instal-generator consumes OfferDTO; topinstal-mail-ingress dispatches to this repo; RAG may interpret/explain results.
+
+## What this repo does NOT do
+
+- Render DOCX/PDF (that is top-instal-generator)
+- Poll Gmail or parse mail (that is topinstal-mail-ingress)
+- Own knowledge base or retrieval (that is rag-chat-asystent)
+- Duplicate logic that belongs in another module
+
+## Local rules
+
+- Core domain (`/core/domain`) is pure: no WP, UI, DB, PDF, mail
+- REST `POST /wp-json/topinstal/v1/calculate-offer` is the canonical system boundary
+- Use `docs/architecture/repo-rules.md` for canonical local architecture guidance
+- Small steps; repo must work after each commit
+
+## Cross-repo impact check
+
+Before changing CalcRequestDTO, OfferDTO, REST contract, mail-ingress workflow, or generator integration: assess impact on top-instal-generator, topinstal-mail-ingress, rag-chat-asystent. Update `docs/ecosystem/TOPINSTAL_ECOSYSTEM_STATE.md` if contracts or integrations change (see update protocol).
+
+## When unsure
+
+- Does this logic belong here? → Check ecosystem constitution. kalk-top owns calculation, selection, buffer, pricing.
+- Will this break generator or mail-ingress? → Check living document for current contracts. Propose change and document.
+- Should I add this to another repo? → Do not assume ownership. Propose or ask.
+
+## Do not assume ownership
+
+Do not add document rendering, mail parsing, or RAG retrieval logic to this repo. If the task suggests it, redirect to the correct module.

@@ -1,0 +1,24 @@
+---
+description: "Execution protocol for kalk-top: read memory bank first, treat repo root as canonical, verify before claiming success, include evidence, and escalate contract-impact changes."
+alwaysApply: false
+globs:
+  - "memory-bank/**"
+  - ".cursor/**"
+  - ".agents/**"
+  - "docs/AGENT_EXECUTION_STANDARD.md"
+  - "LOCAL_WORKSPACE_RULES.md"
+---
+
+# Execution Protocol
+
+- Read `memory-bank/project-brief.md`, `memory-bank/current-state.md`, and `memory-bank/active-context.md` before meaningful work.
+- Read the nearest nested `AGENTS.md` when working inside a subsystem that defines one.
+- Treat the repo root as canonical. Do not edit `.runtime-wp/` unless the user explicitly asks.
+- Prefer canonical category docs in `docs/*` over root `COMPAT_POINTERS.md` (legacy names) or transitional folders.
+- Use Plan Mode for multi-file, architectural, or unclear work before implementation.
+- Use Browser for visible UI verification and Debug Mode when runtime evidence matters more than code reading.
+- Verify changed behavior before claiming success. Use the lightest relevant verification that matches the changed area.
+- State what you actually ran. Do not imply runtime or test success without evidence.
+- After meaningful work, update `memory-bank/active-context.md` and `memory-bank/progress.md`.
+- Use parallel agents and worktrees only for hard refactors, alternatives, or Best-of-N comparisons where isolation is useful.
+- If work changes DTOs, REST contracts, auth/trace semantics, generator integration, or mail-ingress workflow, perform an explicit impact check and decide whether `docs/ecosystem/TOPINSTAL_ECOSYSTEM_STATE.md` must be updated.

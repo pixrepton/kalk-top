@@ -1,0 +1,38 @@
+---
+description: "top-instal-generator: document layer, renders DOCX/PDF from OfferDTO. Does NOT calculate, parse mail, or own RAG. Cross-repo impact check required."
+alwaysApply: true
+---
+
+# top-instal-generator — Repo Role
+
+## Role in ecosystem
+
+**Document layer.** Downstream renderer. Receives OfferDTO (or direct config), selects template, fills placeholders, produces DOCX/PDF. Upstream: kalk-top produces OfferDTO; mail-ingress workflow triggers kalk-top which then calls generator; RAG may request document generation via adapter.
+
+## What this repo does NOT do
+
+- Calculate HVAC, selection, buffer, pricing (that is kalk-top)
+- Poll Gmail or parse mail (that is topinstal-mail-ingress)
+- Own knowledge base or retrieval (that is rag-chat-asystent)
+- Add business logic for offer decisions (only render what it receives)
+
+## Local rules
+
+- `mode=from-offer-dto` is the canonical integration path from kalk-top
+- REST `POST /wp-json/topinstal/v1/offer-documents/generate` is the system boundary
+- Do not guess or infer offer fields; consume what OfferDTO provides
+- Keep mapping from OfferDTO to placeholders explicit and lossless where possible
+
+## Cross-repo impact check
+
+Before changing OfferDocumentRequestDTO, from-offer-dto mapping, REST contract, or auth: assess impact on kalk-top (producer of OfferDTO) and any callers. Update `docs/ecosystem/TOPINSTAL_ECOSYSTEM_STATE.md` if contracts change (see update protocol).
+
+## When unsure
+
+- Does this logic belong here? → Check ecosystem constitution. Generator only renders; it does not calculate.
+- Will this break kalk-top integration? → Check living document for current OfferDTO shape and from-offer-dto mapping.
+- Should I add calculation or parsing? → No. Redirect to kalk-top or mail-ingress.
+
+## Do not assume ownership
+
+Do not add calculation, mail parsing, or offer decision logic. If the task suggests it, redirect to kalk-top.

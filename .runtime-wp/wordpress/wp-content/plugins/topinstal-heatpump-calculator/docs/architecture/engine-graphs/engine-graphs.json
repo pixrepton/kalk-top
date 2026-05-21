@@ -1,0 +1,414 @@
+{
+  "metadata": {
+    "status": "operational",
+    "owner": "TOP-INSTAL engineering / calculation core",
+    "lastVerifiedAgainstCodeRuntime": "2026-05-20",
+    "sourceOfTruthLevel": "L2",
+    "note": "Repo-local export aligned with GitNexus MCP (context/cypher/impact) on indexed repo kalk-top. Domain-level nodes/edges preserved for human review; gitnexus.* blocks are machine traceability."
+  },
+  "gitnexus": {
+    "repo": "kalk-top",
+    "path": "C:\\Users\\compg\\Desktop\\kalk-top",
+    "indexedAt": "2026-05-20T10:18:29.014Z",
+    "stats": {
+      "files": 316,
+      "nodes": 8615,
+      "edges": 15106,
+      "communities": 332,
+      "processes": 300
+    },
+    "indexCommand": "npx gitnexus analyze --name kalk-top --skip-git --force",
+    "queryWarning": "If semantic query returns empty, rerun analyze --force; context/cypher/impact remain authoritative."
+  },
+  "orchestration": {
+    "runtimeOwner": "core/application/CalculateOfferUseCase.php",
+    "classUid": "Class:core/application/CalculateOfferUseCase.php:TopInstal_CalculateOffer_UseCase",
+    "entryMethod": {
+      "name": "execute",
+      "uid": "Method:core/application/CalculateOfferUseCase.php:TopInstal_CalculateOffer_UseCase.execute#1",
+      "startLine": 63,
+      "endLine": 337
+    },
+    "engineProperties": [
+      "ozc_engine",
+      "selection_engine",
+      "buffer_engine",
+      "cwu_engine",
+      "pricing_engine"
+    ],
+    "executeCallsGitNexus": [
+      "canonicalize_calc_request",
+      "resolve_ozc_result",
+      "resolve_selection_cwu_context",
+      "resolve_cwu_result",
+      "computeBuffer",
+      "price"
+    ],
+    "restEntry": "wp-adapter/rest/CalculateOfferController.php:build_use_case"
+  },
+  "graphs": {
+    "ozc": {
+      "runtimeOwner": "core/domain/ozc/OzcEngine.php",
+      "classUid": "Class:core/domain/ozc/OzcEngine.php:TopInstal_OzcEngine",
+      "fullClassUid": "Class:core/domain/ozc/OzcEngine.php:TopInstal_OzcEngine_Full",
+      "jsParityUid": "Function:kalkulator/engine/ozc/ozc-engine.js:computeAdditiveCorrectionsKw",
+      "nodes": [
+        "CalcRequestDTO.building",
+        "CalcRequestDTO.preferences",
+        "TopInstal_OzcEngine.calculate",
+        "TopInstal_OzcEngine.calculateRaw",
+        "TopInstal_OzcEngine.normalizePayloadForOzc",
+        "TopInstal_OzcEngine.computeGeometry",
+        "TopInstal_OzcEngine.computeAreas",
+        "TopInstal_OzcEngine.resolveClimate",
+        "TopInstal_OzcEngine.resolveUValues",
+        "TopInstal_OzcEngine.resolveVentilationParams",
+        "TopInstal_OzcEngine.calculateOZC",
+        "TopInstal_OzcEngine.computeAdditiveCorrectionsKw",
+        "TopInstal_OzcEngine.computeAnnualEnergy_kWh",
+        "TopInstal_OzcEngine_Full.build_payload",
+        "TopInstal_OzcEngine_Full.computeDesignHeatLoss",
+        "designHeatLoss_kW",
+        "engineering.ozc"
+      ],
+      "edges": [
+        [
+          "CalcRequestDTO.building",
+          "TopInstal_OzcEngine.normalizePayloadForOzc"
+        ],
+        [
+          "CalcRequestDTO.preferences",
+          "TopInstal_OzcEngine.normalizePayloadForOzc"
+        ],
+        [
+          "TopInstal_OzcEngine.normalizePayloadForOzc",
+          "TopInstal_OzcEngine.computeGeometry"
+        ],
+        [
+          "TopInstal_OzcEngine.normalizePayloadForOzc",
+          "TopInstal_OzcEngine.resolveClimate"
+        ],
+        [
+          "TopInstal_OzcEngine.computeGeometry",
+          "TopInstal_OzcEngine.computeAreas"
+        ],
+        [
+          "TopInstal_OzcEngine.computeAreas",
+          "TopInstal_OzcEngine.calculateOZC"
+        ],
+        [
+          "TopInstal_OzcEngine.resolveUValues",
+          "TopInstal_OzcEngine.calculateOZC"
+        ],
+        [
+          "TopInstal_OzcEngine.resolveVentilationParams",
+          "TopInstal_OzcEngine.calculateOZC"
+        ],
+        [
+          "TopInstal_OzcEngine.calculateOZC",
+          "TopInstal_OzcEngine.computeAdditiveCorrectionsKw"
+        ],
+        [
+          "TopInstal_OzcEngine.computeAdditiveCorrectionsKw",
+          "designHeatLoss_kW"
+        ],
+        [
+          "TopInstal_OzcEngine.calculateOZC",
+          "designHeatLoss_kW"
+        ],
+        [
+          "calculateOZCWithExtended",
+          "TopInstal_OzcEngine.computeAnnualEnergy_kWh"
+        ],
+        [
+          "designHeatLoss_kW",
+          "engineering.ozc"
+        ],
+        [
+          "TopInstal_OzcEngine.computeAnnualEnergy_kWh",
+          "engineering.ozc"
+        ]
+      ],
+      "gitnexusCallEdges": [
+        {
+          "from": "TopInstal_OzcEngine.calculateOZC",
+          "to": "TopInstal_OzcEngine.computeAdditiveCorrectionsKw",
+          "type": "CALLS"
+        },
+        {
+          "from": "TopInstal_OzcEngine.calculateRaw",
+          "to": "TopInstal_OzcEngine.calculateOZC",
+          "type": "CALLS"
+        },
+        {
+          "from": "TopInstal_OzcEngine.calculateOZCWithExtended",
+          "to": "TopInstal_OzcEngine.computeAnnualEnergy_kWh",
+          "type": "CALLS"
+        },
+        {
+          "from": "TopInstal_CalculateOffer_UseCase.resolve_ozc_result",
+          "to": "TopInstal_OzcEngine.calculate",
+          "type": "CALLS",
+          "inferred": true
+        }
+      ],
+      "riskNodes": [
+        {
+          "id": "computeAdditiveCorrectionsKw",
+          "uid": "Method:core/domain/ozc/OzcEngine.php:TopInstal_OzcEngine.computeAdditiveCorrectionsKw#1",
+          "line": 680,
+          "issue": "Likely double-counts windows/doors/recovery/basement already in U*A*dT and ventilation.",
+          "jsParityUid": "Function:kalkulator/engine/ozc/ozc-engine.js:computeAdditiveCorrectionsKw"
+        },
+        {
+          "id": "computeAnnualEnergy_kWh",
+          "uid": "Method:core/domain/ozc/OzcEngine.php:TopInstal_OzcEngine.computeAnnualEnergy_kWh",
+          "line": 1910,
+          "issue": "Annual/HDD path may use full HV without eta_rec."
+        },
+        "computeWallStructureThicknessCm",
+        "U_floor + shapeCorrection"
+      ],
+      "incomingCallers": [
+        "TopInstal_CalculateOffer_UseCase.resolve_default_ozc_engine",
+        "core/application/harness/ozc-full-audit.regression.php",
+        "core/application/harness/engine-parity.php"
+      ]
+    },
+    "selection": {
+      "runtimeOwner": "core/domain/selection/SelectionEngine.php",
+      "classUid": "Class:core/domain/selection/SelectionEngine.php:TopInstal_SelectionEngine",
+      "nodes": [
+        "designHeatLoss_kW",
+        "building.heating_type",
+        "preferences.heating",
+        "selectionRules.pumpMatchingTable",
+        "selectionRules.aioMap",
+        "TopInstal_SelectionEngine.select",
+        "TopInstal_SelectionEngine.resolve_aio_requirement",
+        "TopInstal_SelectionEngine.filter_matches_for_cwu_requirement",
+        "TopInstal_SelectionEngine.resolve_aio_tank_from_maps",
+        "TopInstal_SelectionEngine.build_model_from_table",
+        "pumpSelection",
+        "engineering.selection"
+      ],
+      "edges": [
+        [
+          "designHeatLoss_kW",
+          "TopInstal_SelectionEngine.select"
+        ],
+        [
+          "building.heating_type",
+          "TopInstal_SelectionEngine.select"
+        ],
+        [
+          "selectionRules.pumpMatchingTable",
+          "TopInstal_SelectionEngine.select"
+        ],
+        [
+          "TopInstal_SelectionEngine.resolve_aio_requirement",
+          "TopInstal_SelectionEngine.filter_matches_for_cwu_requirement"
+        ],
+        [
+          "TopInstal_SelectionEngine.filter_matches_for_cwu_requirement",
+          "TopInstal_SelectionEngine.select"
+        ],
+        [
+          "TopInstal_SelectionEngine.select",
+          "pumpSelection"
+        ],
+        [
+          "pumpSelection",
+          "engineering.selection"
+        ]
+      ],
+      "gitnexusMethods": [
+        "select",
+        "resolve_aio_requirement",
+        "filter_matches_for_cwu_requirement",
+        "resolve_aio_tank_from_maps",
+        "build_model_from_table",
+        "find_nearest_model"
+      ],
+      "incomingCallers": [
+        "core/application/harness/selection-aio-cwu.regression.php",
+        "core/application/harness/engine-parity.php"
+      ]
+    },
+    "cwu": {
+      "runtimeOwner": "core/domain/cwu/CwuEngine.php",
+      "classUid": "Class:core/domain/cwu/CwuEngine.php:TopInstal_CwuEngine",
+      "nodes": [
+        "preferences.dhw",
+        "building.hot_water_*",
+        "selection.pumpSelection",
+        "cwuRules",
+        "priceBook.pricing_policy.cwu",
+        "TopInstal_CwuEngine.compute",
+        "TopInstal_CwuEngine.resolve_demand_enabled",
+        "TopInstal_CwuEngine.recommend_capacity_liters",
+        "TopInstal_CwuEngine.estimate_hot_water_power_kw",
+        "TopInstal_CwuEngine.estimate_annual_cwu_energy_kwh",
+        "hotWaterPower_kW",
+        "annualCwuEnergy_kWh",
+        "pricingHint",
+        "engineering.cwu"
+      ],
+      "edges": [
+        [
+          "preferences.dhw",
+          "TopInstal_CwuEngine.resolve_demand_enabled"
+        ],
+        [
+          "building.hot_water_*",
+          "TopInstal_CwuEngine.resolve_demand_enabled"
+        ],
+        [
+          "selection.pumpSelection",
+          "TopInstal_CwuEngine.is_aio_selection"
+        ],
+        [
+          "TopInstal_CwuEngine.resolve_demand_enabled",
+          "TopInstal_CwuEngine.compute"
+        ],
+        [
+          "TopInstal_CwuEngine.recommend_capacity_liters",
+          "TopInstal_CwuEngine.compute"
+        ],
+        [
+          "TopInstal_CwuEngine.compute",
+          "engineering.cwu"
+        ],
+        [
+          "TopInstal_CwuEngine.estimate_hot_water_power_kw",
+          "hotWaterPower_kW"
+        ],
+        [
+          "TopInstal_CwuEngine.estimate_annual_cwu_energy_kwh",
+          "annualCwuEnergy_kWh"
+        ]
+      ],
+      "incomingCallers": [
+        "TopInstal_CalculateOffer_UseCase.resolve_default_cwu_engine",
+        "TopInstal_CalculateOffer_UseCase.resolve_cwu_result",
+        "TopInstal_OzcEngine.resolve_cwu_engine",
+        "core/application/harness/cwu-engine.regression.php",
+        "core/application/harness/cwu-pricing-catalog.regression.php"
+      ]
+    },
+    "buffer": {
+      "runtimeOwner": "core/domain/buffer/BufferEngine.php",
+      "classUid": "Class:core/domain/buffer/BufferEngine.php:TopInstal_BufferEngine",
+      "fullClassUid": "Class:core/domain/buffer/BufferEngine.php:TopInstal_BufferEngine_Full",
+      "nodes": [
+        "designHeatLoss_kW",
+        "building",
+        "preferences",
+        "selection",
+        "bufferRules",
+        "TopInstal_BufferEngine.computeBuffer",
+        "TopInstal_BufferEngine.calculate_final_buffer_recommendation",
+        "V_antiCycling",
+        "V_bivalent",
+        "V_hydraulic",
+        "liters",
+        "engineering.buffer"
+      ],
+      "edges": [
+        [
+          "designHeatLoss_kW",
+          "TopInstal_BufferEngine.computeBuffer"
+        ],
+        [
+          "selection",
+          "TopInstal_BufferEngine.computeBuffer"
+        ],
+        [
+          "bufferRules",
+          "TopInstal_BufferEngine.calculate_final_buffer_recommendation"
+        ],
+        [
+          "TopInstal_BufferEngine.computeBuffer",
+          "liters"
+        ],
+        [
+          "liters",
+          "engineering.buffer"
+        ]
+      ],
+      "gitnexusCallEdges": [
+        {
+          "from": "TopInstal_CalculateOffer_UseCase.execute",
+          "to": "TopInstal_BufferEngine.computeBuffer",
+          "type": "CALLS"
+        }
+      ],
+      "incomingCallers": [
+        "TopInstal_CalculateOffer_UseCase.resolve_default_buffer_engine",
+        "core/application/harness/buffer-explainability.regression.php",
+        "core/application/harness/engine-parity.php"
+      ]
+    },
+    "pricing": {
+      "runtimeOwner": "core/domain/pricing/PricingEngine.php",
+      "classUid": "Class:core/domain/pricing/PricingEngine.php:TopInstal_PricingEngine",
+      "nodes": [
+        "priceBook",
+        "selection",
+        "buffer",
+        "cwu",
+        "preferences.options",
+        "TopInstal_PricingEngine.price",
+        "TopInstal_PricingEngine.resolve_pump_price",
+        "TopInstal_PricingEngine.resolve_buffer_price",
+        "TopInstal_PricingEngine.resolve_cwu_price",
+        "TopInstal_PricingEngine.append_accessory_items",
+        "PUMP item",
+        "BUFFER item",
+        "CWU item",
+        "ACCESSORY items",
+        "INSTALLATION item",
+        "totals",
+        "OfferDTO.pricing"
+      ],
+      "edges": [
+        [
+          "selection",
+          "TopInstal_PricingEngine.resolve_pump_price"
+        ],
+        [
+          "buffer",
+          "TopInstal_PricingEngine.resolve_buffer_price"
+        ],
+        [
+          "cwu",
+          "TopInstal_PricingEngine.resolve_cwu_price"
+        ],
+        [
+          "preferences.options",
+          "TopInstal_PricingEngine.append_accessory_items"
+        ],
+        [
+          "TopInstal_PricingEngine.price",
+          "totals"
+        ],
+        [
+          "totals",
+          "OfferDTO.pricing"
+        ]
+      ],
+      "gitnexusCallEdges": [
+        {
+          "from": "TopInstal_CalculateOffer_UseCase.execute",
+          "to": "TopInstal_PricingEngine.price",
+          "type": "CALLS"
+        }
+      ],
+      "incomingCallers": [
+        "core/application/harness/foundation-pricing.regression.php",
+        "core/application/harness/cwu-pricing-catalog.regression.php",
+        "core/application/harness/engine-parity.php"
+      ]
+    }
+  }
+}

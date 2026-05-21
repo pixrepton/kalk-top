@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://topinstal.local/schemas/calc-request-dto.v1.json",
+  "title": "CalcRequestDTO",
+  "description": "Request contract for HVAC calculation. Producer: UI, mail-ingress workflow. Consumer: kalk-top.",
+  "type": "object",
+  "required": ["schemaVersion", "lead", "building", "preferences"],
+  "properties": {
+    "schemaVersion": { "type": "string", "const": "1.0" },
+    "traceId": { "type": "string", "minLength": 1 },
+    "lead": { "type": "object" },
+    "building": { "type": "object" },
+    "preferences": { "type": "object" },
+    "context": { "type": "object" }
+  },
+  "additionalProperties": true
+}

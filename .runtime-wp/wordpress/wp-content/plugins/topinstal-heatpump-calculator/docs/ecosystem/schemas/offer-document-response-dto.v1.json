@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://topinstal.local/schemas/offer-document-response-dto.v1.json",
+  "title": "OfferDocumentResponseDTO",
+  "description": "Response from document generation. Producer: top-instal-generator.",
+  "type": "object",
+  "required": ["schemaVersion", "status"],
+  "properties": {
+    "schemaVersion": { "type": "string", "const": "1" },
+    "traceId": { "type": "string" },
+    "documentId": { "type": "string", "description": "UUID identifying the generated document" },
+    "status": { "type": "string", "enum": ["ok", "success", "error"] },
+    "document": {
+      "type": "object",
+      "properties": {
+        "format": { "type": "string" },
+        "filename": { "type": "string" },
+        "downloadUrl": { "type": "string" },
+        "mimeType": { "type": "string" }
+      }
+    },
+    "meta": { "type": "object" },
+    "warnings": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": true
+}

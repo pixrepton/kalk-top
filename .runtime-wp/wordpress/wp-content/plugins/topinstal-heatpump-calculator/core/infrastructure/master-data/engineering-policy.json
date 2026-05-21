@@ -1,0 +1,350 @@
+{
+    "schema_version":  "engineering_policy_v1",
+    "data_version":  "2026-03-01",
+    "ozc":  {
+                "area":  {
+                             "default_heated_area_m2":  100,
+                             "min_valid_m2":  1,
+                             "fallback_from_dimensions":  true,
+                             "dimension_fields":  [
+                                                      "building_length",
+                                                      "building_width"
+                                                  ]
+                         },
+                "base_w_per_m2_by_construction_year":  [
+                                                           {
+                                                               "min_year":  2021,
+                                                               "value":  45
+                                                           },
+                                                           {
+                                                               "min_year":  2011,
+                                                               "value":  55
+                                                           },
+                                                           {
+                                                               "min_year":  2000,
+                                                               "value":  70
+                                                           },
+                                                           {
+                                                               "min_year":  1990,
+                                                               "value":  85
+                                                           },
+                                                           {
+                                                               "min_year":  1980,
+                                                               "value":  100
+                                                           },
+                                                           {
+                                                               "min_year":  0,
+                                                               "value":  120
+                                                           }
+                                                       ],
+                "ventilation_multipliers":  {
+                                                "mechanical_recovery":  0.75,
+                                                "mechanical":  0.9,
+                                                "gravity":  1.05,
+                                                "natural":  1
+                                            },
+                "emitter_multipliers":  {
+                                            "underfloor":  0.95,
+                                            "mixed":  1,
+                                            "radiators":  1.05,
+                                            "surface":  0.95
+                                        },
+                "climate":  {
+                                "default_multiplier":  1,
+                                "default_design_outdoor_temp_c":  -20,
+                                "zones":  {
+                                              "STREFA_I":  {
+                                                               "multiplier":  0.9,
+                                                               "design_outdoor_temp_c":  -16
+                                                           },
+                                              "STREFA_II":  {
+                                                                "multiplier":  0.95,
+                                                                "design_outdoor_temp_c":  -18
+                                                            },
+                                              "STREFA_III":  {
+                                                                 "multiplier":  1,
+                                                                 "design_outdoor_temp_c":  -20
+                                                             },
+                                              "STREFA_IV":  {
+                                                                "multiplier":  1.1,
+                                                                "design_outdoor_temp_c":  -22
+                                                            },
+                                              "STREFA_V":  {
+                                                               "multiplier":  1.2,
+                                                               "design_outdoor_temp_c":  -24
+                                                           }
+                                          }
+                            },
+                "construction_multipliers":  {
+                                                 "default":  1,
+                                                 "by_keyword":  {
+                                                                    "canadian":  0.95,
+                                                                    "skeleton":  0.95,
+                                                                    "szkieletowy":  0.95
+                                                                }
+                                             },
+                "windows_multipliers":  {
+                                            "default":  1,
+                                            "by_keyword":  {
+                                                               "triple":  0.95,
+                                                               "single":  1.08,
+                                                               "old":  1.05
+                                                           }
+                                        },
+                "thermal":  {
+                                "indoor_temperature_default_c":  21,
+                                "delta_t_reference_k":  41,
+                                "delta_t_min_k":  5,
+                                "delta_t_multiplier_min":  0.6,
+                                "delta_t_multiplier_max":  1.4,
+                                "min_design_heat_loss_kw":  1.5
+                            }
+            },
+    "buffer":  {
+                   "$schema":  "http://json-schema.org/draft-07/schema#",
+                   "title":  "Buffer Decision Rules",
+                   "description":  "Data-driven rules for buffer sizing and decision engine. Can be modified without code changes.",
+                   "version":  "1.0.0",
+                   "lastUpdated":  "2025-01-XX",
+                   "capacityPerKw":  {
+                                         "description":  "Minimalny wymagany zład wody instalacji [l/kW] dla każdego typu emitera",
+                                         "underfloor":  10,
+                                         "radiators_lt":  20,
+                                         "radiators_ht":  25,
+                                         "radiators":  20,
+                                         "mixed":  15,
+                                         "notes":  "Wyższe wartości dla grzejników wysokotemperaturowych (radiators_ht) ze względu na większe wymagania hydrauliczne"
+                                     },
+                   "systemVolumePerM2":  {
+                                             "description":  "Szacowany zład wody instalacji [l/m²] dla każdego typu emitera",
+                                             "underfloor":  0.95,
+                                             "radiators_lt":  0.6,
+                                             "radiators_ht":  0.9,
+                                             "radiators":  0.6,
+                                             "mixed":  0.9,
+                                             "notes":  "Podłogówka: 0.95 l/m², grzejniki niskotemperaturowe (alu/płytowe): 0.6 l/m², grzejniki wysokotemperaturowe (stalowe/żeliwne): 0.9 l/m². Mixed obliczane proporcjonalnie (średnia ważona 50/50)."
+                                         },
+                   "bivalentStorage":  {
+                                           "description":  "Reguły doboru pojemności bufora dla systemów bivalent (dwa źródła ciepła)",
+                                           "solid_fuel_boiler":  {
+                                                                     "litersPerKw":  60,
+                                                                     "range":  [
+                                                                                   40,
+                                                                                   80
+                                                                               ],
+                                                                     "defaultPowerFactor":  1.0,
+                                                                     "defaultPowerClamp":  [
+                                                                                               8,
+                                                                                               25
+                                                                                           ],
+                                                                     "description":  "Kocioł na paliwo stałe wymaga magazynu ciepła (40-80 l/kW, średnio 60 l/kW). Fallback: designHeatLoss × 1.0, zakres 8-25 kW"
+                                                                 },
+                                           "fireplace_back_boiler":  {
+                                                                         "minimum":  500,
+                                                                         "litersPerKw":  50,
+                                                                         "defaultPowerFactor":  0.7,
+                                                                         "defaultPowerClamp":  [
+                                                                                                   6,
+                                                                                                   20
+                                                                                               ],
+                                                                         "description":  "Kominek z płaszczem wodnym wymaga minimum 500 l + skalowanie z mocą (50 l/kW). Fallback: designHeatLoss × 0.7, zakres 6-20 kW"
+                                                                     },
+                                           "gas_boiler":  {
+                                                              "litersPerKw":  0,
+                                                              "description":  "Kocioł gazowy może modulować, nie wymaga magazynu (chyba że tryb parallel)"
+                                                          }
+                                       },
+                   "availableCapacities":  {
+                                               "description":  "Dostępne pojemności buforów na rynku [l]",
+                                               "buffer":  [
+                                                              50,
+                                                              80,
+                                                              100,
+                                                              120,
+                                                              150,
+                                                              200,
+                                                              300,
+                                                              400,
+                                                              500,
+                                                              800,
+                                                              1000
+                                                          ],
+                                               "cwu":  [
+                                                           50,
+                                                           60,
+                                                           80,
+                                                           100,
+                                                           120,
+                                                           150,
+                                                           200,
+                                                           300,
+                                                           400,
+                                                           500,
+                                                           800,
+                                                           1000
+                                                       ],
+                                               "notes":  "Bufor i CWU mogą mieć różne dostępne pojemności"
+                                           },
+                   "minimumCapacities":  {
+                                             "description":  "Minimalne pojemności buforów dla różnych typów instalacji [l]",
+                                             "seriesBuffer":  50,
+                                             "parallelBuffer":  100,
+                                             "flowProtection":  50,
+                                             "notes":  "seriesBuffer = minimum dla bufora szeregowego (z by-passem), parallelBuffer = minimum dla bufora równoległego (sprzęgło hydrauliczne), flowProtection = minimum dla ochrony przepływu"
+                                         },
+                   "separatorSizeClasses":  {
+                                                "description":  "Klasyfikacja separatorów hydraulicznych według mocy pompy",
+                                                "thresholds":  {
+                                                                   "small":  7,
+                                                                   "medium":  15
+                                                               },
+                                                "mapping":  {
+                                                                "small":  "\u003c 7 kW",
+                                                                "medium":  "7-15 kW",
+                                                                "large":  "≥ 15 kW"
+                                                            }
+                                            },
+                   "antiCyclingDefaults":  {
+                                               "description":  "Domyślne parametry dla obliczania objętości anti-cycling",
+                                               "t_min_minutes":  12,
+                                               "t_min_minutes_range":  [
+                                                                           10,
+                                                                           15
+                                                                       ],
+                                               "deltaT_K":  7,
+                                               "deltaT_K_range":  [
+                                                                      5,
+                                                                      10
+                                                                  ],
+                                               "deltaT_by_type":  {
+                                                                      "underfloor":  5,
+                                                                      "radiators_lt":  7,
+                                                                      "radiators_ht":  7,
+                                                                      "radiators":  7,
+                                                                      "mixed":  5
+                                                                  },
+                                               "minModulationPercent":  0.35,
+                                               "waterSpecificHeat":  1.16,
+                                               "notes":  "t_min = minimalny czas pracy pompy, deltaT = różnica temperatur (zależna od typu emitera), minModulation = minimalna modulacja (35%)"
+                                           },
+                   "absoluteRules":  {
+                                         "description":  "Reguły absolutne (nadrzędne, niepodlegające obliczeniom)",
+                                         "threePhaseKSeries":  {
+                                                                   "enabled":  true,
+                                                                   "phase":  3,
+                                                                   "series":  "K",
+                                                                   "powers":  [
+                                                                                  9,
+                                                                                  12,
+                                                                                  16
+                                                                              ],
+                                                                   "requiredCapacity":  200,
+                                                                   "description":  "Pompy 3-fazowe serii K o mocy 9/12/16 kW → zawsze bufor 200 l (wymaganie producenta)"
+                                                               }
+                                     },
+                   "killerCase":  {
+                                      "description":  "Niskie obciążenie + grzejniki wysokotemperaturowe + niewystarczający zład = wysokie ryzyko short-cycling",
+                                      "conditions":  {
+                                                         "emitterType":  "radiators_ht",
+                                                         "designHeatLoss_kW_max":  5,
+                                                         "insufficientVolume":  true
+                                                     },
+                                      "minimumCapacity":  150
+                                  },
+                   "scenarioRules":  {
+                                         "description":  "Scenariusze priorytetowe (pomijają obliczanie zładu)",
+                                         "underfloorNewBuilding":  {
+                                                                       "heatingType":  "underfloor",
+                                                                       "constructionYear_min":  2015,
+                                                                       "hasPreviousSource":  false,
+                                                                       "recommendedCapacity":  0,
+                                                                       "required":  false,
+                                                                       "allowZeroBuffer":  true
+                                                                   },
+                                         "mixed":  {
+                                                       "heatingType":  "mixed",
+                                                       "recommendedCapacity":  100,
+                                                       "required":  false
+                                                   },
+                                         "radiators":  {
+                                                           "heatingType":  "radiators",
+                                                           "recommendedCapacity":  100,
+                                                           "required":  true
+                                                       }
+                                     },
+                   "cwuRules":  {
+                                    "description":  "Reguły doboru zasobnika CWU",
+                                    "baseCapacity":  {
+                                                         "1":  150,
+                                                         "2":  150,
+                                                         "3":  200,
+                                                         "4":  200,
+                                                         "5+":  300
+                                                     },
+                                    "usageAdjustments":  {
+                                                             "shower":  0,
+                                                             "shower_bath":  50,
+                                                             "bath":  100
+                                                         },
+                                    "materialAdjustments":  {
+                                                                "inox":  50,
+                                                                "emalia":  100
+                                                            },
+                                    "safetyRule":  {
+                                                       "description":  "Dla profilu \u0027bath\u0027 z 2+ osobami: minimum 200 L",
+                                                       "usage":  "bath",
+                                                       "persons_min":  2,
+                                                       "minimumCapacity":  200
+                                                   },
+                                    "availableCapacities":  [
+                                                                150,
+                                                                200,
+                                                                250,
+                                                                300,
+                                                                400,
+                                                                500
+                                                            ]
+                                }
+               },
+    "buffer_engine_policy":  {
+                                 "fallback_capacity_per_kw":  20,
+                                 "fallback_available_sizes":  [
+                                                                  50,
+                                                                  80,
+                                                                  100,
+                                                                  120,
+                                                                  150,
+                                                                  200,
+                                                                  300,
+                                                                  400,
+                                                                  500,
+                                                                  800,
+                                                                  1000
+                                                              ],
+                                 "fallback_minimum_capacities":  {
+                                                                     "seriesBuffer":  50,
+                                                                     "parallelBuffer":  100,
+                                                                     "flowProtection":  50
+                                                                 },
+                                 "oversized_warning_liters":  500,
+                                 "setup_type_threshold_key":  "parallelBuffer",
+                                 "setup_types":  {
+                                                     "none":  "NONE",
+                                                     "series":  "BUFOR_SZEREGOWO",
+                                                     "parallel":  "BUFOR_ROWNOLEGLE"
+                                                 }
+                             },
+    "hot_water_power":  {
+                            "defaults":  {
+                                             "persons":  3,
+                                             "min_power_kw":  0.8,
+                                             "per_person_kw":  0.35
+                                         },
+                            "usage_factor":  {
+                                                 "shower":  0.8,
+                                                 "shower_bath":  1,
+                                                 "bath":  1.2,
+                                                 "default":  1
+                                             }
+                        }
+}

@@ -1,0 +1,28 @@
+{
+  "source_doc": "Panasonic_cennik_pompy_ciepla_03.2026.pdf",
+  "sections": [
+    "buffers",
+    "communication_modules",
+    "controllers_thermostats",
+    "dhw_heat_pumps",
+    "fan_coils",
+    "heat_pumps",
+    "hydraulic_accessories",
+    "other_accessories",
+    "sensors_expansion_boards",
+    "tanks",
+    "ventilation"
+  ],
+  "categories": [
+    "buffers",
+    "communication_modules",
+    "controllers_thermostats",
+    "dhw_heat_pumps",
+    "fan_coils",
+    "heat_pumps",
+    "hydraulic_accessories",
+    "sensors_expansion_boards",
+    "tanks",
+    "ventilation"
+  ]
+}

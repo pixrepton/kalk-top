@@ -1,0 +1,48 @@
+{
+    "schemaVersion": "1.0",
+    "traceId": "agent-32af68cd6e46",
+    "source": "https:\/\/cieplo.app\/wynik\/runtime-e2e-123",
+    "parsedAt": "2026-03-06T19:54:12+00:00",
+    "facts": {
+        "estimatedPower_COplusCWU_atMinus20_kW": 5.3,
+        "heatedArea_m2": 128,
+        "maxBuildingHeatDemand_kW": 5.1,
+        "demandIndex_W_per_m2": 40,
+        "bivalencePower_kW_atTemp": 3.4,
+        "avgIndoorTemp_C": 21.5,
+        "insulationQualityText": "Dobra",
+        "dhwPersons": 2,
+        "dhwUsageStandardText": "Tylko prysznice",
+        "dhwExtraPower_kW": 0.2,
+        "dhwUsageProfile": "shower"
+    },
+    "rawSnippets": {
+        "estimatedPower_COplusCWU_atMinus20_kW": "przy -20°C: 5,3 kW",
+        "heatedArea_m2": "Powierzchnia ogrzewana: 128 m²",
+        "maxBuildingHeatDemand_kW": "Maksymalna potrzebna moc grzewcza samego budynku: 5,1 kW",
+        "demandIndex_W_per_m2": "40 W\/m²",
+        "bivalencePower_kW_atTemp": "3,4 kW @ -6°C",
+        "avgIndoorTemp_C": "Średnia temperatura wewnętrzna: 21,5°C",
+        "insulationQualityText": "Dobra",
+        "dhwPersons": "Liczba osób do CWU: 2",
+        "dhwUsageStandardText": "Tylko prysznice",
+        "dhwExtraPower_kW": "Dodatkowa moc na CWU: 0,2 kW"
+    },
+    "confidence": {
+        "score": 1,
+        "missing": []
+    },
+    "emailFacts": {
+        "receivedAt": "2026-03-06T19:54:11+00:00",
+        "clientEmail": "runtime.e2e@example.com",
+        "phone": "+48 600 700 800",
+        "locationRaw": "Krakow",
+        "cieploUrl": "https:\/\/cieplo.app\/wynik\/runtime-e2e-123",
+        "rawSnippets": {
+            "replyTo": "",
+            "from": "",
+            "bodyExcerpt": "Nowe zapytanie cieplo.app\nAdres e-mail: runtime.e2e@example.com\nTelefon: +48 600 700 800\nLokalizacja: Krakow\nLink do wyniku: https:\/\/cieplo.app\/wynik\/runtime-e2e-123\n\n\nNowe zapytanie cieplo.app\nAdres e-mail: runtime.e2e@example.com\nTelefon: +48 600 700 800\nLokalizacja: Krakow\nLink do wyniku: https:\/\/cieplo.app\/wynik\/runtime-e2e-123",
+            "cieploUrlRaw": "https:\/\/cieplo.app\/wynik\/runtime-e2e-123"
+        }
+    }
+}

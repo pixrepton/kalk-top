@@ -1,0 +1,42 @@
+---
+description: "kalk-top agent harness: MCP, slash commands, hooks, verify npm scripts, SKILL_ROUTER. Use when editing .cursor/, docs/dev/, or .agents/."
+alwaysApply: false
+globs:
+  - ".cursor/**"
+  - "docs/dev/**"
+  - ".agents/**"
+  - "LOCAL_WORKSPACE_RULES.md"
+  - "scripts/agent-harness-preflight.mjs"
+---
+
+# kalk-top Agent Harness and MCP
+
+Use when the task touches Cursor/Codex workflow, `.cursor/rules`, skills, MCP, hooks, or verification commands.
+
+## Prefer Skills First
+
+- `cursor-codex-harness` — prompts, read order, Definition of Done.
+- `context-budget-audit` — rules/skills/token audits.
+- `gitnexus-static-repo-intel` — graph/impact (dev-only).
+- Domain skills via `.agents/SKILL_ROUTER.md`.
+
+## MCP and Tooling
+
+- Default MCP: `kalk-top-repo-assistant` (contract surface, runtime preflight, route/auth, architecture inputs).
+- `playwright` for allowed-host UI smoke when Browser is insufficient.
+- Animation MCPs are **not** in project `mcp.json`; use `npm run mcp:framer-motion` / `mcp:animation` if needed.
+- Verify MCP hints with file reads and `npm run test:contract` / targeted harnesses.
+- Full map: [KALK_TOP_AGENT_HARNESS.md](../../docs/dev/KALK_TOP_AGENT_HARNESS.md).
+
+## Slash Commands
+
+Use `.cursor/commands/` when they match the task: `verify-contract`, `verify-fixtures`, `verify-rest`, `verify-js`, `verify-pack`, `runtime-preflight`.
+
+## Hooks
+
+- `after-file-edit-lint` — `php -l` / `node --check` on canonical paths; optional harness preflight on governance file edits.
+- Do not treat hook output as runtime or Gate proof.
+
+## `.cursor/rules` link hygiene
+
+Links in this folder resolve relative to `.cursor/rules/`. Use `../../docs/dev/...` for repo-root documentation paths.

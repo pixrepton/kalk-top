@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://topinstal.local/schemas/offer-dto.v1.json",
+  "title": "OfferDTO",
+  "description": "Offer response. Producer: kalk-top. Consumer: top-instal-generator, RAG.",
+  "type": "object",
+  "required": ["schemaVersion", "traceId", "engineering", "pricing"],
+  "properties": {
+    "schemaVersion": { "type": "string", "const": "1.0" },
+    "traceId": { "type": "string", "minLength": 1 },
+    "engineering": {
+      "type": "object",
+      "properties": {
+        "ozc": {
+          "type": "object",
+          "properties": {
+            "audit": { "type": ["object", "null"] },
+            "extended": { "type": ["object", "null"] }
+          }
+        },
+        "selection": { "type": "object" },
+        "buffer": {
+          "type": "object",
+          "properties": {
+            "severity": { "type": ["string", "null"] },
+            "explanation": { "type": ["object", "null"] }
+          }
+        },
+        "cwu": {
+          "type": "object",
+          "properties": {
+            "hotWaterPower_kW": { "type": ["number", "null"] },
+            "recommendedCapacityL": { "type": ["number", "null"] },
+            "pricingHint": { "type": ["object", "null"] }
+          }
+        }
+      }
+    },
+    "pricing": {
+      "type": "object",
+      "properties": {
+        "source": { "type": ["string", "null"] },
+        "catalogVersion": { "type": ["string", "null"] },
+        "items": { "type": "array" },
+        "totals": { "type": "object" }
+      }
+    },
+    "warnings": { "type": "array", "items": { "type": "object" } },
+    "assumptions": { "type": "array", "items": { "type": "object" } },
+    "engineMeta": {
+      "type": "object",
+      "properties": {
+        "ozcConstantsSource": { "type": "string" },
+        "fallbackUsed": { "type": "boolean" },
+        "fallbackReasons": { "type": "array", "items": { "type": "string" } },
+        "masterDataVersion": { "type": ["string", "null"] }
+      }
+    }
+  },
+  "additionalProperties": true
+}

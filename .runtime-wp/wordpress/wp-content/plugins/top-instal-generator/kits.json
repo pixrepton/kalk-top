@@ -1,0 +1,300 @@
+{
+  "1fazowe": {
+    "KIT-WC03K3E5": {
+      "name": "KIT-WC03K3E5",
+      "power": "3kW",
+      "voltage": "230V",
+      "indoor_unit": "WH-SDC0309K3E5",
+      "outdoor_unit": "WH-UDZ03KE5",
+      "price": 12200
+    },
+    "KIT-WC05K3E5": {
+      "name": "KIT-WC05K3E5",
+      "power": "5kW",
+      "voltage": "230V",
+      "indoor_unit": "WH-SDC0309K3E5",
+      "outdoor_unit": "WH-UDZ05KE5",
+      "price": 12700
+    },
+    "KIT-WC07K3E5": {
+      "name": "KIT-WC07K3E5",
+      "power": "7kW",
+      "voltage": "230V",
+      "indoor_unit": "WH-SDC0309K3E5",
+      "outdoor_unit": "WH-UDZ07KE5",
+      "price": 13500
+    },
+    "KIT-WC09K3E5": {
+      "name": "KIT-WC09K3E5",
+      "power": "9kW",
+      "voltage": "230V",
+      "indoor_unit": "WH-SDC0309K3E5",
+      "outdoor_unit": "WH-UDZ09KE5",
+      "price": 14700
+    }
+  },
+  "3fazowe": {
+    "KIT-WC09K3E8": {
+      "name": "KIT-WC09K3E8",
+      "power": "9kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-SDC09K3E8",
+      "outdoor_unit": "WH-UDZ09KE8",
+      "price": 15500
+    },
+    "KIT-WC09K9E8": {
+      "name": "KIT-WC09K9E8",
+      "power": "9kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-SDC09K3E8",
+      "outdoor_unit": "WH-UDZ09KE8",
+      "price": 15500
+    },
+    "KIT-WC12K9E8": {
+      "name": "KIT-WC12K9E8",
+      "power": "12kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-SDC12K3E8",
+      "outdoor_unit": "WH-UDZ12KE8",
+      "price": 17650
+    },
+    "KIT-WC16K9E8": {
+      "name": "KIT-WC16K9E8",
+      "power": "16kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-SDC16K3E8",
+      "outdoor_unit": "WH-UDZ16KE8",
+      "price": 21000
+    }
+  },
+  "all_in_one_185": {
+    "KIT-ADC03K3E5": {
+      "name": "All-in-One 3kW 185L",
+      "power": "3kW",
+      "voltage": "230V",
+      "indoor_unit": "WH-ADC0309K3E5",
+      "outdoor_unit": "WH-UDZ03KE5",
+      "price": 17500
+    },
+    "KIT-ADC05K3E5": {
+      "name": "All-in-One 5kW 185L",
+      "power": "5kW",
+      "voltage": "230V",
+      "indoor_unit": "WH-ADC0309K3E5",
+      "outdoor_unit": "WH-UDZ05KE5",
+      "price": 18000
+    },
+    "KIT-ADC07K3E5": {
+      "name": "All-in-One 7kW 185L",
+      "power": "7kW",
+      "voltage": "230V",
+      "indoor_unit": "WH-ADC0309K3E5",
+      "outdoor_unit": "WH-UDZ07KE5",
+      "price": 18900
+    },
+    "KIT-ADC09K3E5": {
+      "name": "All-in-One 9kW 185L",
+      "power": "9kW",
+      "voltage": "230V",
+      "indoor_unit": "WH-ADC0309K3E5",
+      "outdoor_unit": "WH-UDZ09KE5",
+      "price": 20000
+    },
+    "KIT-ADC09K9E8": {
+      "name": "All-in-One 9kW 185L",
+      "power": "9kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-ADC0912K9E8",
+      "outdoor_unit": "WH-UDZ09KE8",
+      "price": 22800
+    },
+    "KIT-ADC12K9E8": {
+      "name": "All-in-One 12kW 185L",
+      "power": "12kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-ADC0912K9E8",
+      "outdoor_unit": "WH-UDZ12KE8",
+      "price": 24100
+    },
+    "KIT-ADC16K9E8": {
+      "name": "All-in-One 16kW 185L",
+      "power": "16kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-ADC16K9E8",
+      "outdoor_unit": "WH-UDZ16KE8",
+      "price": 25750
+    }
+  },
+  "all_in_one_260": {
+    "KIT-ADC09K9E83": {
+      "name": "All-in-One 9kW 260L",
+      "power": "9kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-ADC0912K9E83",
+      "outdoor_unit": "WH-UDZ09KE8",
+      "price": 22800
+    },
+    "KIT-ADC12K9E83": {
+      "name": "All-in-One 12kW 260L",
+      "power": "12kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-ADC0912K9E83",
+      "outdoor_unit": "WH-UDZ12KE8",
+      "price": 24100
+    },
+    "KIT-ADC16K9E83": {
+      "name": "All-in-One 16kW 260L",
+      "power": "16kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-ADC16K9E83",
+      "outdoor_unit": "WH-UDZ16KE8",
+      "price": 25750
+    }
+  },
+  "all_in_one_2strefowy": {
+    "KIT-ADC03K3E5B": {
+      "name": "All-in-One 2-strefowy 3kW",
+      "power": "3kW",
+      "voltage": "230V",
+      "indoor_unit": "WH-ADC0309K3E5B",
+      "outdoor_unit": "WH-UDZ03KE5",
+      "price": 19025
+    },
+    "KIT-ADC05K3E5B": {
+      "name": "All-in-One 2-strefowy 5kW",
+      "power": "5kW",
+      "voltage": "230V",
+      "indoor_unit": "WH-ADC0309K3E5B",
+      "outdoor_unit": "WH-UDZ05KE5",
+      "price": 19520
+    },
+    "KIT-ADC07K3E5B": {
+      "name": "All-in-One 2-strefowy 7kW",
+      "power": "7kW",
+      "voltage": "230V",
+      "indoor_unit": "WH-ADC0309K3E5B",
+      "outdoor_unit": "WH-UDZ07KE5",
+      "price": 20270
+    },
+    "KIT-ADC09K3E5B": {
+      "name": "All-in-One 2-strefowy 9kW",
+      "power": "9kW",
+      "voltage": "230V",
+      "indoor_unit": "WH-ADC0309K3E5B",
+      "outdoor_unit": "WH-UDZ09KE5",
+      "price": 21483
+    }
+  },
+  "tcap_1fazowe": {
+    "KIT-WXC09K3E5": {
+      "name": "T-CAP 9kW 1-fazowy",
+      "power": "9kW",
+      "voltage": "230V",
+      "indoor_unit": "WH-SXC09K3E5",
+      "outdoor_unit": "WH-UX09KE5",
+      "price": 17146
+    },
+    "KIT-WXC12K6E5": {
+      "name": "T-CAP 12kW 1-fazowy",
+      "power": "12kW",
+      "voltage": "230V",
+      "indoor_unit": "WH-SXC12K6E5",
+      "outdoor_unit": "WH-UX12KE5",
+      "price": 19995
+    }
+  },
+  "tcap_3fazowe": {
+    "KIT-WXC09K3E8": {
+      "name": "T-CAP 9kW 3-fazowy",
+      "power": "9kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-SXC09K3E8",
+      "outdoor_unit": "WH-UX09KE8",
+      "price": 18971
+    },
+    "KIT-WXC12K9E8": {
+      "name": "T-CAP 12kW 3-fazowy",
+      "power": "12kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-SXC12K9E8",
+      "outdoor_unit": "WH-UX12KE8",
+      "price": 21715
+    },
+    "KIT-WXC16K9E8": {
+      "name": "T-CAP 16kW 3-fazowy",
+      "power": "16kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-SXC16K9E8",
+      "outdoor_unit": "WH-UX16KE8",
+      "price": 23484
+    }
+  },
+  "tcap_aio_185": {
+    "KIT-AXC9KE5": {
+      "name": "T-CAP All-in-One 9kW 185L",
+      "power": "9kW",
+      "voltage": "230V",
+      "indoor_unit": "WH-ADC0912K6E5",
+      "outdoor_unit": "WH-UX09KE5",
+      "price": 23330
+    },
+    "KIT-AXC12KE5": {
+      "name": "T-CAP All-in-One 12kW 185L",
+      "power": "12kW",
+      "voltage": "230V",
+      "indoor_unit": "WH-ADC0912K6E5",
+      "outdoor_unit": "WH-UX12KE5",
+      "price": 24905
+    },
+    "KIT-AXC9KE8": {
+      "name": "T-CAP All-in-One 9kW 185L",
+      "power": "9kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-ADC0912K9E8",
+      "outdoor_unit": "WH-UX09KE8",
+      "price": 24530
+    },
+    "KIT-AXC12KE8": {
+      "name": "T-CAP All-in-One 12kW 185L",
+      "power": "12kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-ADC0912K9E8",
+      "outdoor_unit": "WH-UX12KE8",
+      "price": 25770
+    },
+    "KIT-AXC16KE9E8": {
+      "name": "T-CAP All-in-One 16kW 185L",
+      "power": "16kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-ADC0916K9E8",
+      "outdoor_unit": "WH-UX16KE8",
+      "price": 27125
+    }
+  },
+  "tcap_aio_260": {
+    "KIT-AXC9K9E83": {
+      "name": "T-CAP All-in-One 9kW 260L",
+      "power": "9kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-ADC0912K9E83",
+      "outdoor_unit": "WH-UX09KE8",
+      "price": 25262
+    },
+    "KIT-AXC12K9E83": {
+      "name": "T-CAP All-in-One 12kW 260L",
+      "power": "12kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-ADC0912K9E83",
+      "outdoor_unit": "WH-UX12KE8",
+      "price": 26502
+    },
+    "KIT-AXC16K9E83": {
+      "name": "T-CAP All-in-One 16kW 260L",
+      "power": "16kW",
+      "voltage": "400V",
+      "indoor_unit": "WH-ADC0916K9E83",
+      "outdoor_unit": "WH-UX16KE8",
+      "price": 27867
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "hooks": {
+    "stop": [
+      {
+        "command": "node .cursor/hooks/stop-followup.js",
+        "loop_limit": 1
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": "node .cursor/hooks/after-file-edit-lint.js"
+      }
+    ]
+  }
+}

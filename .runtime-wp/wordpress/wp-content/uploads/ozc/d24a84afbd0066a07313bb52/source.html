@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="warm">
+
+<head>
+    <meta charset="utf-8">
+    <title>Dom jednorodzinny jednopiętrowy, 214mkw. ogrzewane, Jaworzno | cieplo.app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Prosty szacunkowy audyt energetyczny twojego domu. Dowiesz się, czym najlepiej ogrzewać i jak oszczędzić na ogrzewaniu bez ubierania kalesonów.">
+    <meta name="author" content="CzysteOgrzewanie.pl">
+    <meta property="og:title" content="Ciepło Właściwie" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://cieplo.app/wynik/2ovff" />
+    <meta property="og:image" content="https://cieplo.app//images/promo.jpg" />
+    <meta property="og:description" content="Prosty szacunkowy audyt energetyczny twojego domu. Dowiesz się, czym najlepiej ogrzewać i jak oszczędzić na ogrzewaniu bez ubierania kalesonów." />
+    <meta property="og:locale" content="pl_PL" />
+    <meta property="og:site_name" content="cieplo.app" />
+
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css" rel="stylesheet">
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            <link rel="stylesheet" href="/bower/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/bower/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
+        <link rel="stylesheet" href="/bower/bootstrap-material-design/dist/css/ripples.css">
+        <link rel="stylesheet" href="/assets/scss/app-77c65d08ee79fe30a2138b248284a2a4.css">
+            <script src="/assets/bundles/fosjsrouting/js/router-4ea8360227f37a4c969fc2b78628f207.js"></script>
+    <script src="/js/routing?callback=fos.Router.setData"></script>
+</head>
+
+<body data-spy="scroll" data-target=".bs-docs-sidebar" ng-controller="WarmCtrl">
+
+    <header class="navbar navbar-inverse navbar-fixed-top" id="top" role="banner">
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+            <span class="sr-only">Pokaż menu</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand navbar-brand" href="/">Ciepło Właściwie</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation" style="float:left">
+                  <ul class="nav navbar-nav">
+            
+                <li class="first">        <a href="/panel/wyniki" class="visible-xs">Panel Użytkownika</a>        
+    </li>
+
+    
+                <li>        <a href="/start">Start</a>        
+    </li>
+
+    
+                <li>        <a href="/jak-to-dziala">Jak to działa</a>        
+    </li>
+
+    
+                <li>        <a href="/czemu-nie-dziala">Czemu nie działa</a>        
+    </li>
+
+    
+                <li>        <a href="/cennik">Cennik</a>        
+    </li>
+
+    
+                <li>        <a href="/uslugi">Usługi</a>        
+    </li>
+
+    
+                <li>        <a href="/zasady">Zasady</a>        
+    </li>
+
+    
+                <li>        <a href="/moje-wyniki">Moje wyniki</a>        
+    </li>
+
+    
+                <li>        <a href="/opis-api">API</a>        
+    </li>
+
+    
+                <li>        <a href="/ets2">ETS2</a>        
+    </li>
+
+    
+                <li class="last">        <a href="/kontakt">Kontakt</a>        
+    </li>
+
+
+    </ul>
+
+        </nav>
+          <a href="/panel" class="btn btn-warning btn-raised hidden-xs" style="float:right">Panel</a>
+      </div>
+    </header>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+<script>
+    window.buildingType = 'single_house';
+    window.calculationId = 4519707;
+    window.totalFloors = 3;
+    window.roofType = 'steep';
+    window.hasBasement = 0;
+    window.heatedFloors = JSON.parse('[1,2]');
+    window.apartmentWhatsOver = '';
+    window.apartmentWhatsUnder = '';
+</script>
+
+<div class="container warm">
+    <div class="well bs-component">
+        <div class="row">
+          <div class="col-md-12">
+              <ul class="nav nav-pills hidden-print" style="margin-bottom:20px">
+                <li class="active"><a href="https://cieplo.app/wynik/2ovff">Wynik</a></li>
+                <li><a href="https://cieplo.app/wynik/2ovff/grzejniki">Dobór grzejników</a></li>
+                <li><a href="https://cieplo.app/edycja/2ovff">Edytuj budynek</a></li>
+                <li><a href="https://cieplo.app/wynik/2ovff/pdf">PDF</a></li>
+                            </ul>
+              <h1 style="margin-bottom:20px">
+                Dom jednorodzinny jednopiętrowy <small>214m<sup>2</sup> ogrzewane, lata 2011 – 2020<br>Jaworzno
+                                </small>
+              </h1>
+              <p class="hidden-print">
+                                                      <small>Udostępnij ten wynik: <strong><a href="https://cieplo.app/wynik/2ovff">https://cieplo.app/wynik/2ovff</a></strong></small>
+              </p>
+          </div>
+        </div>
+
+        <div class="row" id="info">
+          <div class="col-md-6">
+            <h3 class="rank" style="width:100%;margin-top:0;background-color:#4caf50">
+              <span class="class-badge b-class">B</span>
+              <span class="class-badge" style="font-size:80%;width:76%;padding-left:5px;padding-right:5px;line-height:36px">&nbsp;Dom energooszczędny</span>
+            </h3>
+            <div id="house_preview" style="margin-bottom:10px"></div>
+                          <div class="alert alert-info" style="background-color:#fcf8e3;color:#8a6d3b">
+                  <h4>Instalatora dobrze mieć blisko a serwis jeszcze bliżej</h4>
+                  <p>Znajdź w okolicy firmy od pomp ciepła, kotłów albo fotowoltaiki.</p>
+                  <p><a href="https://cieplo.app/ostatki/2ovff?oferty=1" class="btn btn-raised btn-danger">Zapytaj o wyceny</a></p>
+              </div>
+                      </div>
+          <div class="col-md-6">
+              <h4 style="margin-top:2px"><span class="label label-warning">11,2kW</span> to szacowana moc grzewcza przy -20&deg;C (C.O. + CWU)</h4>
+              <h4><span class="label label-warning">~14 tys. kWh</span> to roczne zużycie ciepła na ogrzewanie (bez CWU)</h4>
+                                <div class="alert alert-warning" style="background-color: #4caf50;margin-top:15px;margin-bottom:0;padding:5px 15px">
+                      <h4 style="margin-bottom:0">Dom bardzo czysty!&nbsp;<i class="bi bi-emoji-smile"></i><br>
+                          <small style="color:#fff">Ogrzewanie emituje tylko <b>1kg pyłów</b> rocznie.</small></h4>
+                  </div>
+                  <div class="alert alert-warning" style="background-color: #777;margin-top:5px;padding:5px 15px">
+                      <h4 style="margin-bottom:0">Dom w 100% uzależniony od paliw kopalnych.<br>
+                          <small style="color:#fff">Ogrzewanie emituje <b>5t kopalnego CO<sub>2</sub></b> rocznie. <a class="hidden-print" style="text-decoration: underline" href="/ogrzewanie/2ovff#has_photovoltaics">Chyba, że masz fotowoltaikę?</a></small></h4>
+                  </div>
+                            <h4>W skrócie o budynku</h4>
+              <table class="table table-condensed">
+                  <tbody>
+                  <tr><td class="col-md-4">Lokalizacja</td><td class="col-md-8">Jaworzno, Polska<br><small>
+                                                        Dane klimatyczne dla m. Sosnowiec, PL
+                                                    </small></td></tr>
+                  <tr><td class="col-md-4">Powierzchnia ogrzewana</td><td class="col-md-8">~214m<sup>2</sup> (parter, 1. piętro)<br><small><a href="https://cieplo.app/czemu-nie-dziala#powierzchnia_ogrzewana" target="_blank">Wartość może być inna niż w projekcie i to jest w porządku</a></small></td></tr>
+                  <tr><td class="col-md-4">Jakość izolacji</td><td class="col-md-8"><strong>przeciętna</strong> &mdash; ściany (15cm), strop - podłoga poddasza (<strong>brak</strong>), podłoga parteru (13cm)</td></tr>
+                  <tr><td class="col-md-4">Średnia temperatura w&nbsp;domu</td><td class="col-md-8">22,0&deg;C</td></tr>
+                  <tr><td class="col-md-4">Ogrzewanie</td>
+                      <td class="col-md-8">
+                                                        <p>Pompa ciepła powietrze-powietrze (klimatyzacja) </p>
+                                                                                  <p>Instalacja c.o: Brak centralnego ogrzewania, max. temp. nieznana</p>
+                                                                                  <p>Koszt: 3t ekogroszku
+                                                                za 4000zł
+                                                            </p>
+                                                                                  <span class="label label-secondary">&cross; fotowoltaika</span>
+                                                                                  <span class="label label-secondary">&cross; kolektory słoneczne</span>
+                                                </td>
+                  </tr>
+                  </tbody>
+              </table>
+              <p><a href="#full_house_details" data-toggle="modal" class="btn btn-default btn-raised btn-block hidden-print" data-target="#full_house_details">Zobacz pełne informacje o budynku</a></p>
+              <p><a href="https://cieplo.app/ostatki/2ovff?mail=1" class="btn btn-default btn-raised btn-block hidden-print">Wyślij wynik mailem</a></p>
+          </div>
+        </div>
+
+        <div class="page-header" id="moce" style="margin:20px 0 0">
+            <h2>Szacunkowe zapotrzebowanie na moc i&nbsp;energię cieplną</h2>
+        </div>
+
+        <div class="row">
+    <div class="col-md-6">
+        <h3>Moc grzewcza: <small><span class="label label-warning">11,2kW</span> (C.O. + CWU)</small></h3>
+        <h4>Ogrzewanie budynku</h4>
+        <h4><span class="label label-warning">10,7kW</span> – maksymalna potrzebna moc grzewcza</h4>
+        <p>W "najmroźniejszy" dzień zimy, tj. przy średniej dobowej za oknem <strong>-20,0&deg;C</strong> i średniej temperaturze w domu <strong>22,0&deg;C</strong>.</p>
+        <h5><span class="label label-default">5,0kW</span> – przeciętna moc grzewcza</h5>
+        <p>Tyle będzie potrzebne w przeciętny dzień zimy, przy średniej dobowej <strong>1,9&deg;C</strong> i średniej temperaturze w domu <strong>22,0&deg;C</strong>.</p>
+        <h5><span class="label label-default">50W/m<sup>2</sup></span> wskaźnik zapotrzebowania na moc grzewczą</h5>
+        <h5><span class="label label-info">7,1kW</span> – moc w temperaturze biwalentnej <span class="label label-success">-6&deg;C</span></h5>
+        <p>Taka temperatura biwalentna jest optymalna w sytuacji, gdy drugim źródłem ciepła jest prąd – grzałki wspomagające pracę pompy ciepła. Dla innych źródeł ciepła odpowiedniejszy może być wybór innej temperatury biwalentnej.</p>
+        <p class="text-center hidden-print"><a href="#other_bivalent_temperatures" data-toggle="modal" class="btn btn-info btn-raised" data-target="#other_bivalent_temperatures">Zobacz inne temperatury biwalentne</a></p>
+
+        <h4>Podgrzewanie wody kranowej (CWU)</h4>
+                    <p><b>Wymagania:</b> dla 4 osób, Głównie prysznice, czasem wanna.</p>
+            <h4><span class="label label-warning">0,5kW</span> dodatkowa moc potrzebna do grzania CWU</h4>
+            <p>Nie dolicza się jej w przypadku pomp ciepła dobieranych w trybie biwalentnym.</p>
+            <h5><span class="label label-default">~220l</span> odpowiednia do potrzeb pojemność bojlera</h5>
+            <p>Jeśli będzie jakieś dodatkowe dogrzewanie CWU (np. grzałka) to można sobie pozwolić na mniejszą pojemność.</p>
+            </div>
+    <div class="col-md-6">
+        <h3>Energia użytkowa: <small><span class="label label-warning">~13 700kWh = 49GJ</span> (C.O.)</small></h3>
+        <h5><span class="label label-warning">EU &#8776; 64kWh/m<sup>2</sup>/rok</span> wskaźnik zapotrzebowania na energię użytkową (C.O.)</h5>
+            <div class="alert alert-success">
+            <h4>Czyste Powietrze 2025</h4>
+                            <p>Ze wskaźnikiem <b>EU &#8776; 64kWh/m<sup>2</sup>/rok</b>
+                    można skorzystać z dofinansowania <b>wyłącznie na wymianę przestarzałego źródła ciepła na paliwo stałe</b>.
+                    Zastąpić je można pompą ciepła albo nowoczesnym kotłem na drewno lub pellet (kotły gazowe zostały wykluczone z&nbsp;dopłat).</p>
+                <p>Pamiętaj, że <b>decydujący jest wskaźnik EU uzyskany w audycie energetycznym</b>,
+                    który trzeba zlecić przed skorzystaniem z programu.</p>
+                    </div>
+                        <h5><span class="label label-default" style="background-color:#000">EP &#8776; 71kWh/m<sup>2</sup>/rok</span>
+                wskaźnik zapotrzebowania na nieodnawialną energię pierwotną (C.O. + CWU). <span style="font-weight: lighter"> Wyznacza <a href="/jak-to-dziala#klasyfikacja" target="_blank">klasę energetyczną&nbsp;budynku</a>.</span></h5>
+                <h4>Ogrzewanie budynku</h4>
+        <h5><span class="label label-default">~20 200kWh = 73GJ</span> projektowe zapotrzebowanie na ciepło (C.O.)</h5>
+        <p>Całkowita ilość energii cieplnej, jaką budynek traci przeciętnie zimą – na podstawie danych pogodowych z lat 1991-2020 dla m. Sosnowiec.
+            </p>
+        <h5><span class="label label-warning">~13 700kWh = 49GJ</span> zapotrzebowanie na energię użytkową (C.O.)</h5>
+        <p>Ilość energii cieplnej, jaką trzeba do budynku dostarczyć, czyli: zapotrzebowanie projektowe minus zyski ciepła (m.in. od słońca). Nadal na podstawie danych pogodowych z lat 1991-2020 dla m. Sosnowiec.
+        </p>
+                            <h5><span class="label label-info">~12 400kWh = 45GJ</span> zapotrzebowanie na energię użytkową w poprzednim sezonie grzewczym (C.O.)</h5>
+            <p>Tyle w przybliżeniu powinno wynosić zużycie energii cieplnej przez ten budynek <b>ostatniej zimy</b>.<br>
+            Aby zobaczyć, jak to się przekłada na zużycie paliw i koszty ogrzewania, przewiń tę stronę w dół do wykresu "Roczny koszt ogrzewania budynku".
+            </p>
+                            <h5><span class="label label-default">121kWh</span> – przeciętne dobowe zużycie energii cieplnej na ogrzewanie</h5>
+        <p>Tyle będzie potrzebne w przeciętny dzień zimy, przy średniej dobowej <strong>1,9&deg;C</strong> i średniej temperaturze w domu <strong>22,0&deg;C</strong>.</p>
+
+        <h4>Podgrzewanie wody kranowej (CWU)</h4>
+                    <h5><span class="label label-warning">7 700kWh = 28GJ</span> mocno szacunkowe roczne zużycie energii cieplnej na podgrzewanie CWU</h5>
+            <p>Zużycie energii na przygotowanie CWU ogromnie zależy od wielu czynników, dlatego ta wartość może być mocno orientacyjna. W instalacji ciepłej wody z cyrkulacją zapotrzebowanie na energię może być spokojnie o 50% wyższe.</p>
+            </div>
+</div>
+        <div class="page-header" id="moce" style="margin:20px 0 0">
+            <h2>Sugestie w sprawie doboru źródła ciepła</h2>
+        </div>
+
+        <style>
+    a.lulz:hover, a.lulz:active, a.lulz:visited {
+        color: #fff;
+        text-decoration: none;
+    }
+</style>
+<div class="row">
+    <div class="col-md-6">
+        <h3>Energia odnawialna</h3>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingHeatPump">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseHeatPump" aria-expanded="false" aria-controls="collapseHeatPump">
+                            Pompa ciepła <span class="label label-success">OZE</span> <span class="label label-success">ETS2: 0zł</span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseHeatPump" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingHeatPump">
+                    <div class="panel-body">
+                                            <p>
+                            Pompę ciepła lepiej dobrać kilowat za małą niż kilowat za dużą. Zbyt duże urządzenie odnotuje gorszą sprawność przez 90% sezonu grzewczego i dużo szybciej się zużyje, podczas gdy zbyt mała pompa ciepła będzie jedynie potrzebowała wspomagania innym źródłem ciepła przez 5-10% sezonu.
+                            <br><b>Im starszy budynek</b>, tym bardziej <strong>wskazane jest wykonanie profesjonalnego bilansu cieplnego (OZC)</strong>, gdyż dokładność niniejszego oszacowania może być niewystarczająca!
+                        </p>
+                        <p>Pompy ciepła przeważnie dobiera się inaczej niż kotły – w trybie biwalentnym, czyli nie dla <strong>-20&deg;C</strong> lecz dla <b>-6&deg;C</b> – nazywa się to <b><i>temperatura biwalentna</i></b>.
+                            Poniżej <b>-6&deg;C</b> za oknem włącza się odatkowe dodatkowe źródło ciepła (zwykle grzałki, choć może być też kocioł gazowy lub inny) i albo wspomaga sprężarkę pompy ciepła, albo zupełnie ją zastępuje.
+                            <ul>
+                            <li>Stąd wymagana moc pompy ciepła w&nbsp;trybie biwalentnym jest mniejsza: przy <b>-6&deg;C</b> pompa ciepła ma osiągać <span class="label label-warning">7,1kW</span> (dla wymaganej wówczas temperatury zasilania instalacji grzewczej).</li>
+                            <li>Natomiast dodatkowe źródło ciepła musi dostarczyć <span class="label label-warning">11,2kW</span> przy <strong>-20&deg;C</strong>.</li>
+                            </ul>
+                            Tak dobrana pompa ciepła może być mniejsza (czyli ładne kilka tysięcy tańsza) a wciąż pokryje min. <b>95%</b> sezonowego zapotrzebowania na ciepło. Dodatkowe źródło ciepła dostarczy jedynie max. 5% energii, więc nawet jeśli będą to grzałki, to ich wpływ na roczny rachunek za prąd będzie niewielki.</p>
+                        <p>
+                            <a href="https://czysteogrzewanie.pl/jak-to-sie-robi/dobor-mocy-pompy-ciepla-do-ogrzewania/" target="_blank" class="btn btn-secondary btn-raised">Więcej o doborze mocy pompy ciepła</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingWood">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseWood" aria-expanded="true" aria-controls="collapseWood">
+                            Kocioł na drewno bez podajnika <b>z buforem ciepła</b>
+                        </a> <span class="label label-success">OZE</span> <span class="label label-success">ETS2: 0zł</span>
+                    </h4>
+                </div>
+                <div id="collapseWood" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingWood">
+                    <div class="panel-body">
+                        <p>Najlepiej gdyby moc kotła wynosiła ok. <span class="label label-warning">22kW</span> a pojemność bufora ok. <span class="label label-warning">2 300l</span>.</p>
+                        <p>Wtedy jedna wizyta w kotłowni, jeden załadunek i jedno rozpalenie prawie zawsze wystarczy, by nagrzać bufor na co najmniej pełną dobę.</p>
+                        <p>Można oczywiście dobrać mniejszy kocioł i/lub mniejszy bufor – licząc się z tym, że konieczne będą częstsze odwiedziny kotłowni.</p>
+                        <ul>
+                            <li>Tutaj sprawdzisz, <a href="https://czysteogrzewanie.pl/podstawy/uchwaly-antysmogowe/" target="_blank">czy w twoim regionie można instalować nowoczesne kotły na drewno z buforem ciepła</a> (niestety jest parę miejsc, gdzie nie można).</li>
+                            <li>Tutaj znajdziesz <a href="https://czysteogrzewanie.pl/na-zakupach/przeglad-tanich-i-czystych-kotlow-na-wegiel-i-drewno/" target="_blank">listę (niepełną) nowoczesnych kotłów na drewno.</a></li>
+                            <li>Tutaj znajdziesz <a href="https://czysteogrzewanie.pl/jak-to-sie-robi/bufor-ciepla/#Jaka_pojemnosc_bufora" target="_blank">dokładniejszy opis obliczania pojemności bufora.</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingPellet">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsePellet" aria-expanded="false" aria-controls="collapsePellet">
+                            Kocioł podajnikowy na pellet drzewny
+                        </a> <span class="label label-success">OZE</span> <span class="label label-success">ETS2: 0zł</span>
+                    </h4>
+                </div>
+                <div id="collapsePellet" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingPellet">
+                    <div class="panel-body">
+                        <p>Moc kotła pelletowego musi wynosić min. <span class="label label-warning">11kW</span>. Zapas rzędu 10-15% jest jeszcze rozsądny jeśli nie ma dostępnej bliższej mocy.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingWoodchips">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseWoodchips" aria-expanded="false" aria-controls="collapseWoodchips">
+                            Kocioł podajnikowy na zrębkę drzewną
+                        </a> <span class="label label-success">OZE</span> <span class="label label-success">ETS2: 0zł</span>
+                    </h4>
+                </div>
+                <div id="collapseWoodchips" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingWoodchips">
+                    <div class="panel-body">
+                        <p>Moc kotła na zrębkę drzewną musi wynosić min. <span class="label label-warning">11kW</span>. Zapas rzędu 10-15% jest jeszcze rozsądny, jeśli nie ma dostępnej bliższej mocy.</p>
+                        <p>Niestety, oferta kotłów na zrębkę w Polsce jest skromniutka, a moce zaczynają się od ok. 20kW.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingStove">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseStove" aria-expanded="false" aria-controls="collapseStove">
+                            Kominek / piec na drewno
+                        </a> <span class="label label-success">OZE</span> <span class="label label-success">ETS2: 0zł</span>
+                    </h4>
+                </div>
+                <div id="collapseStove" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingStove">
+                    <div class="panel-body">
+                        Kominek lub piec zwykle nie ogrzewają całego mieszkania / domu. Jeśli pełnią cele "dekoracyjne", ich moc może być znacznie mniejsza niż potrzeby budynku. Gdyby kominek miał stanowić główne źródło ciepła – powinien mieć moc zbliżoną do <span class="label label-warning">11kW</span>.
+                        Chyba że zostanie podpięty pod bufor ciepła – wtedy moc może być wyższa, ale trzeba pamiętać, że część tej mocy będzie oddawana do pomieszczenia, w którym piec/kominek stoi. Dłuższe palenie w celu grzania całego budynku oraz ładowania bufora może się szybko skończyć przegrzaniem tego pomieszczenia.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            </div>
+    <div class="col-md-6">
+
+        <h3>Energia nieodnawialna</h3>
+        <p>Paliwa kopalne (węgiel/gaz/olej) do ogrzewania domów będą obłożone nową opłatą emisyjną od 2027 roku. <a class="hidden-print" href="/ets2" target="_blank">Dowiedz się więcej</a></p>
+        <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingZero">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseZero" aria-expanded="false" aria-controls="collapseOneHalf">
+                            Kocioł węglowy bez podajnika, bez bufora ciepła
+                        </a> <span class="label label-danger">&nbsp;!&nbsp;</span> <span class="label label-inverse">ETS2: ~2000zł</span>
+                    </h4>
+                </div>
+                <div id="collapseZero" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingZero">
+                    <div class="panel-body">
+                        <p>Montaż kotła na węgiel/drewno bez bufora ciepła to nie jest dobry pomysł!</p>
+                        <p>W większości województw <a href="https://czysteogrzewanie.pl/podstawy/uchwaly-antysmogowe/" target="_blank">uchwały antysmogowe</a> wymagają już, aby nowo instalowane kotły na węgiel/drewno spełniały normę emisyjną 5. klasy / Ecodesign.
+                            Kotły bez podajnika spełniają tę normę wyłącznie wtedy, gdy pracują stale na pełnej mocy. Do tego potrzebują <a href="http://czysteogrzewanie.pl/instalacja-grzewcza/bufor-ciepla" target="_blank">bufora ciepła</a>.
+                            Bez bufora ciepła taki kocioł nie spełnia w/w normy, czyli jest lub zaraz będzie nielegalny.</p>
+                        <p>Bufor ciepła można wykonać niskim kosztem u lokalnego spawacza, a jego posiadanie niesie mnóstwo korzyści: przede wszystkim zmniejsza nakład pracy na obsługę kotłowni prawie do poziomu, jaki oferują kotły podajnikowe. Szczegóły <a href="http://czysteogrzewanie.pl/instalacja-grzewcza/bufor-ciepla" target="_blank">w artykule o buforach ciepła</a>.</p>
+                        <p>Kotły węglowe bez bufora ciepła osiągają niższe sprawności (realnie ok. 50%, a przy kiepskiej obsłudze nawet mniej) niż kotły z buforem (bez problemu ok. 70%), co przełoży się na wyższe zużycie opału i <b>najwyższe</b> koszty opłaty emisyjnej ETS2 od 2027 roku.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingCoal">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseCoal" aria-expanded="true" aria-controls="collapseCoal">
+                            Kocioł węglowy bez podajnika, <b>z buforem ciepła</b> <span class="label label-inverse">ETS2: ~1200zł</span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseCoal" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingCoal">
+                    <div class="panel-body">
+                        <p>Najlepiej gdyby moc kotła wynosiła ok. <span class="label label-warning">17kW</span> a pojemność bufora ok. <span class="label label-warning">2 300l</span>.</p>
+                        <p>Wtedy jedna wizyta w kotłowni, jeden załadunek i jedno rozpalenie prawie zawsze wystarczy, by nagrzać bufor na co najmniej pełną dobę.</p>
+                        <p>Można oczywiście dobrać mniejszy kocioł i/lub mniejszy bufor – licząc się z tym, że konieczne będą częstsze odwiedziny kotłowni.</p>
+                        <ul>
+                            <li>Tutaj sprawdzisz, <a href="https://czysteogrzewanie.pl/podstawy/uchwaly-antysmogowe/" target="_blank">czy w twoim regionie można instalować nowoczesne kotły węglowe z buforem ciepła</a> (niestety jest parę miejsc, gdzie nie można).</li>
+                            <li>Tutaj znajdziesz <a href="https://czysteogrzewanie.pl/na-zakupach/przeglad-tanich-i-czystych-kotlow-na-wegiel-i-drewno/" target="_blank">listę (niepełną) nowoczesnych kotłów na węgiel.</a></li>
+                            <li>Tutaj znajdziesz <a href="https://czysteogrzewanie.pl/jak-to-sie-robi/bufor-ciepla/#Jaka_pojemnosc_bufora" target="_blank">dokładniejszy opis obliczania pojemności bufora.</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingEcoCoal">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseEcoCoal" aria-expanded="false" aria-controls="collapseEcoCoal">
+                            Kocioł podajnikowy na węgiel ekogroszek <span class="label label-inverse">ETS2: ~1200zł</span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseEcoCoal" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEcoCoal">
+                    <div class="panel-body">
+                        <p>Moc kotła podajnikowego na węgiel ekogroszek musi wynosić min. <span class="label label-warning">11kW</span>. Zapas rzędu 10-15% jest jeszcze rozsądny, o ile nie ma dostępnej bliższej mocy.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingGas">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseGas" aria-expanded="false" aria-controls="collapseGas">
+                            Kocioł gazowy <span class="label label-inverse">ETS2: ~800zł</span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseGas" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingGas">
+                    <div class="panel-body">
+                        <p>Moc kotła gazowego musi wynosić min. <span class="label label-warning">11kW</span>.</p>
+                        <p>Kotły gazowe pracują z wysoką sprawnością nawet na niskich mocach, ale to nie znaczy, że można wstawić kocioł dowolnie wielki. Jednakże istotniejsza od mocy nominalnej jest moc minimalna danego kotła, która powinna być jak najniższa.</p>
+                        <p>
+                            <a href="https://czysteogrzewanie.pl/jak-to-sie-robi/ekonomiczne-ogrzewanie-gazem/" target="_blank" class="btn btn-secondary btn-raised">Więcej o doborze mocy kotła gazowego</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOil">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseOil" aria-expanded="false" aria-controls="collapseOil">
+                            Kocioł olejowy <span class="label label-inverse">ETS2: ~1000zł</span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOil" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOil">
+                    <div class="panel-body">
+                        <p>Moc kotła olejowego musi wynosić nie mniej niż <span class="label label-warning">11kW</span>, ale też możliwie niewiele więcej.</p>
+                    </div>
+                </div>
+            </div>
+
+                            <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingElectricityAccumulative">
+        <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseElectricityAccumulative" aria-expanded="false" aria-controls="collapseElectricityAccumulative">
+                Ogrzewanie elektryczne akumulacyjne  <span class="label label-inverse">ETS2: 0zł</span>
+            </a>
+        </h4>
+    </div>
+    <div id="collapseElectricityAccumulative" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingElectricityAccumulative">
+        <div class="panel-body">
+            <p>Akumulacyjne ogrzewanie prądem z założenia pobiera prąd wyłącznie w tanich godzinach taryf dwu-i-więcej-strefowych (G12, G13), dlatego moc urządzenia grzewczego trzeba w tym przypadku <b>znacznie zwiększyć</b>.</p>
+            <p>Przykładowo w taryfie G12 w ciągu doby jest 10 godzin z tanim prądem. Urządzenie grzewcze musi być w stanie pobrać w ciągu tych 10 godzin zapas energii na całe 24 godziny. Na każdą godzinę doby budynek zużywa max. 11kWh, zatem moc
+                urządzenia grzewczego powinna wynosić co najmniej <span class="label label-warning">27kW</span> .</p>
+                    </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingElectricityDirect">
+        <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseElectricityDirect" aria-expanded="false" aria-controls="collapseElectricityDirect">
+                Ogrzewanie elektryczne nieakumulacyjne  <span class="label label-inverse">ETS2: 0zł</span>
+            </a>
+        </h4>
+    </div>
+    <div id="collapseElectricityDirect" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingElectricityDirect">
+        <div class="panel-body">
+            <p>Moc grzewcza musi wynosić co najmniej <span class="label label-warning">11kW</span>  – ale nie trzeba się jej ściśle trzymać, bowiem wszelkie grzałki, kotły elektryczne, promienniki ciepła itp.
+                nie tracą na sprawności przy przewymiarowaniu.</p>
+                    </div>
+    </div>
+</div>                    </div>
+    </div>
+</div>
+        <div class="page-header" id="koszty">
+          <h2>Koszty ogrzewania i sposoby ich zmniejszenia</h2>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+              <h3>Roczny koszt ogrzewania budynku (bez CWU)</h3>
+                                  <p>W oparciu o szacowane zużycie energii z zimy 2022/2023.</p>
+                            <div id="fuel_chart" style="height:600px;clear:both"></div>
+
+              <p>&nbsp;</p>
+              <p class="text-center"><a href="/koszty-ogrzewania" target="_blank" style="font-weight: bold">Źródła danych i założenia wykorzystane do oszacowania kosztów ogrzewania</a></p>
+
+              <p class="text-center hidden-print"><a href="#custom_fuel_prices" data-toggle="modal" class="btn btn-danger btn-raised" data-target="#custom_fuel_prices">Podaj własne ceny paliw/energii</a></p>
+          </div>
+          <div class="col-md-6">
+              <h3>Najbardziej opłacalne opcje modernizacji budynku</h3>
+                                              <p>Zaznacz wybrane inwestycje, aby zobaczyć, jakie będą koszty ogrzewania po ich wykonaniu.</p>
+                                        <h4><input type="checkbox" value="0.23" ng-click="updateUpgradeOptions(0, 0.23)"> <span class="label label-success">-23%</span> wentylacja mechaniczna z odzyskiem ciepła</h4>
+                                        <h4><input type="checkbox" value="0.15" ng-click="updateUpgradeOptions(1, 0.15)"> <span class="label label-success">-15%</span> ocieplenie dachu 20cm styropianu</h4>
+                                
+              <p>&nbsp;</p>
+              <h3>Którędy ucieka ciepło</h3>
+              <div id="heat_loss_breakdown"></div>
+          </div>
+        </div>
+
+            <a class="btn btn-warning btn-raised pull-right hidden-print" href="/edycja/2ovff">Edytuj parametry budynku</a>
+
+        <br style="clear:both"/>
+    </div>
+</div>
+
+<div id="full_house_details" class="modal fade" role="dialog" aria-labelledby="pelneDetaleBudynku" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>Pełne informacje o budynku</h3>
+        </div>
+        <div class="modal-body">
+            <table class="table table-condensed">
+                <tbody>
+                                    <tr><td class="col-md-4">Wymiary obrysu budynku</td>
+                        <td class="col-md-8">
+                                                            11x12m                                                        <br>Regularny obrys budynku
+                        </td></tr>
+                    <tr><td class="col-md-4">Powierzchnia wewn. jednego piętra</td><td class="col-md-8">107m<sup>2</sup></td></tr>
+                    <tr><td class="col-md-4">Powierzchnia całkowita budynku</td><td class="col-md-8">289m<sup>2</sup></td></tr>
+                                    <tr><td class="col-md-4">Powierzchnia ogrzewana*</td><td class="col-md-8">214m<sup>2</sup></td></tr>
+                    <tr><td class="col-md-4">Kubatura przestrzeni ogrzewanej*</td><td class="col-md-8">557m<sup>3</sup></td></tr>
+                    <tr><td class="col-md-4">Wysokość piętra</td><td class="col-md-8">2,6m</td></tr>
+                                    <tr><td class="col-md-4">Ogrzewane piętra</td><td class="col-md-8">parter, 1. piętro</td></tr>
+                                            <tr><td class="col-md-4">Nieogrzewane piętra</td><td class="col-md-8">poddasze</td></tr>
+                                        <tr><td class="col-md-4">Dach</td><td class="col-md-8">dach skośny z poddaszem</td></tr>
+                                    <tr><td class="col-md-4">Ściany</td><td class="col-md-8">40cm, konstrukcja: porotherm, izolacja: styropian grafitowy 15cm</td></tr>
+                    <tr><td class="col-md-4">Izolacja od góry</td><td class="col-md-8">Strop - podłoga poddasza, bez izolacji</td></tr>
+                    <tr><td class="col-md-4">Izolacja od dołu</td><td class="col-md-8">Podłoga parteru, Styropian twardy (XPS) 13cm</td></tr>
+                    <tr><td class="col-md-4">Drzwi i okna</td><td class="col-md-8">Okna: 16 szt. (2011-2020 trójszybowe)<br>/łączna powierzchnia ~30m<sup>2</sup>/<br/>Drzwi: 2 szt. (nowe metalowe)</td></tr>
+                                    <tr><td class="col-md-4">Garaż</td><td class="col-md-8">Jednostanowiskowy (d)ogrzewany</td></tr>
+                                    <tr><td class="col-md-4">Wentylacja</td><td class="col-md-8">naturalna lub grawitacyjna</td></tr>
+                    <tr><td class="col-md-4">Temperatura w części ogrzewanej</td><td class="col-md-8">22,0&deg;C</td></tr>
+                    <tr><td colspan="2">* Wartości wyliczone na podstawie zewnętrznych wymiarów budynku. Na pewno będą większe niż podana w projekcie powierzchnia użytkowa. To nie błąd – to powierzchnia użytkowa w projekcie jest zaniżona. Nie wliczają się do niej części pomieszczeń, które jak najbardziej są ogrzewane (np. klatki schodowe, skosy na poddaszu).</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal" data-target="#full_house_details">Zamknij</a>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div id="custom_fuel_prices" class="modal fade" role="dialog" aria-labelledby="cenyPaliw" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>Ceny paliw</h3>
+        </div>
+        <div class="modal-body">
+            <p>Poniżej możesz podać ceny paliw dostępnych w twojej okolicy, aby otrzymać bardziej realne podsumowanie kosztów ogrzewania.</p>
+            <div id="custom_fuel_prices2">
+                <form role="form">
+                <div class="form-group col-md-6" ng-repeat="(fuel_type, fuel) in fuels">
+                    <label for="fuel_{[{ fuel_type }]}" class="required control-label">{[{ fuel.name }]}:</label>
+                    <div class="input-group">
+                        <input type="text" id="fuel_{[{ fuel_type }]}" name="fuel_{[{ fuel_type }]}" ng-model="fuel.human_price" class="form-control" />
+                        <span class="input-group-addon">zł/{[{ fuel.trade_unit }]}</span>
+                    </div>
+                </div>
+                </form>
+                <br style="clear:both">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal" data-target="#custom_fuel_prices">Zamknij</a>
+            <a class="btn btn-raised btn-primary" data-dismiss="modal" data-target="#custom_fuel_prices" id="update_fuels" ng-click="updateFuelCosts()">Przelicz koszty</a>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div id="other_bivalent_temperatures" class="modal fade" role="dialog" aria-labelledby="pelneDetaleBudynku" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">&times;</a>
+                <h3>Temperatury biwalentne</h3>
+            </div>
+            <div class="modal-body">
+                                                <table class="table table-responsive table-condensed">
+                    <thead>
+                    <tr>
+                        <td colspan="4" style="background-color: #fafafa"><p class="text-center" style="margin-bottom:0">Tryb równoległy
+                                <small>(najczęściej stosowany)<br>Poniżej temp. biwalentnej, aż do <strong>-20,0&deg;C</strong>, pompa ciepła jest <b>wspomagana</b> przez drugie źródło ciepła.</small></p></td>
+                    </tr>
+                    <tr>
+                        <th>Temp. biwalentna</th>
+                        <td>Moc w temp. biwalentnej<sup>*</sup></td>
+                        <td>Udział pompy ciepła<sup>**</sup></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                                        <tr>
+                        <td >5&deg;C</td>
+                        <td >4,3kW</td>
+                        <td >66%</td>
+                    </tr>
+                                        <tr>
+                        <td >4&deg;C</td>
+                        <td >4,6kW</td>
+                        <td >68%</td>
+                    </tr>
+                                        <tr>
+                        <td >3&deg;C</td>
+                        <td >4,9kW</td>
+                        <td >70%</td>
+                    </tr>
+                                        <tr>
+                        <td >2&deg;C</td>
+                        <td >5,1kW</td>
+                        <td >73%</td>
+                    </tr>
+                                        <tr>
+                        <td >1&deg;C</td>
+                        <td >5,4kW</td>
+                        <td >76%</td>
+                    </tr>
+                                        <tr>
+                        <td >0&deg;C</td>
+                        <td >5,6kW</td>
+                        <td >79%</td>
+                    </tr>
+                                        <tr>
+                        <td >-1&deg;C</td>
+                        <td >5,9kW</td>
+                        <td >83%</td>
+                    </tr>
+                                        <tr>
+                        <td >-2&deg;C</td>
+                        <td >6,1kW</td>
+                        <td >87%</td>
+                    </tr>
+                                        <tr>
+                        <td >-3&deg;C</td>
+                        <td >6,4kW</td>
+                        <td >89%</td>
+                    </tr>
+                                        <tr>
+                        <td >-4&deg;C</td>
+                        <td >6,6kW</td>
+                        <td >92%</td>
+                    </tr>
+                                        <tr>
+                        <td >-5&deg;C</td>
+                        <td >6,9kW</td>
+                        <td >93%</td>
+                    </tr>
+                                        <tr>
+                        <td class="success">-6&deg;C</td>
+                        <td class="success">7,1kW</td>
+                        <td class="success">95%</td>
+                    </tr>
+                                        <tr>
+                        <td >-7&deg;C</td>
+                        <td >7,4kW</td>
+                        <td >96%</td>
+                    </tr>
+                                        <tr>
+                        <td >-8&deg;C</td>
+                        <td >7,7kW</td>
+                        <td >97%</td>
+                    </tr>
+                                        <tr>
+                        <td >-10&deg;C</td>
+                        <td >8,2kW</td>
+                        <td >98%</td>
+                    </tr>
+                                        <tr>
+                        <td >-13&deg;C</td>
+                        <td >8,9kW</td>
+                        <td >99%</td>
+                    </tr>
+                                        </tbody>
+                </table>
+
+                <table class="table table-responsive table-condensed">
+                    <thead>
+                    <tr>
+                        <td colspan="4" style="background-color: #fafafa"><p class="text-center" style="margin-bottom:0">Tryb alternatywny
+                                <br><small>Poniżej temp. biwalentnej pracuje <b>tylko</b> drugie źródło ciepła.</small></p></td>
+                    </tr>
+                    <tr>
+                        <th>Temp. biwalentna</th>
+                        <td>Moc w temp. biwalentnej<sup>*</sup></td>
+                        <td>Udział pompy ciepła<sup>**</sup></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                                            <tr>
+                            <td >5&deg;C</td>
+                            <td >4,3kW</td>
+                            <td >18%</td>
+                        </tr>
+                                            <tr>
+                            <td >4&deg;C</td>
+                            <td >4,6kW</td>
+                            <td >25%</td>
+                        </tr>
+                                            <tr>
+                            <td >3&deg;C</td>
+                            <td >4,9kW</td>
+                            <td >33%</td>
+                        </tr>
+                                            <tr>
+                            <td >2&deg;C</td>
+                            <td >5,1kW</td>
+                            <td >40%</td>
+                        </tr>
+                                            <tr>
+                            <td >1&deg;C</td>
+                            <td >5,4kW</td>
+                            <td >49%</td>
+                        </tr>
+                                            <tr>
+                            <td >0&deg;C</td>
+                            <td >5,6kW</td>
+                            <td >59%</td>
+                        </tr>
+                                            <tr>
+                            <td >-1&deg;C</td>
+                            <td >5,9kW</td>
+                            <td >67%</td>
+                        </tr>
+                                            <tr>
+                            <td >-2&deg;C</td>
+                            <td >6,1kW</td>
+                            <td >73%</td>
+                        </tr>
+                                            <tr>
+                            <td >-3&deg;C</td>
+                            <td >6,4kW</td>
+                            <td >79%</td>
+                        </tr>
+                                            <tr>
+                            <td >-4&deg;C</td>
+                            <td >6,6kW</td>
+                            <td >83%</td>
+                        </tr>
+                                            <tr>
+                            <td >-5&deg;C</td>
+                            <td >6,9kW</td>
+                            <td >86%</td>
+                        </tr>
+                                            <tr>
+                            <td >-6&deg;C</td>
+                            <td >7,1kW</td>
+                            <td >89%</td>
+                        </tr>
+                                            <tr>
+                            <td >-7&deg;C</td>
+                            <td >7,4kW</td>
+                            <td >91%</td>
+                        </tr>
+                                            <tr>
+                            <td >-8&deg;C</td>
+                            <td >7,7kW</td>
+                            <td >93%</td>
+                        </tr>
+                                            <tr>
+                            <td >-9&deg;C</td>
+                            <td >7,9kW</td>
+                            <td >94%</td>
+                        </tr>
+                                            <tr>
+                            <td class="success">-10&deg;C</td>
+                            <td class="success">8,2kW</td>
+                            <td class="success">95%</td>
+                        </tr>
+                                            <tr>
+                            <td >-11&deg;C</td>
+                            <td >8,4kW</td>
+                            <td >96%</td>
+                        </tr>
+                                            <tr>
+                            <td >-12&deg;C</td>
+                            <td >8,7kW</td>
+                            <td >97%</td>
+                        </tr>
+                                            <tr>
+                            <td >-13&deg;C</td>
+                            <td >8,9kW</td>
+                            <td >98%</td>
+                        </tr>
+                                            <tr>
+                            <td >-15&deg;C</td>
+                            <td >9,4kW</td>
+                            <td >99%</td>
+                        </tr>
+                                        </tbody>
+                </table>
+
+                <p>* <small>Moc grzewcza, jaką pompa ciepła musi dostarczyć w danej temp. biwalentnej i przy temperaturze zasilania, jakiej wymagać będzie wtedy twoja instalacja grzewcza.</small>
+                    <br>** <small>Udział energii produkowanej przez sprężarkę pompy ciepła w sezonowej produkcji ciepła (reszta przypada na drugie źródło ciepła).</small></p>
+                <p><small><a href="/czemu-nie-dziala#biwalentna" target="_blank">Tutaj więcej na temat tego, jak liczymy temperatury biwalentne.</a></small></p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal" data-target="#other_bivalent_temperatures">Zamknij</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <footer class="footer hidden-print">
+      <p class="container">
+        <p>Coś nie działa jak powinno, jest niezrozumiałe albo czegoś brakuje? <a href="/kontakt" target="_blank"><strong>Daj znać!</strong></a></p>
+        <p>---</p>
+        <p>Wyprodukowano we Wrocławiu | <a href="/regulamin">Regulamin</a> | <a href="/prywatnosc">Polityka prywatności</a></p>
+        <p>Aplikacja jest częścią serwisu <a href="https://czysteogrzewanie.pl" target="_blank">Czyste Ogrzewanie</a>, którego misją jest cywilizowanie ogrzewania zwykłych polskich domów w ramach możliwości jakie daje zwykła polska pensja.</p>
+    </footer>
+                
+<script type="importmap">
+{
+    "imports": {
+        "result": "/assets/result_all-3630fcbe026ddbb0221bf0dc5af33719.js",
+        "/assets/jquery.min.js": "/assets/jquery.min-32e32a8097f762b4294b397c92d13038.js",
+        "/assets/raphael.min.js": "/assets/raphael.min-7ab826fc81a1728f1708a076399e5719.js",
+        "/assets/js/bootstrap.min.js": "/assets/js/bootstrap.min-872868dcd89c7e3601b8f566a9a1d348.js",
+        "/assets/js/material.min.js": "/assets/js/material.min-cb33b4f2c40ea2853917f6cdd8ba2b22.js",
+        "/assets/js/ripples.js": "/assets/js/ripples-b0390027a7d7ce0084baefeea042588c.js",
+        "/assets/vendor/angular-1.6.min.js": "/assets/vendor/angular-1.6.min-1f869ed647524d86548a1642ee9b5899.js",
+        "/assets/vendor/angular-1.6-pl.min.js": "/assets/vendor/angular-1.6-pl.min-a2641b1eefad09dddbf2016b2de49046.js",
+        "/assets/vendor/highcharts.js": "/assets/vendor/highcharts-b851def56d4e2c0475cc9031bb9514ad.js",
+        "/assets/result.js": "/assets/result-cd09cd6f45c26e4989423d369177851d.js",
+        "/assets/house_preview.js": "/assets/house_preview-bf1ccc16ca64b63f6a02edc73cf7e085.js",
+        "app": "/assets/app-2d4482e51c30c1ae3ce68fc8e0edcdd7.js",
+        "/assets/bootstrap.js": "/assets/bootstrap-2c4bff9577513da58b827205af0e27b2.js",
+        "/assets/@symfony/stimulus-bundle/controllers.js": "/assets/@symfony/stimulus-bundle/controllers-65458285325936d3729bdeffb8b1801e.js",
+        "/assets/controllers/payments-controller.js": "/assets/controllers/payments-controller-ceb6decf0ba68cbe28bbb87285f7382d.js",
+        "/assets/controllers/inquiry-controller.js": "/assets/controllers/inquiry-controller-3364d4c664000e85143a706acb7bb369.js",
+        "/assets/controllers/location-controller.js": "/assets/controllers/location-controller-2df593779a7a97704890d6d7dbab3a00.js",
+        "/assets/mopabootstrap-collection.js": "/assets/mopabootstrap-collection-8ece13a2fbf29e286f02b33ce2585dce.js",
+        "/assets/js/app.js": "/assets/js/app-89cf92b5b55effabdc0a1c23e1eebf90.js",
+        "dashboard": "/assets/dashboard_index_page-e20420f40e061359475f3acf094bb44a.js",
+        "dashboard_radar": "/assets/dashboard_radar_page-1f3a540872e247e8290d8f28305e379c.js",
+        "/assets/dashboard_radar.js": "/assets/dashboard_radar-238531a815c7f147910a4d37a10a4f6e.js",
+        "dimensions": "/assets/dimensions_page-7bdcc18d5d4a67c7859c7de316f3d89c.js",
+        "/assets/dimensions.js": "/assets/dimensions-e444ffc79849378a4bee3718cb7ab166.js",
+        "/assets/app.js": "/assets/app-2d4482e51c30c1ae3ce68fc8e0edcdd7.js",
+        "dimensions_apartment": "/assets/dimensions_apartment_page-4f17a15286d8a5625f5715d68c32aa66.js",
+        "/assets/dimensions_apartment.js": "/assets/dimensions_apartment-6f61d5c6792a0d70be9ad2147cab2f83.js",
+        "walls": "/assets/walls_page-d52015083c5911f087c5dd586ce383fd.js",
+        "/assets/walls.js": "/assets/walls-45154d3672742712d88bfd1f30d0e85b.js",
+        "ceiling": "/assets/ceiling_page-354b675392de1e6f8859feaeba7bf7ea.js",
+        "/assets/ceiling.js": "/assets/ceiling-9e39b3f7c46f0ed0b6230518dbbb988c.js",
+        "ceiling_apartment": "/assets/ceiling_apartment_page-50dd8171bdc7b7b6f5a684cbcb0fdcc8.js",
+        "/assets/ceiling_apartment.js": "/assets/ceiling_apartment-054789d5664f0cced5b5c4d80272a34a.js",
+        "heating": "/assets/heating_page-83a5fb8421c88854541c42b8d8d4faf2.js",
+        "/assets/heating.js": "/assets/heating-a67ef5ee057c9547db6d018f60418e90.js",
+        "ultimate_step_public": "/assets/ultimate_step_public_page-01965f09793a375f7657e7f7a0b930b6.js",
+        "@hotwired/stimulus": "/assets/vendor/@hotwired/stimulus/stimulus.index-4b8ccd71e6b1c4ddba22853d5a50a26c.js",
+        "@symfony/stimulus-bundle": "/assets/@symfony/stimulus-bundle/loader-5751ad1ee2975e725a94d8121d153d17.js",
+        "ol": "/assets/vendor/ol/ol.index-6f19387679186e3814e625585587e03c.js",
+        "color-space/lchuv.js": "/assets/vendor/color-space/lchuv-dcff7ae3b79811510cef9754a18e5463.js",
+        "color-rgba": "/assets/vendor/color-rgba/color-rgba.index-b664158fcdc59b65c6b87ae3a673df0e.js",
+        "color-space/rgb.js": "/assets/vendor/color-space/rgb-d4562afedc1e94da2c217376673999f5.js",
+        "color-space/xyz.js": "/assets/vendor/color-space/xyz-82bb5569adc7d828fb02d7d44dd5aa44.js",
+        "rbush": "/assets/vendor/rbush/rbush.index-b116e2a04890fcc4be13a8ae65c370e8.js",
+        "color-parse": "/assets/vendor/color-parse/color-parse.index-2652e1f68005db53d63d8a55a9b2e3ad.js",
+        "color-space/hsl.js": "/assets/vendor/color-space/hsl-b94cadc1de59ba054f352aed46ef7e52.js",
+        "quickselect": "/assets/vendor/quickselect/quickselect.index-dffeda524a4a98d818ed2831c9a15947.js",
+        "color-name": "/assets/vendor/color-name/color-name.index-711760191eae1bb777f52d876a0b0fc3.js",
+        "ol/layer/Tile": "/assets/vendor/ol/layer/Tile-b86a65f06d1c30e907428061a6152b87.js",
+        "ol/source/OSM": "/assets/vendor/ol/source/OSM-1f5b32a9a8f72ebd1e8bd7b0976709f2.js",
+        "ol/proj": "/assets/vendor/ol/proj-c9ec8a5428894ebc69b1e09a5a14947b.js",
+        "ol/geom/Point": "/assets/vendor/ol/geom/Point-cd38a7e38feafd640fe5da6b3ac78f48.js",
+        "ol/interaction/Translate": "/assets/vendor/ol/interaction/Translate-e8599b180080f424581e78bbfb801d6e.js",
+        "ol/layer/Vector": "/assets/vendor/ol/layer/Vector-596d1b5949741ab498631834b2ac9a80.js",
+        "ol/source/Vector": "/assets/vendor/ol/source/Vector-309433605c6ccfb7417e82337dfea683.js",
+        "ol/style": "/assets/vendor/ol/style-391e53756b922bd415c4d46e82bc8156.js"
+    }
+}
+</script>
+<!-- ES Module Shims: Import maps polyfill for modules browsers without import maps support -->
+<script async src="https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js"></script>
+<link rel="modulepreload" href="/assets/result_all-3630fcbe026ddbb0221bf0dc5af33719.js">
+<link rel="modulepreload" href="/assets/jquery.min-32e32a8097f762b4294b397c92d13038.js">
+<link rel="modulepreload" href="/assets/raphael.min-7ab826fc81a1728f1708a076399e5719.js">
+<link rel="modulepreload" href="/assets/js/bootstrap.min-872868dcd89c7e3601b8f566a9a1d348.js">
+<link rel="modulepreload" href="/assets/js/material.min-cb33b4f2c40ea2853917f6cdd8ba2b22.js">
+<link rel="modulepreload" href="/assets/js/ripples-b0390027a7d7ce0084baefeea042588c.js">
+<link rel="modulepreload" href="/assets/vendor/angular-1.6.min-1f869ed647524d86548a1642ee9b5899.js">
+<link rel="modulepreload" href="/assets/vendor/angular-1.6-pl.min-a2641b1eefad09dddbf2016b2de49046.js">
+<link rel="modulepreload" href="/assets/vendor/highcharts-b851def56d4e2c0475cc9031bb9514ad.js">
+<link rel="modulepreload" href="/assets/result-cd09cd6f45c26e4989423d369177851d.js">
+<link rel="modulepreload" href="/assets/house_preview-bf1ccc16ca64b63f6a02edc73cf7e085.js">
+<script type="module">import 'result';</script>
+    </body>
+</html>

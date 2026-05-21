@@ -1,0 +1,77 @@
+{"fact_type": "compatibility", "model": "KIT-WC05L3E5", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-SDC0509L3E5", "outdoor_unit": "WH-WDG05LE5"}
+{"fact_type": "compatibility", "model": "KIT-WC07L3E5", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-SDC0509L3E5", "outdoor_unit": "WH-WDG07LE5"}
+{"fact_type": "compatibility", "model": "KIT-WC09L3E5", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-SDC0509L3E5", "outdoor_unit": "WH-WDG09LE5"}
+{"fact_type": "compatibility", "model": "KIT-ADC05L3E5", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0509L3E51", "outdoor_unit": "WH-WDG05LE5"}
+{"fact_type": "compatibility", "model": "KIT-ADC07L3E5", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0509L3E51", "outdoor_unit": "WH-WDG07LE5"}
+{"fact_type": "compatibility", "model": "KIT-ADC09L3E5", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0509L3E51", "outdoor_unit": "WH-WDG09LE5"}
+{"fact_type": "compatibility", "model": "KIT-ADC05L3E5B", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0509L3E5B", "outdoor_unit": "WH-WDG05LE5"}
+{"fact_type": "compatibility", "model": "KIT-ADC07L3E5B", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0509L3E5B", "outdoor_unit": "WH-WDG07LE5"}
+{"fact_type": "compatibility", "model": "KIT-ADC09L3E5B", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0509L3E5B", "outdoor_unit": "WH-WDG09LE5"}
+{"fact_type": "compatibility", "model": "WH-SDC0916M3E5", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-SDC0916M3E5", "outdoor_unit": "WH-WDG12ME5"}
+{"fact_type": "compatibility", "model": "WH-SDC0916M6E5", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-SDC0916M6E5", "outdoor_unit": "WH-WDG12ME5"}
+{"fact_type": "compatibility", "model": "WH-SDC0316M9E8", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-SDC0316M9E8", "outdoor_unit": "WH-WXG09ME8"}
+{"fact_type": "compatibility", "model": "WH-ADC0916M3E51", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0916M3E51", "outdoor_unit": "WH-WXG09ME5"}
+{"fact_type": "compatibility", "model": "WH-ADC0916M3E52", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0916M3E52", "outdoor_unit": "WH-WXG09ME5"}
+{"fact_type": "compatibility", "model": "WH-ADC0316M9E81", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0316M9E81", "outdoor_unit": "WH-WXG09ME8"}
+{"fact_type": "compatibility", "model": "WH-ADC0916M6E53", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0916M6E53", "outdoor_unit": "WH-WDG12ME5"}
+{"fact_type": "compatibility", "model": "WH-CME5", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-CME5", "outdoor_unit": "WH-WDG12ME5"}
+{"fact_type": "compatibility", "model": "WH-ADC0316M9E82", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0316M9E82", "outdoor_unit": "WH-WXG09ME8"}
+{"fact_type": "compatibility", "model": "CZ-RTW2TAW1C", "family": "", "series": "T-CAP", "generation": "M", "indoor_unit": "CZ-RTW2TAW1C", "outdoor_unit": "WH-WDG12ME5"}
+{"fact_type": "compatibility", "model": "WH-ADC0316M9E83", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0316M9E83", "outdoor_unit": "WH-WXG09ME8"}
+{"fact_type": "compatibility", "model": "WH-CME5", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-CME5", "outdoor_unit": "WH-WXG09ME5"}
+{"fact_type": "compatibility", "model": "KIT-WC03K3E5", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-SDC0309K3E5", "outdoor_unit": "WH-UDZ03KE5"}
+{"fact_type": "compatibility", "model": "KIT-WC05K3E5", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-SDC0309K3E5", "outdoor_unit": "WH-UDZ05KE5"}
+{"fact_type": "compatibility", "model": "KIT-WC07K3E5", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-SDC0309K3E5", "outdoor_unit": "WH-UDZ07KE5"}
+{"fact_type": "compatibility", "model": "KIT-WC09K3E5", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-SDC0309K3E5", "outdoor_unit": "WH-UDZ09KE5"}
+{"fact_type": "compatibility", "model": "WH-CME8", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-CME8", "outdoor_unit": "WH-WXG09ME8"}
+{"fact_type": "compatibility", "model": "KIT-ADC03K3E5", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0309K3E5", "outdoor_unit": "WH-UDZ03KE5"}
+{"fact_type": "compatibility", "model": "KIT-ADC05K3E5", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0309K3E5", "outdoor_unit": "WH-UDZ05KE5"}
+{"fact_type": "compatibility", "model": "KIT-ADC07K3E5", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0309K3E5", "outdoor_unit": "WH-UDZ07KE5"}
+{"fact_type": "compatibility", "model": "KIT-ADC09K3E5", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0309K3E5", "outdoor_unit": "WH-UDZ09KE5"}
+{"fact_type": "compatibility", "model": "WH-CME8L", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-CME8L", "outdoor_unit": "WH-WXG20ME8"}
+{"fact_type": "compatibility", "model": "KIT-ADC03K3E5B", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0309K3E5B", "outdoor_unit": "WH-UDZ03KE5"}
+{"fact_type": "compatibility", "model": "KIT-ADC05K3E5B", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0309K3E5B", "outdoor_unit": "WH-UDZ05KE5"}
+{"fact_type": "compatibility", "model": "KIT-ADC07K3E5B", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0309K3E5B", "outdoor_unit": "WH-UDZ07KE5"}
+{"fact_type": "compatibility", "model": "KIT-ADC09K3E5B", "family": "Aquarea", "series": "T-CAP", "generation": "M", "indoor_unit": "WH-ADC0309K3E5B", "outdoor_unit": "WH-UDZ09KE5"}
+{"fact_type": "compatibility", "model": "CZ-RTW2TAW1C", "family": "", "series": "T-CAP", "generation": "M", "indoor_unit": "CZ-RTW2TAW1C", "outdoor_unit": "WH-WXG09ME5"}
+{"fact_type": "compatibility", "model": "WH-ADF0309J3E5CM", "family": "Aquarea", "series": "High Performance", "generation": "K", "indoor_unit": "WH-ADF0309J3E5CM", "outdoor_unit": ""}
+{"fact_type": "compatibility", "model": "S-71WF3E", "family": "", "series": "High Performance", "generation": "K", "indoor_unit": "", "outdoor_unit": ""}
+{"fact_type": "compatibility", "model": "CU-2WZ71YBE5", "family": "", "series": "High Performance", "generation": "K", "indoor_unit": "", "outdoor_unit": ""}
+{"fact_type": "compatibility", "model": "KIT-WC09K3E8", "family": "Aquarea", "series": "High Performance", "generation": "K", "indoor_unit": "WH-SDC09K3E8", "outdoor_unit": "WH-UDZ09KE8"}
+{"fact_type": "compatibility", "model": "KIT-WC12K9E8", "family": "Aquarea", "series": "High Performance", "generation": "K", "indoor_unit": "WH-SDC12K9E8", "outdoor_unit": "WH-UDZ12KE8"}
+{"fact_type": "compatibility", "model": "KIT-WC16K9E8", "family": "Aquarea", "series": "High Performance", "generation": "K", "indoor_unit": "WH-SDC16K9E8", "outdoor_unit": "WH-UDZ16KE8"}
+{"fact_type": "compatibility", "model": "KIT-ADC09K9E8", "family": "Aquarea", "series": "High Performance", "generation": "K", "indoor_unit": "WH-ADC0912K9E8", "outdoor_unit": "WH-UDZ09KE8"}
+{"fact_type": "compatibility", "model": "KIT-ADC12K9E8", "family": "Aquarea", "series": "High Performance", "generation": "K", "indoor_unit": "WH-ADC0912K9E8", "outdoor_unit": "WH-UDZ12KE8"}
+{"fact_type": "compatibility", "model": "KIT-ADC16K9E8", "family": "Aquarea", "series": "High Performance", "generation": "K", "indoor_unit": "WH-ADC16K9E8", "outdoor_unit": "WH-UDZ16KE8"}
+{"fact_type": "compatibility", "model": "KIT-ADC09K9E83", "family": "Aquarea", "series": "High Performance", "generation": "K", "indoor_unit": "WH-ADC0912K9E83", "outdoor_unit": "WH-UDZ09KE8"}
+{"fact_type": "compatibility", "model": "KIT-ADC12K9E83", "family": "Aquarea", "series": "High Performance", "generation": "K", "indoor_unit": "WH-ADC0912K9E83", "outdoor_unit": "WH-UDZ12KE8"}
+{"fact_type": "compatibility", "model": "KIT-ADC16K9E83", "family": "Aquarea", "series": "High Performance", "generation": "K", "indoor_unit": "WH-ADC16K9E83", "outdoor_unit": "WH-UDZ16KE8"}
+{"fact_type": "compatibility", "model": "KIT-WXC09K3E5", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-SXC09K3E5", "outdoor_unit": "WH-UXZ09KE5"}
+{"fact_type": "compatibility", "model": "KIT-WXC12K6E5", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-SXC12K6E5", "outdoor_unit": "WH-UXZ12KE5"}
+{"fact_type": "compatibility", "model": "KIT-WXC09K3E8", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-SXC09K3E8", "outdoor_unit": "WH-UXZ09KE8"}
+{"fact_type": "compatibility", "model": "KIT-WXC12K9E8", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-SXC12K9E8", "outdoor_unit": "WH-UXZ12KE8"}
+{"fact_type": "compatibility", "model": "KIT-WXC16K9E8", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-SXC16K9E8", "outdoor_unit": "WH-UXZ16KE8"}
+{"fact_type": "compatibility", "model": "KIT-AXC09K6E5", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-ADC0912K6E5", "outdoor_unit": "WH-UXZ09KE5"}
+{"fact_type": "compatibility", "model": "KIT-AXC12K6E5", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-ADC0912K6E5", "outdoor_unit": "WH-UXZ12KE5"}
+{"fact_type": "compatibility", "model": "KIT-AXC09K9E8", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-ADC0912K9E8", "outdoor_unit": "WH-UXZ09KE8"}
+{"fact_type": "compatibility", "model": "KIT-AXC12K9E8", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-ADC0912K9E8", "outdoor_unit": "WH-UXZ12KE8"}
+{"fact_type": "compatibility", "model": "KIT-AXC16K9E8", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-ADC16K9E8", "outdoor_unit": "WH-UXZ16KE8"}
+{"fact_type": "compatibility", "model": "KIT-AXC09K6E53", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-ADC0912K6E53", "outdoor_unit": "WH-UXZ09KE5"}
+{"fact_type": "compatibility", "model": "KIT-AXC12K6E53", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-ADC0912K6E53", "outdoor_unit": "WH-UXZ12KE5"}
+{"fact_type": "compatibility", "model": "KIT-AXC09K9E83", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-ADC0912K9E83", "outdoor_unit": "WH-UXZ09KE8"}
+{"fact_type": "compatibility", "model": "KIT-AXC12K9E83", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-ADC0912K9E83", "outdoor_unit": "WH-UXZ12KE8"}
+{"fact_type": "compatibility", "model": "KIT-AXC16K9E83", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-ADC16K9E83", "outdoor_unit": "WH-UXZ16KE8"}
+{"fact_type": "compatibility", "model": "WH-MDC05J3E5-1", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-MDC05J3E5-1", "outdoor_unit": ""}
+{"fact_type": "compatibility", "model": "WH-MDC07J3E5-1", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-MDC07J3E5-1", "outdoor_unit": ""}
+{"fact_type": "compatibility", "model": "WH-MDC09J3E5-1", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-MDC09J3E5-1", "outdoor_unit": ""}
+{"fact_type": "compatibility", "model": "KIT-WQC09K3E8", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-SXC09K3E8", "outdoor_unit": "WH-UQZ09KE8"}
+{"fact_type": "compatibility", "model": "KIT-WQC12K9E8", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-SXC12K9E8", "outdoor_unit": "WH-UQZ12KE8"}
+{"fact_type": "compatibility", "model": "KIT-WQC16K9E8", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-SXC16K9E8", "outdoor_unit": "WH-UQZ16KE8"}
+{"fact_type": "compatibility", "model": "KIT-AQC09K9E8", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-ADC0912K9E8", "outdoor_unit": "WH-UQZ09KE8"}
+{"fact_type": "compatibility", "model": "KIT-AQC12K9E8", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-ADC0912K9E8", "outdoor_unit": "WH-UQZ12KE8"}
+{"fact_type": "compatibility", "model": "KIT-AQC16K9E8", "family": "Aquarea", "series": "T-CAP", "generation": "K", "indoor_unit": "WH-ADC16K9E8", "outdoor_unit": "WH-UQZ16KE8"}
+{"fact_type": "compatibility", "model": "WH-MXC09J3E5", "family": "Aquarea", "series": "T-CAP", "generation": "J", "indoor_unit": "WH-MXC09J3E5", "outdoor_unit": ""}
+{"fact_type": "compatibility", "model": "WH-MXC12J6E5", "family": "Aquarea", "series": "T-CAP", "generation": "J", "indoor_unit": "WH-MXC12J6E5", "outdoor_unit": ""}
+{"fact_type": "compatibility", "model": "WH-MXC09J3E8", "family": "Aquarea", "series": "T-CAP", "generation": "J", "indoor_unit": "WH-MXC09J3E8", "outdoor_unit": ""}
+{"fact_type": "compatibility", "model": "WH-MXC12J9E8", "family": "Aquarea", "series": "T-CAP", "generation": "J", "indoor_unit": "WH-MXC12J9E8", "outdoor_unit": ""}
+{"fact_type": "compatibility", "model": "WH-MXC16J9E8", "family": "Aquarea", "series": "T-CAP", "generation": "J", "indoor_unit": "WH-MXC16J9E8", "outdoor_unit": ""}

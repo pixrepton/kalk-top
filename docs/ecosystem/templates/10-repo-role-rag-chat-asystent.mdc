@@ -1,0 +1,38 @@
+---
+description: "rag-chat-asystent: knowledge, explainability, future orchestration. Does NOT own calculation, document generation, or mail transport."
+alwaysApply: true
+---
+
+# rag-chat-asystent — Repo Role
+
+## Role in ecosystem
+
+**Knowledge + explainability + future orchestration layer.** Retrieves evidence, grounds answers, explains logic. May call kalk-top (calculator) and top-instal-generator via adapters. Does NOT own calculation, document rendering, or mail ingress. Prepares for agentic orchestration; does not yet replace other modules.
+
+## What this repo does NOT do
+
+- Own HVAC calculation or produce OfferDTO (that is kalk-top)
+- Render DOCX/PDF (that is top-instal-generator)
+- Poll Gmail or parse mail (that is topinstal-mail-ingress)
+- Become the single "agent that does everything" — orchestrate via stable APIs, do not absorb their logic
+
+## Local rules
+
+- Use kernel envelopes and adapters for calculator/generator integration
+- RAG retrieves and explains; it may invoke tools but does not duplicate their logic
+- Keep retrieval, grounding, and generation as core; orchestration as a layer on top
+- Do not move calculation or document logic into this repo
+
+## Cross-repo impact check
+
+Before changing kernel contract, calculator adapter, or generator adapter: assess impact on kalk-top and top-instal-generator. Update `docs/ecosystem/TOPINSTAL_ECOSYSTEM_STATE.md` if contracts change (see update protocol).
+
+## When unsure
+
+- Does this logic belong here? → Check ecosystem constitution. RAG explains and orchestrates; it does not calculate or render.
+- Will this duplicate kalk-top or generator logic? → Avoid. Call their APIs instead.
+- Should I add mail parsing or document rendering? → No. That belongs to mail-ingress and generator.
+
+## Do not assume ownership
+
+Do not absorb calculation, document generation, or mail transport. Use adapters to invoke other modules; do not reimplement their logic.

@@ -1,0 +1,1373 @@
+{
+    "schema_version":  "equipment_catalog_v1",
+    "data_version":  "2026-03-01",
+    "currency":  "PLN",
+    "vat_rate":  0.08,
+    "pumps":  [
+                  {
+                      "model":  "KIT-WC03K3E5",
+                      "power_kw":  3,
+                      "series":  "K",
+                      "type":  "split",
+                      "phase":  1,
+                      "selection_range_kw":  {
+                                                 "surface":  {
+                                                                 "min":  3,
+                                                                 "max":  4.2
+                                                             },
+                                                 "mixed":  {
+                                                               "min":  3,
+                                                               "max":  4.2
+                                                           },
+                                                 "radiators":  {
+                                                                   "min":  2.5,
+                                                                   "max":  3.5
+                                                               }
+                                             },
+                      "pricing":  {
+                                      "split_net":  12200,
+                                      "aio_premium_net":  17500
+                                  },
+                      "pair":  {
+                                   "aio_model":  "KIT-ADC03K3E5"
+                               },
+                      "technical":  {
+                                        "refrigerant":  "R32",
+                                        "aux_heater":  {
+                                                           "code":  "E3",
+                                                           "power_kW":  3
+                                                       },
+                                        "heating":  {
+                                                        "A7W35_kW":  3.20,
+                                                        "A7W35_COP":  5.33,
+                                                        "A7W55_kW":  3.20,
+                                                        "A7W55_COP":  2.81
+                                                    },
+                                        "cooling":  {
+                                                        "A35W7_kW":  3.20,
+                                                        "A35W7_EER":  4.71
+                                                    },
+                                        "scop":  {
+                                                     "35C_value":  5.07,
+                                                     "35C_class":  "A+++",
+                                                     "55C_value":  3.47,
+                                                     "55C_class":  "A++"
+                                                 },
+                                        "indoor_unit":  {
+                                                            "model":  "SDC0309K3E5",
+                                                            "weight_kg":  40
+                                                        },
+                                        "outdoor_unit":  {
+                                                             "model":  "UDZ03KE5",
+                                                             "sound_dB":  55,
+                                                             "dimensions_mm":  {
+                                                                                   "h":  622,
+                                                                                   "w":  824,
+                                                                                   "d":  298
+                                                                               },
+                                                             "weight_kg":  37
+                                                         }
+                                    }
+                  },
+                  {
+                      "model":  "KIT-WC05K3E5",
+                      "power_kw":  5,
+                      "series":  "K",
+                      "type":  "split",
+                      "phase":  1,
+                      "selection_range_kw":  {
+                                                 "surface":  {
+                                                                 "min":  4.3,
+                                                                 "max":  6.5
+                                                             },
+                                                 "mixed":  {
+                                                               "min":  4.3,
+                                                               "max":  6.4
+                                                           },
+                                                 "radiators":  {
+                                                                   "min":  3.5,
+                                                                   "max":  6
+                                                               }
+                                             },
+                      "pricing":  {
+                                      "split_net":  12700,
+                                      "aio_premium_net":  18000
+                                  },
+                      "pair":  {
+                                   "aio_model":  "KIT-ADC05K3E5"
+                               },
+                      "technical":  {
+                                        "refrigerant":  "R32",
+                                        "aux_heater":  {
+                                                           "code":  "E3",
+                                                           "power_kW":  3
+                                                       },
+                                        "heating":  {
+                                                        "A7W35_kW":  5.00,
+                                                        "A7W35_COP":  5.10,
+                                                        "A7W55_kW":  5.00,
+                                                        "A7W55_COP":  2.93
+                                                    },
+                                        "cooling":  {
+                                                        "A35W7_kW":  5.00,
+                                                        "A35W7_EER":  4.90
+                                                    },
+                                        "scop":  {
+                                                     "35C_value":  5.12,
+                                                     "35C_class":  "A+++",
+                                                     "55C_value":  3.62,
+                                                     "55C_class":  "A++"
+                                                 },
+                                        "indoor_unit":  {
+                                                            "model":  "SDC0309K3E5",
+                                                            "weight_kg":  40
+                                                        },
+                                        "outdoor_unit":  {
+                                                             "model":  "UDZ05KE5",
+                                                             "sound_dB":  55,
+                                                             "dimensions_mm":  {
+                                                                                   "h":  795,
+                                                                                   "w":  875,
+                                                                                   "d":  380
+                                                                               },
+                                                             "weight_kg":  55
+                                                         }
+                                    }
+                  },
+                  {
+                      "model":  "KIT-WC07K3E5",
+                      "power_kw":  7,
+                      "series":  "K",
+                      "type":  "split",
+                      "phase":  1,
+                      "selection_range_kw":  {
+                                                 "surface":  {
+                                                                 "min":  5.5,
+                                                                 "max":  7
+                                                             },
+                                                 "mixed":  {
+                                                               "min":  5,
+                                                               "max":  6.5
+                                                           },
+                                                 "radiators":  {
+                                                                   "min":  4.5,
+                                                                   "max":  6.5
+                                                               }
+                                             },
+                      "pricing":  {
+                                      "split_net":  13500,
+                                      "aio_premium_net":  18900
+                                  },
+                      "pair":  {
+                                   "aio_model":  "KIT-ADC07K3E5"
+                               },
+                      "technical":  {
+                                        "refrigerant":  "R32",
+                                        "aux_heater":  {
+                                                           "code":  "E3",
+                                                           "power_kW":  3
+                                                       },
+                                        "heating":  {
+                                                        "A7W35_kW":  7.00,
+                                                        "A7W35_COP":  4.86,
+                                                        "A7W55_kW":  7.00,
+                                                        "A7W55_COP":  2.92
+                                                    },
+                                        "cooling":  {
+                                                        "A35W7_kW":  7.00,
+                                                        "A35W7_EER":  4.72
+                                                    },
+                                        "scop":  {
+                                                     "35C_value":  4.90,
+                                                     "35C_class":  "A++",
+                                                     "55C_value":  3.62,
+                                                     "55C_class":  "A++"
+                                                 },
+                                        "indoor_unit":  {
+                                                            "model":  "SDC0309K3E5",
+                                                            "weight_kg":  40
+                                                        },
+                                        "outdoor_unit":  {
+                                                             "model":  "UDZ07KE5",
+                                                             "sound_dB":  56,
+                                                             "dimensions_mm":  {
+                                                                                   "h":  795,
+                                                                                   "w":  875,
+                                                                                   "d":  380
+                                                                               },
+                                                             "weight_kg":  55
+                                                         }
+                                    }
+                  },
+                  {
+                      "model":  "KIT-WC09K3E5",
+                      "power_kw":  9,
+                      "series":  "K",
+                      "type":  "split",
+                      "phase":  1,
+                      "selection_range_kw":  {
+                                                 "surface":  {
+                                                                 "min":  6.7,
+                                                                 "max":  8
+                                                             },
+                                                 "mixed":  {
+                                                               "min":  6.5,
+                                                               "max":  8
+                                                           },
+                                                 "radiators":  {
+                                                                   "min":  5.5,
+                                                                   "max":  7.5
+                                                               }
+                                             },
+                      "pricing":  {
+                                      "split_net":  14700,
+                                      "split400_net":  15500,
+                                      "aio_premium_net":  20000,
+                                      "aio_premium400_net":  22800
+                                  },
+                      "pair":  {
+                                   "aio_model":  "KIT-ADC09K3E5"
+                               },
+                      "technical":  {
+                                        "refrigerant":  "R32",
+                                        "aux_heater":  {
+                                                           "code":  "E3",
+                                                           "power_kW":  3
+                                                       },
+                                        "heating":  {
+                                                        "A7W35_kW":  9.00,
+                                                        "A7W35_COP":  4.55,
+                                                        "A7W55_kW":  9.00,
+                                                        "A7W55_COP":  2.93
+                                                    },
+                                        "cooling":  {
+                                                        "A35W7_kW":  9.00,
+                                                        "A35W7_EER":  4.18
+                                                    },
+                                        "scop":  {
+                                                     "35C_value":  4.44,
+                                                     "35C_class":  "A++",
+                                                     "55C_value":  3.41,
+                                                     "55C_class":  "A++"
+                                                 },
+                                        "indoor_unit":  {
+                                                            "model":  "SDC0309K3E5",
+                                                            "weight_kg":  40
+                                                        },
+                                        "outdoor_unit":  {
+                                                             "model":  "UDZ09KE5",
+                                                             "sound_dB":  56,
+                                                             "dimensions_mm":  {
+                                                                                   "h":  795,
+                                                                                   "w":  875,
+                                                                                   "d":  380
+                                                                               },
+                                                             "weight_kg":  55
+                                                         }
+                                    }
+                  },
+                  {
+                      "model":  "KIT-WC09K3E8",
+                      "power_kw":  9,
+                      "series":  "K",
+                      "type":  "split",
+                      "phase":  3,
+                      "selection_range_kw":  {
+                                                 "surface":  {
+                                                                 "min":  8,
+                                                                 "max":  11
+                                                             },
+                                                 "mixed":  {
+                                                               "min":  8.1,
+                                                               "max":  10.5
+                                                           },
+                                                 "radiators":  {
+                                                                   "min":  7.5,
+                                                                   "max":  10
+                                                               }
+                                             },
+                      "pricing":  {
+                                      "split_net":  14700,
+                                      "split400_net":  15500,
+                                      "aio_premium_net":  20000,
+                                      "aio_premium400_net":  22800
+                                  },
+                      "pair":  {
+                                   "aio_model":  "KIT-ADC09K9E8",
+                                   "aio_model_large_cwu":  "KIT-ADC09K9E83"
+                               },
+                      "technical":  {
+                                        "refrigerant":  "R32",
+                                        "aux_heater":  {
+                                                           "code":  "E8",
+                                                           "power_kW":  3
+                                                       },
+                                        "heating":  {
+                                                        "A7W35_kW":  9.00,
+                                                        "A7W35_COP":  4.90,
+                                                        "A7W55_kW":  9.00,
+                                                        "A7W55_COP":  2.97
+                                                    },
+                                        "cooling":  {
+                                                        "A35W7_kW":  8.80,
+                                                        "A35W7_EER":  4.63
+                                                    },
+                                        "scop":  {
+                                                     "35C_value":  4.96,
+                                                     "35C_class":  "A+++",
+                                                     "55C_value":  3.57,
+                                                     "55C_class":  "A++"
+                                                 },
+                                        "indoor_unit":  {
+                                                            "model":  "SDC09K3E8",
+                                                            "weight_kg":  40
+                                                        },
+                                        "outdoor_unit":  {
+                                                             "model":  "UDZ09KE8",
+                                                             "sound_dB":  65,
+                                                             "dimensions_mm":  {
+                                                                                   "h":  1340,
+                                                                                   "w":  900,
+                                                                                   "d":  320
+                                                                               },
+                                                             "weight_kg":  90
+                                                         }
+                                    }
+                  },
+                  {
+                      "model":  "KIT-WC12K9E8",
+                      "power_kw":  12,
+                      "series":  "K",
+                      "type":  "split",
+                      "phase":  3,
+                      "selection_range_kw":  {
+                                                 "surface":  {
+                                                                 "min":  10.5,
+                                                                 "max":  14.5
+                                                             },
+                                                 "mixed":  {
+                                                               "min":  9.5,
+                                                               "max":  13.5
+                                                           },
+                                                 "radiators":  {
+                                                                   "min":  8.5,
+                                                                   "max":  13
+                                                               }
+                                             },
+                      "pricing":  {
+                                      "split400_net":  17650,
+                                      "aio_premium400_net":  24100
+                                  },
+                      "pair":  {
+                                   "aio_model":  "KIT-ADC12K9E8",
+                                   "aio_model_large_cwu":  "KIT-ADC12K9E83"
+                               },
+                      "technical":  {
+                                        "refrigerant":  "R32",
+                                        "aux_heater":  {
+                                                           "code":  "E8",
+                                                           "power_kW":  9
+                                                       },
+                                        "heating":  {
+                                                        "A7W35_kW":  12.10,
+                                                        "A7W35_COP":  4.78,
+                                                        "A7W55_kW":  12.10,
+                                                        "A7W55_COP":  2.90
+                                                    },
+                                        "cooling":  {
+                                                        "A35W7_kW":  10.70,
+                                                        "A35W7_EER":  3.92
+                                                    },
+                                        "scop":  {
+                                                     "35C_value":  4.58,
+                                                     "35C_class":  "A+++",
+                                                     "55C_value":  3.33,
+                                                     "55C_class":  "A++"
+                                                 },
+                                        "indoor_unit":  {
+                                                            "model":  "SDC12K9E8",
+                                                            "weight_kg":  41
+                                                        },
+                                        "outdoor_unit":  {
+                                                             "model":  "UDZ12KE8",
+                                                             "sound_dB":  65,
+                                                             "dimensions_mm":  {
+                                                                                   "h":  1340,
+                                                                                   "w":  900,
+                                                                                   "d":  320
+                                                                               },
+                                                             "weight_kg":  90
+                                                         }
+                                    }
+                  },
+                  {
+                      "model":  "KIT-WC16K9E8",
+                      "power_kw":  16,
+                      "series":  "K",
+                      "type":  "split",
+                      "phase":  3,
+                      "selection_range_kw":  {
+                                                 "surface":  {
+                                                                 "min":  12.5,
+                                                                 "max":  17.5
+                                                             },
+                                                 "mixed":  {
+                                                               "min":  11,
+                                                               "max":  16
+                                                           },
+                                                 "radiators":  {
+                                                                   "min":  10,
+                                                                   "max":  14.5
+                                                               }
+                                             },
+                      "pricing":  {
+                                      "split400_net":  21000,
+                                      "aio_premium400_net":  25750
+                                  },
+                      "pair":  {
+                                   "aio_model":  "KIT-ADC16K9E8",
+                                   "aio_model_large_cwu":  "KIT-ADC16K9E83"
+                               },
+                      "technical":  {
+                                        "refrigerant":  "R32",
+                                        "aux_heater":  {
+                                                           "code":  "E8",
+                                                           "power_kW":  9
+                                                       },
+                                        "heating":  {
+                                                        "A7W35_kW":  16.00,
+                                                        "A7W35_COP":  4.31,
+                                                        "A7W55_kW":  16.00,
+                                                        "A7W55_COP":  2.72
+                                                    },
+                                        "cooling":  {
+                                                        "A35W7_kW":  15.50,
+                                                        "A35W7_EER":  3.60
+                                                    },
+                                        "scop":  {
+                                                     "35C_value":  4.46,
+                                                     "35C_class":  "A++",
+                                                     "55C_value":  3.40,
+                                                     "55C_class":  "A++"
+                                                 },
+                                        "indoor_unit":  {
+                                                            "model":  "SDC16K9E8",
+                                                            "weight_kg":  41
+                                                        },
+                                        "outdoor_unit":  {
+                                                             "model":  "UDZ16KE8",
+                                                             "sound_dB":  65,
+                                                             "dimensions_mm":  {
+                                                                                   "h":  1340,
+                                                                                   "w":  900,
+                                                                                   "d":  320
+                                                                               },
+                                                             "weight_kg":  103
+                                                         }
+                                    }
+                  },
+                  {
+                      "model":  "KIT-ADC03K3E5",
+                      "power_kw":  3,
+                      "series":  "K",
+                      "type":  "all-in-one",
+                      "phase":  1,
+                      "cwu_tank":  185,
+                      "selection_range_kw":  {
+                                                 "surface":  {
+                                                                 "min":  3,
+                                                                 "max":  4.2
+                                                             },
+                                                 "mixed":  {
+                                                               "min":  3,
+                                                               "max":  4.2
+                                                           },
+                                                 "radiators":  {
+                                                                   "min":  2.5,
+                                                                   "max":  3.5
+                                                               }
+                                             },
+                      "pricing":  {
+                                      "split_net":  12200,
+                                      "aio_premium_net":  17500
+                                  },
+                      "pair":  {
+                                   "aio_model":  null
+                               },
+                      "technical":  {
+                                        "refrigerant":  "R32",
+                                        "aux_heater":  {
+                                                           "code":  "E3",
+                                                           "power_kW":  3
+                                                       },
+                                        "heating":  {
+                                                        "A7W35_kW":  3.20,
+                                                        "A7W35_COP":  5.33,
+                                                        "A7W55_kW":  3.20,
+                                                        "A7W55_COP":  2.81
+                                                    },
+                                        "cooling":  {
+                                                        "A35W7_kW":  3.20,
+                                                        "A35W7_EER":  4.71
+                                                    },
+                                        "scop":  {
+                                                     "35C_value":  5.07,
+                                                     "35C_class":  "A+++",
+                                                     "55C_value":  3.47,
+                                                     "55C_class":  "A++"
+                                                 },
+                                        "indoor_unit":  {
+                                                            "model":  "ADC0309K3E5",
+                                                            "weight_kg":  100
+                                                        },
+                                        "outdoor_unit":  {
+                                                             "model":  "UDZ03KE5",
+                                                             "sound_dB":  55,
+                                                             "dimensions_mm":  {
+                                                                                   "h":  622,
+                                                                                   "w":  824,
+                                                                                   "d":  298
+                                                                               },
+                                                             "weight_kg":  37
+                                                         }
+                                    }
+                  },
+                  {
+                      "model":  "KIT-ADC05K3E5",
+                      "power_kw":  5,
+                      "series":  "K",
+                      "type":  "all-in-one",
+                      "phase":  1,
+                      "cwu_tank":  185,
+                      "selection_range_kw":  {
+                                                 "surface":  {
+                                                                 "min":  4.3,
+                                                                 "max":  6.5
+                                                             },
+                                                 "mixed":  {
+                                                               "min":  4.3,
+                                                               "max":  6.4
+                                                           },
+                                                 "radiators":  {
+                                                                   "min":  3.5,
+                                                                   "max":  6
+                                                               }
+                                             },
+                      "pricing":  {
+                                      "split_net":  12700,
+                                      "aio_premium_net":  18000
+                                  },
+                      "pair":  {
+                                   "aio_model":  null
+                               },
+                      "technical":  {
+                                        "refrigerant":  "R32",
+                                        "aux_heater":  {
+                                                           "code":  "E3",
+                                                           "power_kW":  3
+                                                       },
+                                        "heating":  {
+                                                        "A7W35_kW":  5.00,
+                                                        "A7W35_COP":  5.10,
+                                                        "A7W55_kW":  5.00,
+                                                        "A7W55_COP":  2.93
+                                                    },
+                                        "cooling":  {
+                                                        "A35W7_kW":  5.00,
+                                                        "A35W7_EER":  4.90
+                                                    },
+                                        "scop":  {
+                                                     "35C_value":  5.12,
+                                                     "35C_class":  "A+++",
+                                                     "55C_value":  3.62,
+                                                     "55C_class":  "A++"
+                                                 },
+                                        "indoor_unit":  {
+                                                            "model":  "ADC0309K3E5",
+                                                            "weight_kg":  100
+                                                        },
+                                        "outdoor_unit":  {
+                                                             "model":  "UDZ05KE5",
+                                                             "sound_dB":  55,
+                                                             "dimensions_mm":  {
+                                                                                   "h":  795,
+                                                                                   "w":  875,
+                                                                                   "d":  380
+                                                                               },
+                                                             "weight_kg":  55
+                                                         }
+                                    }
+                  },
+                  {
+                      "model":  "KIT-ADC07K3E5",
+                      "power_kw":  7,
+                      "series":  "K",
+                      "type":  "all-in-one",
+                      "phase":  1,
+                      "cwu_tank":  185,
+                      "selection_range_kw":  {
+                                                 "surface":  {
+                                                                 "min":  5.5,
+                                                                 "max":  7
+                                                             },
+                                                 "mixed":  {
+                                                               "min":  5,
+                                                               "max":  6.5
+                                                           },
+                                                 "radiators":  {
+                                                                   "min":  4.5,
+                                                                   "max":  6.5
+                                                               }
+                                             },
+                      "pricing":  {
+                                      "split_net":  13500,
+                                      "aio_premium_net":  18900
+                                  },
+                      "pair":  {
+                                   "aio_model":  null
+                               },
+                      "technical":  {
+                                        "refrigerant":  "R32",
+                                        "aux_heater":  {
+                                                           "code":  "E3",
+                                                           "power_kW":  3
+                                                       },
+                                        "heating":  {
+                                                        "A7W35_kW":  7.00,
+                                                        "A7W35_COP":  4.86,
+                                                        "A7W55_kW":  7.00,
+                                                        "A7W55_COP":  2.92
+                                                    },
+                                        "cooling":  {
+                                                        "A35W7_kW":  7.00,
+                                                        "A35W7_EER":  4.72
+                                                    },
+                                        "scop":  {
+                                                     "35C_value":  4.90,
+                                                     "35C_class":  "A++",
+                                                     "55C_value":  3.62,
+                                                     "55C_class":  "A++"
+                                                 },
+                                        "indoor_unit":  {
+                                                            "model":  "ADC0309K3E5",
+                                                            "weight_kg":  100
+                                                        },
+                                        "outdoor_unit":  {
+                                                             "model":  "UDZ07KE5",
+                                                             "sound_dB":  56,
+                                                             "dimensions_mm":  {
+                                                                                   "h":  795,
+                                                                                   "w":  875,
+                                                                                   "d":  380
+                                                                               },
+                                                             "weight_kg":  55
+                                                         }
+                                    }
+                  },
+                  {
+                      "model":  "KIT-ADC09K3E5",
+                      "power_kw":  9,
+                      "series":  "K",
+                      "type":  "all-in-one",
+                      "phase":  1,
+                      "cwu_tank":  185,
+                      "selection_range_kw":  {
+                                                 "surface":  {
+                                                                 "min":  6.7,
+                                                                 "max":  8
+                                                             },
+                                                 "mixed":  {
+                                                               "min":  6.5,
+                                                               "max":  8
+                                                           },
+                                                 "radiators":  {
+                                                                   "min":  5.5,
+                                                                   "max":  7.5
+                                                               }
+                                             },
+                      "pricing":  {
+                                      "split_net":  14700,
+                                      "split400_net":  15500,
+                                      "aio_premium_net":  20000,
+                                      "aio_premium400_net":  22800
+                                  },
+                      "pair":  {
+                                   "aio_model":  null
+                               },
+                      "technical":  {
+                                        "refrigerant":  "R32",
+                                        "aux_heater":  {
+                                                           "code":  "E3",
+                                                           "power_kW":  3
+                                                       },
+                                        "heating":  {
+                                                        "A7W35_kW":  9.00,
+                                                        "A7W35_COP":  4.55,
+                                                        "A7W55_kW":  9.00,
+                                                        "A7W55_COP":  2.93
+                                                    },
+                                        "cooling":  {
+                                                        "A35W7_kW":  9.00,
+                                                        "A35W7_EER":  4.18
+                                                    },
+                                        "scop":  {
+                                                     "35C_value":  4.44,
+                                                     "35C_class":  "A++",
+                                                     "55C_value":  3.41,
+                                                     "55C_class":  "A++"
+                                                 },
+                                        "indoor_unit":  {
+                                                            "model":  "ADC0309K3E5",
+                                                            "weight_kg":  100
+                                                        },
+                                        "outdoor_unit":  {
+                                                             "model":  "UDZ09KE5",
+                                                             "sound_dB":  56,
+                                                             "dimensions_mm":  {
+                                                                                   "h":  795,
+                                                                                   "w":  875,
+                                                                                   "d":  380
+                                                                               },
+                                                             "weight_kg":  55
+                                                         }
+                                    }
+                  },
+                  {
+                      "model":  "KIT-ADC09K9E8",
+                      "power_kw":  9,
+                      "series":  "K",
+                      "type":  "all-in-one",
+                      "phase":  3,
+                      "cwu_tank":  185,
+                      "selection_range_kw":  {
+                                                 "surface":  {
+                                                                 "min":  8,
+                                                                 "max":  11
+                                                             },
+                                                 "mixed":  {
+                                                               "min":  8.1,
+                                                               "max":  10.5
+                                                           },
+                                                 "radiators":  {
+                                                                   "min":  7.5,
+                                                                   "max":  10
+                                                               }
+                                             },
+                      "pricing":  {
+                                      "split_net":  14700,
+                                      "split400_net":  15500,
+                                      "aio_premium_net":  20000,
+                                      "aio_premium400_net":  22800
+                                  },
+                      "pair":  {
+                                   "aio_model":  null
+                               },
+                      "technical":  {
+                                        "refrigerant":  "R32",
+                                        "aux_heater":  {
+                                                           "code":  "E8",
+                                                           "power_kW":  9
+                                                       },
+                                        "heating":  {
+                                                        "A7W35_kW":  9.00,
+                                                        "A7W35_COP":  4.90,
+                                                        "A7W55_kW":  9.00,
+                                                        "A7W55_COP":  2.97
+                                                    },
+                                        "cooling":  {
+                                                        "A35W7_kW":  8.80,
+                                                        "A35W7_EER":  4.63
+                                                    },
+                                        "scop":  {
+                                                     "35C_value":  4.96,
+                                                     "35C_class":  "A+++",
+                                                     "55C_value":  3.57,
+                                                     "55C_class":  "A++"
+                                                 },
+                                        "indoor_unit":  {
+                                                            "model":  "ADC0912K9E8",
+                                                            "weight_kg":  102
+                                                        },
+                                        "outdoor_unit":  {
+                                                             "model":  "UDZ09KE8",
+                                                             "sound_dB":  65,
+                                                             "dimensions_mm":  {
+                                                                                   "h":  1340,
+                                                                                   "w":  900,
+                                                                                   "d":  320
+                                                                               },
+                                                             "weight_kg":  90
+                                                         }
+                                    }
+                  },
+                  {
+                      "model":  "KIT-ADC12K9E8",
+                      "power_kw":  12,
+                      "series":  "K",
+                      "type":  "all-in-one",
+                      "phase":  3,
+                      "cwu_tank":  185,
+                      "selection_range_kw":  {
+                                                 "surface":  {
+                                                                 "min":  10.5,
+                                                                 "max":  14.5
+                                                             },
+                                                 "mixed":  {
+                                                               "min":  9.5,
+                                                               "max":  13.5
+                                                           },
+                                                 "radiators":  {
+                                                                   "min":  8.5,
+                                                                   "max":  13
+                                                               }
+                                             },
+                      "pricing":  {
+                                      "split400_net":  17650,
+                                      "aio_premium400_net":  24100
+                                  },
+                      "pair":  {
+                                   "aio_model":  null
+                               },
+                      "technical":  {
+                                        "refrigerant":  "R32",
+                                        "aux_heater":  {
+                                                           "code":  "E8",
+                                                           "power_kW":  9
+                                                       },
+                                        "heating":  {
+                                                        "A7W35_kW":  12.10,
+                                                        "A7W35_COP":  4.78,
+                                                        "A7W55_kW":  12.00,
+                                                        "A7W55_COP":  2.90
+                                                    },
+                                        "cooling":  {
+                                                        "A35W7_kW":  10.70,
+                                                        "A35W7_EER":  3.92
+                                                    },
+                                        "scop":  {
+                                                     "35C_value":  4.58,
+                                                     "35C_class":  "A++",
+                                                     "55C_value":  3.33,
+                                                     "55C_class":  "A++"
+                                                 },
+                                        "indoor_unit":  {
+                                                            "model":  "ADC0912K9E8",
+                                                            "weight_kg":  102
+                                                        },
+                                        "outdoor_unit":  {
+                                                             "model":  "UDZ12KE8",
+                                                             "sound_dB":  65,
+                                                             "dimensions_mm":  {
+                                                                                   "h":  1340,
+                                                                                   "w":  900,
+                                                                                   "d":  320
+                                                                               },
+                                                             "weight_kg":  90
+                                                         }
+                                    }
+                  },
+                  {
+                      "model":  "KIT-ADC16K9E8",
+                      "power_kw":  16,
+                      "series":  "K",
+                      "type":  "all-in-one",
+                      "phase":  3,
+                      "cwu_tank":  185,
+                      "selection_range_kw":  {
+                                                 "surface":  {
+                                                                 "min":  12.5,
+                                                                 "max":  17.5
+                                                             },
+                                                 "mixed":  {
+                                                               "min":  11,
+                                                               "max":  16
+                                                           },
+                                                 "radiators":  {
+                                                                   "min":  10,
+                                                                   "max":  14.5
+                                                               }
+                                             },
+                      "pricing":  {
+                                      "split400_net":  21000,
+                                      "aio_premium400_net":  25750
+                                  },
+                      "pair":  {
+                                   "aio_model":  null
+                               },
+                      "technical":  {
+                                        "refrigerant":  "R32",
+                                        "aux_heater":  {
+                                                           "code":  "E8",
+                                                           "power_kW":  9
+                                                       },
+                                        "heating":  {
+                                                        "A7W35_kW":  16.00,
+                                                        "A7W35_COP":  4.31,
+                                                        "A7W55_kW":  14.70,
+                                                        "A7W55_COP":  2.72
+                                                    },
+                                        "cooling":  {
+                                                        "A35W7_kW":  15.50,
+                                                        "A35W7_EER":  3.60
+                                                    },
+                                        "scop":  {
+                                                     "35C_value":  4.46,
+                                                     "35C_class":  "A++",
+                                                     "55C_value":  3.40,
+                                                     "55C_class":  "A++"
+                                                 },
+                                        "indoor_unit":  {
+                                                            "model":  "ADC16K9E8",
+                                                            "weight_kg":  103
+                                                        },
+                                        "outdoor_unit":  {
+                                                             "model":  "UDZ16KE8",
+                                                             "sound_dB":  65,
+                                                             "dimensions_mm":  {
+                                                                                   "h":  1340,
+                                                                                   "w":  900,
+                                                                                   "d":  320
+                                                                               },
+                                                             "weight_kg":  103
+                                                         }
+                                    }
+                  },
+                  {
+                      "model":  "KIT-ADC09K9E83",
+                      "power_kw":  9,
+                      "series":  "K",
+                      "type":  "all-in-one",
+                      "phase":  3,
+                      "cwu_tank":  260,
+                      "selection_range_kw":  {
+                                                 "surface":  {
+                                                                 "min":  8,
+                                                                 "max":  11
+                                                             },
+                                                 "mixed":  {
+                                                               "min":  8.1,
+                                                               "max":  10.5
+                                                           },
+                                                 "radiators":  {
+                                                                   "min":  7.5,
+                                                                   "max":  10
+                                                               }
+                                             },
+                      "pricing":  {
+                                      "split_net":  14700,
+                                      "split400_net":  15500,
+                                      "aio_premium_net":  20000,
+                                      "aio_premium400_net":  22800
+                                  },
+                      "pair":  {
+                                   "aio_model":  null
+                               },
+                      "technical":  {
+                                        "refrigerant":  "R32",
+                                        "aux_heater":  {
+                                                           "code":  "E83",
+                                                           "power_kW":  9
+                                                       },
+                                        "heating":  {
+                                                        "A7W35_kW":  9.00,
+                                                        "A7W35_COP":  4.90,
+                                                        "A7W55_kW":  9.00,
+                                                        "A7W55_COP":  2.97
+                                                    },
+                                        "cooling":  {
+                                                        "A35W7_kW":  8.80,
+                                                        "A35W7_EER":  4.63
+                                                    },
+                                        "scop":  {
+                                                     "35C_value":  4.96,
+                                                     "35C_class":  "A+++",
+                                                     "55C_value":  3.57,
+                                                     "55C_class":  "A++"
+                                                 },
+                                        "indoor_unit":  {
+                                                            "model":  "ADC0912K9E83",
+                                                            "weight_kg":  119
+                                                        },
+                                        "outdoor_unit":  {
+                                                             "model":  "UDZ09KE8",
+                                                             "sound_dB":  65,
+                                                             "dimensions_mm":  {
+                                                                                   "h":  1340,
+                                                                                   "w":  900,
+                                                                                   "d":  320
+                                                                               },
+                                                             "weight_kg":  90
+                                                         }
+                                    }
+                  },
+                  {
+                      "model":  "KIT-ADC12K9E83",
+                      "power_kw":  12,
+                      "series":  "K",
+                      "type":  "all-in-one",
+                      "phase":  3,
+                      "cwu_tank":  260,
+                      "selection_range_kw":  {
+                                                 "surface":  {
+                                                                 "min":  10.5,
+                                                                 "max":  14.5
+                                                             },
+                                                 "mixed":  {
+                                                               "min":  9.5,
+                                                               "max":  13.5
+                                                           },
+                                                 "radiators":  {
+                                                                   "min":  8.5,
+                                                                   "max":  13
+                                                               }
+                                             },
+                      "pricing":  {
+                                      "split400_net":  17650,
+                                      "aio_premium400_net":  24100
+                                  },
+                      "pair":  {
+                                   "aio_model":  null
+                               },
+                      "technical":  {
+                                        "refrigerant":  "R32",
+                                        "aux_heater":  {
+                                                           "code":  "E83",
+                                                           "power_kW":  9
+                                                       },
+                                        "heating":  {
+                                                        "A7W35_kW":  12.10,
+                                                        "A7W35_COP":  4.78,
+                                                        "A7W55_kW":  12.00,
+                                                        "A7W55_COP":  2.90
+                                                    },
+                                        "cooling":  {
+                                                        "A35W7_kW":  10.70,
+                                                        "A35W7_EER":  3.92
+                                                    },
+                                        "scop":  {
+                                                     "35C_value":  4.58,
+                                                     "35C_class":  "A++",
+                                                     "55C_value":  3.33,
+                                                     "55C_class":  "A++"
+                                                 },
+                                        "indoor_unit":  {
+                                                            "model":  "ADC0912K9E83",
+                                                            "weight_kg":  119
+                                                        },
+                                        "outdoor_unit":  {
+                                                             "model":  "UDZ12KE8",
+                                                             "sound_dB":  65,
+                                                             "dimensions_mm":  {
+                                                                                   "h":  1340,
+                                                                                   "w":  900,
+                                                                                   "d":  320
+                                                                               },
+                                                             "weight_kg":  90
+                                                         }
+                                    }
+                  },
+                  {
+                      "model":  "KIT-ADC16K9E83",
+                      "power_kw":  16,
+                      "series":  "K",
+                      "type":  "all-in-one",
+                      "phase":  3,
+                      "cwu_tank":  260,
+                      "selection_range_kw":  {
+                                                 "surface":  {
+                                                                 "min":  12.5,
+                                                                 "max":  17.5
+                                                             },
+                                                 "mixed":  {
+                                                               "min":  11,
+                                                               "max":  16
+                                                           },
+                                                 "radiators":  {
+                                                                   "min":  10,
+                                                                   "max":  14.5
+                                                               }
+                                             },
+                      "pricing":  {
+                                      "split400_net":  21000,
+                                      "aio_premium400_net":  25750
+                                  },
+                      "pair":  {
+                                   "aio_model":  null
+                               },
+                      "technical":  {
+                                        "refrigerant":  "R32",
+                                        "aux_heater":  {
+                                                           "code":  "E83",
+                                                           "power_kW":  9
+                                                       },
+                                        "heating":  {
+                                                        "A7W35_kW":  16.00,
+                                                        "A7W35_COP":  4.31,
+                                                        "A7W55_kW":  14.70,
+                                                        "A7W55_COP":  2.72
+                                                    },
+                                        "cooling":  {
+                                                        "A35W7_kW":  15.50,
+                                                        "A35W7_EER":  3.60
+                                                    },
+                                        "scop":  {
+                                                     "35C_value":  4.46,
+                                                     "35C_class":  "A++",
+                                                     "55C_value":  3.40,
+                                                     "55C_class":  "A++"
+                                                 },
+                                        "indoor_unit":  {
+                                                            "model":  "ADC16K9E83",
+                                                            "weight_kg":  120
+                                                        },
+                                        "outdoor_unit":  {
+                                                             "model":  "UDZ16KE8",
+                                                             "sound_dB":  65,
+                                                             "dimensions_mm":  {
+                                                                                   "h":  1340,
+                                                                                   "w":  900,
+                                                                                   "d":  320
+                                                                               },
+                                                             "weight_kg":  103
+                                                         }
+                                    }
+                  }
+               ],
+    "selection_policy":  {
+                             "schema_version":  "selection_policy_v1",
+                             "heating_type_aliases":  {
+                                                          "surface":  "surface",
+                                                          "underfloor":  "surface",
+                                                          "mixed":  "mixed",
+                                                          "radiators":  "radiators"
+                                                      },
+                             "preferred_type":  "split",
+                             "special_cases":  {
+                                                   "low_power_building":  {
+                                                                              "enabled":  true,
+                                                                              "demand_max_kw":  1.8,
+                                                                              "construction_types":  [
+                                                                                                         "canadian",
+                                                                                                         "skeleton",
+                                                                                                         "szkieletowy"
+                                                                                                     ],
+                                                                              "heated_area_max_m2":  80,
+                                                                              "indoor_temp_max_c":  21,
+                                                                              "force_model":  "KIT-WC03K3E5"
+                                                                          },
+                                                   "high_power_catalog_limit":  {
+                                                                                    "enabled":  true,
+                        "demand_min_kw":  15.9,
+                                                                                    "demand_max_kw":  25,
+                                                                                    "force_model":  "KIT-WC16K9E8"
+                                                                                }
+                                               },
+                             "fallback_strategy":  {
+                                                       "mode":  "nearest",
+                                                       "reason_code":  "SELECTION_NO_EXACT_MATCH"
+                                                   }
+                         },
+    "pricing_sections":  {
+                             "cwu":  {
+                                         "emalia":  {
+                                                        "150":  2250,
+                                                        "200":  2750,
+                                                        "250":  2900,
+                                                        "300":  3000,
+                                                        "400":  3600,
+                                                        "500":  4200
+                                                    },
+                                         "inox":  {
+                                                      "150":  2800,
+                                                      "200":  3200,
+                                                      "250":  3600,
+                                                      "300":  4100,
+                                                      "400":  5200,
+                                                      "500":  6100
+                                                  },
+                                         "none":  0
+                                     },
+                             "buffer":  {
+                                            "0":  {
+                                                      "sprzeglo":  0,
+                                                      "na_powrocie":  0
+                                                  },
+                                            "40":  {
+                                                       "sprzeglo":  1250,
+                                                       "na_powrocie":  650
+                                                   },
+                                            "60":  {
+                                                       "sprzeglo":  1250,
+                                                       "na_powrocie":  650
+                                                   },
+                                            "80":  {
+                                                       "sprzeglo":  1300,
+                                                       "na_powrocie":  700
+                                                   },
+                                            "100":  {
+                                                        "sprzeglo":  1750,
+                                                        "na_powrocie":  1150
+                                                    },
+                                            "120":  {
+                                                        "sprzeglo":  1900,
+                                                        "na_powrocie":  1250
+                                                    },
+                                            "140":  {
+                                                        "sprzeglo":  2050,
+                                                        "na_powrocie":  1400
+                                                    },
+                                            "150":  {
+                                                        "sprzeglo":  2050,
+                                                        "na_powrocie":  1400
+                                                    },
+                                            "200":  {
+                                                        "sprzeglo":  2150,
+                                                        "na_powrocie":  1500
+                                                    },
+                                            "300":  {
+                                                        "sprzeglo":  2450,
+                                                        "na_powrocie":  1800
+                                                    },
+                                            "400":  {
+                                                        "sprzeglo":  2850,
+                                                        "na_powrocie":  2200
+                                                    },
+                                            "500":  {
+                                                        "sprzeglo":  3050,
+                                                        "na_powrocie":  2400
+                                                    },
+                                            "800":  {
+                                                        "sprzeglo":  3900,
+                                                        "na_powrocie":  3300
+                                                    },
+                                            "1000":  {
+                                                         "sprzeglo":  4750,
+                                                         "na_powrocie":  4100
+                                                     }
+                                        },
+                             "foundation":  {
+                                                "fundament-nasz":  300,
+                                                "fundament-klienta":  0,
+                                                "stojak":  600
+                                            },
+                             "drainage":  {
+                                              "skropliny-z-grzalka":  1000,
+                                              "bez":  0
+                                          },
+                             "water":  {
+                                           "filters":  {
+                                                           "filtry-zmiekczacz":  4500,
+                                                           "filtry-podstawowe":  200,
+                                                           "bez-filtrow":  0
+                                                       },
+                                           "pressure":  {
+                                                            "z-reduktorem-cisnienia":  400,
+                                                            "bez-reduktora":  0
+                                                        }
+                                       },
+                             "options":  {
+                                             "service-cloud":  0,
+                                             "cyrkulacja-tak":  350,
+                                             "cyrkulacja-nie":  0,
+                                             "magnetic_filter_standard":  0,
+                                             "magnetic_filter_premium":  1200,
+                                             "hydro_safety_standard":  0,
+                                             "hydro_safety_extended":  1500,
+                                             "flushing_standard":  800,
+                                             "flushing_premium":  1200,
+                                             "electrical_standard":  0
+                                         },
+                             "hydraulic_components_aio":  2700,
+                             "hydraulic_components_split":  3700,
+                             "installation_net":  11000
+                         },
+    "pricing_policy":  {
+                           "schema_version":  "pricing_policy_v1",
+                           "pump":  {
+                                        "catalog_powers_kw":  [
+                                                                  3,
+                                                                  5,
+                                                                  7,
+                                                                  9,
+                                                                  12,
+                                                                  16
+                                                              ],
+                                        "option_to_price_key_candidates":  {
+                                                                               "aio_premium400":  [
+                                                                                                      "aio_premium400_net",
+                                                                                                      "aio_premium_net",
+                                                                                                      "split400_net",
+                                                                                                      "split_net"
+                                                                                                  ],
+                                                                               "split400":  [
+                                                                                                "split400_net",
+                                                                                                "split_net",
+                                                                                                "aio_premium400_net",
+                                                                                                "aio_premium_net"
+                                                                                            ],
+                                                                               "aio":  [
+                                                                                           "aio_premium_net",
+                                                                                           "split_net",
+                                                                                           "aio_premium400_net",
+                                                                                           "split400_net"
+                                                                                       ]
+                                                                           },
+                                        "default_candidates":  {
+                                                                   "split_1ph":  [
+                                                                                     "split_net",
+                                                                                     "split400_net",
+                                                                                     "aio_premium_net",
+                                                                                     "aio_premium400_net"
+                                                                                 ],
+                                                                   "split_3ph":  [
+                                                                                     "split400_net",
+                                                                                     "split_net",
+                                                                                     "aio_premium400_net",
+                                                                                     "aio_premium_net"
+                                                                                 ],
+                                                                   "aio_1ph":  [
+                                                                                   "aio_premium_net",
+                                                                                   "aio_premium400_net",
+                                                                                   "split_net",
+                                                                                   "split400_net"
+                                                                               ],
+                                                                   "aio_3ph":  [
+                                                                                   "aio_premium400_net",
+                                                                                   "aio_premium_net",
+                                                                                   "split400_net",
+                                                                                   "split_net"
+                                                                               ]
+                                                               }
+                                    },
+                           "cwu":  {
+                                       "capacity_by_persons":  {
+                                                                   "le_2":  150,
+                                                                   "le_4":  200,
+                                                                   "gt_4":  300
+                                                               },
+                                       "default_material":  "emalia"
+                                   },
+                           "option_mapping":  {
+                                                  "circulation_yes":  "cyrkulacja-tak",
+                                                  "pressure_reducer_yes":  "reduktor-tak",
+                                                  "water_treatment_softener":  "woda-tak",
+                                                  "water_treatment_filter":  "woda-filtr",
+                                                  "foundation_wall":  "posadowienie-sciana",
+                                                  "foundation_eco":  "posadowienie-eko",
+                                                  "foundation_ground":  "posadowienie-grunt",
+                                                  "service_cloud":  "service-cloud",
+                                                  "no_buffer":  [
+                                                                    "buffer-0",
+                                                                    "bufor-nie"
+                                                                ],
+                                                  "no_dhw":  [
+                                                                 "cwu-none",
+                                                                 "none"
+                                                             ]
+                                              },
+                           "defaults":  {
+                                            "currency":  "PLN",
+                                            "vat_rate":  0.08
+                                        }
+                       }
+}

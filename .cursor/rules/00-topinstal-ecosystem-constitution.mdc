@@ -1,0 +1,33 @@
+---
+description: "TOP-INSTAL ecosystem: treat this repo as part of a larger system. Enforce ownership, cross-repo impact check, no logic duplication. kalk-top=decision layer, generator=document layer, mail-ingress=ingress adapter, RAG=knowledge/orchestration."
+alwaysApply: false
+globs:
+  - "docs/ecosystem/**"
+  - "schemas/**"
+  - "docs/contracts/**"
+---
+
+# TOP-INSTAL Ecosystem Constitution
+
+This repo is part of the TOP-INSTAL ecosystem. When working here, you MUST:
+
+## Canonical roles (do not violate)
+
+- **topinstal-mail-ingress** = thin ingress adapter (Gmail → normalized payload). Does NOT calculate, generate docs, or own business logic.
+- **kalk-top** = source of truth for calculation, selection, buffer, pricing, offer. Decision layer.
+- **top-instal-generator** = downstream document renderer. Receives OfferDTO, produces DOCX/PDF. Does NOT calculate or own offer logic.
+- **rag-chat-asystent** = knowledge, explainability, future orchestration. Does NOT own calculation, document generation, or mail transport.
+
+## Before larger changes
+
+1. **Ownership check:** Is this change within this repo's role? If not, stop and signal.
+2. **Contract impact check:** Does this touch DTO, envelope, REST contract, or trace/auth? If yes, consider cross-repo impact and update `docs/ecosystem/TOPINSTAL_ECOSYSTEM_STATE.md` per update protocol.
+3. **No logic duplication:** Do not move calculation into generator, parsing into kalk-top, or document logic into mail-ingress.
+
+## When proposing changes that cross boundaries
+
+Explicitly signal: "This change may affect [module X]. Ownership: [Y]. Contract impact: [yes/no]. Ecosystem doc update: [yes/no]."
+
+## Do not assume ownership of another module
+
+If the task suggests adding logic that belongs to another repo (e.g. calculation in generator, mail parsing in kalk-top), stop and ask or propose the change in the correct repo.

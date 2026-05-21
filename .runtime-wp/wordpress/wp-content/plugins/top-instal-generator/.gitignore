@@ -1,0 +1,4 @@
+# Test / debug artifacts
+test_minimal.docx
+test_converter_output.pdf
+curl_debug.txt

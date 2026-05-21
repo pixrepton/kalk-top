@@ -1,0 +1,32 @@
+{
+  "cwu": {
+    "emalia": { "150": 2250, "200": 2750, "300": 3000 },
+    "inox":   { "150": 0, "200": 3200, "250": 3600, "300": 4100 },
+    "none": 0
+  },
+  "buffer": {
+    "0":   { "sprzeglo": 0, "na_powrocie": 0 },
+    "40":  { "sprzeglo": 1250, "na_powrocie": 650 },
+    "60":  { "sprzeglo": 1250, "na_powrocie": 650 },
+    "80":  { "sprzeglo": 1300, "na_powrocie": 700 },
+    "100": { "sprzeglo": 1750, "na_powrocie": 1150 },
+    "120": { "sprzeglo": 1900, "na_powrocie": 1250 },
+    "140": { "sprzeglo": 2050, "na_powrocie": 1400 },
+    "150": { "sprzeglo": 2050, "na_powrocie": 1400 },
+    "200": { "sprzeglo": 2150, "na_powrocie": 1500 },
+    "300": { "sprzeglo": 2450, "na_powrocie": 1800 },
+    "400": { "sprzeglo": 2850, "na_powrocie": 2200 },
+    "500": { "sprzeglo": 3050, "na_powrocie": 2400 },
+    "800": { "sprzeglo": 3900, "na_powrocie": 3300 },
+    "1000": { "sprzeglo": 4750, "na_powrocie": 4100 }
+  },
+  "foundation": {
+    "fundament-nasz": 300,
+    "fundament-klienta": 0,
+    "stojak": 600
+  },
+  "installation_net": 11000,
+  "hydraulic_components_aio": 2700,
+  "hydraulic_components_split": 3700,
+  "vat_rate": 0.08
+}

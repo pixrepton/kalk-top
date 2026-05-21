@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://topinstal.local/schemas/panasonic_pricing_fact.schema.json",
+  "title": "Panasonic Pricing Fact",
+  "type": "object",
+  "required": ["fact_type", "model", "price_net", "currency", "source_doc", "page"],
+  "properties": {
+    "fact_type": { "type": "string", "enum": ["price"] },
+    "model": { "type": "string" },
+    "price_net": { "type": ["number", "null"] },
+    "currency": { "type": "string" },
+    "source_doc": { "type": "string" },
+    "page": { "type": "integer", "minimum": 1 },
+    "effective_date": { "type": "string" },
+    "uncertainty_notes": { "type": "string" }
+  },
+  "additionalProperties": true
+}

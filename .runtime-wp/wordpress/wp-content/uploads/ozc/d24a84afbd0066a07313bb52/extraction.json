@@ -1,0 +1,50 @@
+{
+    "schemaVersion": "1.0",
+    "traceId": "agent-d24a84afbd00",
+    "source": "https:\/\/cieplo.app\/wynik\/2ovff",
+    "parsedAt": "2026-03-07T01:01:47+00:00",
+    "facts": {
+        "estimatedPower_COplusCWU_atMinus20_kW": 11.2,
+        "heatedArea_m2": 214,
+        "maxBuildingHeatDemand_kW": null,
+        "demandIndex_W_per_m2": 50,
+        "bivalencePower_kW_atTemp": null,
+        "avgIndoorTemp_C": 22,
+        "insulationQualityText": "przeciętna — ściany (15cm)",
+        "dhwPersons": null,
+        "dhwUsageStandardText": "wanna",
+        "dhwExtraPower_kW": 10.7,
+        "dhwUsageProfile": "bath"
+    },
+    "rawSnippets": {
+        "estimatedPower_COplusCWU_atMinus20_kW": "Szacunkowe zapotrzebowanie na moc i energię cieplną Moc grzewcza: 11,2kW",
+        "heatedArea_m2": "Powierzchnia ogrzewana~214m2",
+        "maxBuildingHeatDemand_kW": null,
+        "demandIndex_W_per_m2": "50W\/m2",
+        "bivalencePower_kW_atTemp": null,
+        "avgIndoorTemp_C": "Średnia temperatura w domu22,0°C",
+        "insulationQualityText": "przeciętna — ściany (15cm)",
+        "dhwPersons": null,
+        "dhwUsageStandardText": "wanna",
+        "dhwExtraPower_kW": "CWU) Ogrzewanie budynku 10,7kW"
+    },
+    "confidence": {
+        "score": 0.54,
+        "missing": [
+            "maxBuildingHeatDemand_kW"
+        ]
+    },
+    "emailFacts": {
+        "receivedAt": "2026-03-04T15:52:51+00:00",
+        "clientEmail": "biuro.topinstal@gmail.com",
+        "phone": "513 560 192",
+        "locationRaw": "",
+        "cieploUrl": "https:\/\/cieplo.app\/wynik\/2ovff",
+        "rawSnippets": {
+            "replyTo": "",
+            "from": "Piotr Gurgul <pio.gurgul@gmail.com>",
+            "bodyExcerpt": "Panie Darku, zadzwonię jutro bo bede wiedział jak pracuje. I mam jeszcze\r\nkilka pytań.\r\n\r\nśr., 4 mar 2026, 16:25 użytkownik TOP INSTAL <biuro.topinstal@gmail.com>\r\nnapisał:\r\n\r\n> Dobrze zgadzamy się na taką propozycję\r\n> Kiedy możemy umówić się na spotkanie i podpisać umowę ?\r\n>\r\n>\r\n> śr., 4 mar 2026, 10:24 użytkownik Piotr Gurgul <pio.gurgul@gmail.com>\r\n> napisał:\r\n>\r\n>> Panie Darku, dogadajmy cenę :) i róbmy to,\r\n>>\r\n>> proponuje 42000 na gotowo z uwzględnienie wszystkich punktów, o których\r\n>> pisałem.\r\n>>\r\n>> Co Pan na to?\r\n>>\r\n>> pt., 13 lut 2026 o 12:59 TOP INSTAL <biuro.topinstal@gmail.com>\r\n>> napisał(a):\r\n>>\r\n>>> Panie Piotrze, sprawy mają się następująco:\r\n>>>\r\n>>> 1.jest w zestawie sterowanie online\r\n>>> 2.podciagniecie zasilania w cenie\r\n>>> 3.przerobienie zestawów pompowych w cenie\r\n>>> 4.na chwilę obecną nie przewidujemy żadnych dodatkowych kosztów\r\n>>> związanych z montażem\r\n>>> 5.co do samej pompy cyrkulacyjnej to nie ma potrzeby jej wymieniać one\r\n>>> chodzą po x-lat a nowe pompki nie zawsze bywają oczywistej jakości.\r\n>>> 6. Cenę końcową dogadamy ewentualnie przy podpisaniu umowy\r\n>>>\r\n>>>\r\n>>>\r\n>>>\r\n>>>\r\n>>>\r\n>>> pt., 13 lut 2026, 12:31 użytkownik Piotr Gurgul <pio.gurgul@gmail.com>\r\n>>> napisał:\r\n>>>\r\n>>>> Panie Darku, jeszcze chciałem zapytać:\r\n>>>>\r\n>>>> 1. Czy ta pompa będzie miała możliwość sterowania online?\r\n>>>> 2. Czy w cenie oferty jest pociągnięcie przewodu do zasilania 3\r\n>>>> fazowego z rozdzielni\r\n>>>> 3. Czy w cenie oferty jest likwidacja zestawów pompowych w\r\n>>>> rozdzielaczach\r\n>>>> 4. Czy mogą pojawić się jakieś dodatkowe koszty związane z realizacją\r\n>>>> oferty\r\n>>>> 5. Ja mam pompę cyrkulacyjną, czy konieczne jest zainstalowanie nowej?\r\n>>>> Chyba, że proponuje Pan coś nowocześniejszego?\r\n>>>> 6. Czy wykonanie całościowo zamontowanie jednostki zewnętrznej,\r\n>>>> zastanawiam się nad postawieniem jej na kostce z boku mojego domku.\r\n>>>> 6. I ostatnie pytanie, ",
+            "cieploUrlRaw": "https:\/\/cieplo.app\/wynik\/2ovff"
+        }
+    }
+}

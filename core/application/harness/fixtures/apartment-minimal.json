@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "traceId": "fixture-apartment-minimal",
+  "lead": {
+    "sessionId": "sess-006"
+  },
+  "building": {
+    "heated_area": 68,
+    "construction_year": 2010,
+    "location_id": "PL_II",
+    "include_hot_water": "yes",
+    "hot_water_persons": 2
+  },
+  "preferences": {
+    "heating": {
+      "emitterType": "floor_heating"
+    },
+    "dhw": {
+      "enabled": true,
+      "persons": 2,
+      "usageProfile": "shower"
+    }
+  },
+  "context": {
+    "source": "harness",
+    "channel": "calculator"
+  }
+}

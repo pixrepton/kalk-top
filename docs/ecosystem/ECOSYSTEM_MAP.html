@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TOP-INSTAL — mapa ekosystemu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: "dark",
+      securityLevel: "strict",
+      fontFamily: "DM Sans, system-ui, sans-serif",
+      themeVariables: {
+        primaryColor: "#2d3a4f",
+        primaryTextColor: "#e8eaef",
+        primaryBorderColor: "#5c6d8a",
+        lineColor: "#8b9cb8",
+        secondaryColor: "#1e2636",
+        tertiaryColor: "#121820",
+      },
+    });
+    await mermaid.run({ querySelector: ".mermaid" });
+  </script>
+  <style>
+    :root {
+      --bg: #0c0e12;
+      --surface: #141820;
+      --text: #e8eaef;
+      --muted: #8b95a8;
+      --accent: #6eb5ff;
+      --border: #2a3344;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "DM Sans", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      font-size: 15px;
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.75rem;
+      margin-bottom: 2rem;
+    }
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 0.5rem;
+    }
+    .lede {
+      color: var(--muted);
+      max-width: 52ch;
+      margin: 0;
+    }
+    .meta {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 1rem;
+    }
+    nav.toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      margin: 1.5rem 0 2rem;
+      padding: 1rem 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    nav.toc a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    nav.toc a:hover { text-decoration: underline; }
+    section {
+      margin-bottom: 3rem;
+    }
+    h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 0 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .diagram {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      overflow-x: auto;
+    }
+    .diagram .mermaid {
+      display: block;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--border);
+    }
+    th {
+      background: var(--surface);
+      font-weight: 600;
+    }
+    .note {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+    }
+    code {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.82em;
+      background: #1a2230;
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+    }
+    @media print {
+      body { background: #fff; color: #111; }
+      .diagram { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Mapa ekosystemu TOP-INSTAL</h1>
+      <p class="lede">
+        Repozytoria, przepływy danych i granice odpowiedzialności. Otwórz ten plik w przeglądarce (podwójne kliknięcie lub przeciągnij do Chrome/Edge).
+      </p>
+      <p class="meta">
+        Kanon kontraktów: <code>TOPINSTAL_ECOSYSTEM_STATE.md</code> · Porządek folderów / Cursor: <code>WORKSPACE_GOVERNANCE.md</code>
+      </p>
+    </header>
+
+    <nav class="toc" aria-label="Spis">
+      <a href="#owners">Właściciele</a>
+      <a href="#lead-flow">Lead cieplo.app</a>
+      <a href="#browser">Przeglądarka</a>
+      <a href="#contracts">Kontrakty</a>
+      <a href="#workspace">Workspace</a>
+      <a href="#oneliner">„Gdzie żyje logika”</a>
+    </nav>
+
+    <section id="owners">
+      <h2>1. Kto za co odpowiada</h2>
+      <div class="diagram">
+        <div class="mermaid">
+flowchart TB
+  subgraph ingress["Wejście"]
+    Gmail[Gmail]
+    MI[topinstal-mail-ingress]
+    Browser[Przeglądarka / widget WP]
+  end
+
+  subgraph decision["Warstwa decyzyjna"]
+    KT[kalk-top]
+  end
+
+  subgraph downstream["Downstream"]
+    GEN[top-instal-generator]
+  end
+
+  subgraph vps["VPS / automatyzacja"]
+    ORCH[topinstal-cieplo-orchestrator]
+  end
+
+  subgraph knowledge["Wiedza / AI"]
+    RAG[RAG Chat Asystent]
+    ZORD[agent-zordon]
+  end
+
+  Gmail --> MI
+  MI -->|"cieplo_app_lead_v1"| ORCH
+  MI -.->|"legacy"| KT
+  ORCH --> KT
+  ORCH --> GEN
+  Browser --> KT
+  KT --> GEN
+  ZORD --> KT
+  ZORD --> GEN
+  ZORD --> RAG
+        </div>
+      </div>
+    </section>
+
+    <section id="lead-flow">
+      <h2>2. Przepływ leada (cieplo.app → oferta → PDF)</h2>
+      <div class="diagram">
+        <div class="mermaid">
+sequenceDiagram
+  participant G as Gmail
+  participant M as mail-ingress
+  participant O as cieplo-orchestrator
+  participant K as kalk-top
+  participant D as top-instal-generator
+
+  G->>M: nowa wiadomość
+  M->>M: parse, envelope, dispatch
+  M->>O: POST ingress (agent key)
+  O->>O: fetch HTML, CalcRequestDTO
+  O->>K: calculate-offer
+  K->>K: CalcRequestDTO → OfferDTO
+  O->>D: offer-documents/generate from-offer-dto
+  D-->>O: PDF / metadane
+        </div>
+      </div>
+    </section>
+
+    <section id="browser">
+      <h2>3. Użytkownik w przeglądarce</h2>
+      <div class="diagram">
+        <div class="mermaid">
+flowchart LR
+  U[Użytkownik] --> WP[WordPress + kalk-top UI]
+  WP --> KAPI[kalk-top REST / AJAX]
+  KAPI --> Offer[OfferDTO]
+  Offer --> GEN[generator PDF/DOCX]
+  WP --> Widget[widget RAG / Zordon]
+  Widget --> ZAPI[agent-zordon API]
+  ZAPI --> KAPI
+  ZAPI --> GEN
+  Widget --> RAGAPI[RAG /chat]
+        </div>
+      </div>
+    </section>
+
+    <section id="contracts">
+      <h2>4. Kontrakty (skrót)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Artefakt</th>
+            <th>Producent → konsument</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>CalcRequestDTO</code></td>
+            <td>UI, orchestrator, workflow → <strong>kalk-top</strong></td>
+          </tr>
+          <tr>
+            <td><code>OfferDTO</code></td>
+            <td><strong>kalk-top</strong> → generator, RAG (kontekst), UI</td>
+          </tr>
+          <tr>
+            <td><code>cieplo_app_lead_v1</code></td>
+            <td><strong>mail-ingress</strong> → orchestrator / (legacy) kalk-top</td>
+          </tr>
+          <tr>
+            <td><code>OfferDocumentRequestDTO</code></td>
+            <td>kalk-top, adapter RAG → <strong>top-instal-generator</strong></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="note">Szczegóły i endpointy: <code>TOPINSTAL_ECOSYSTEM_STATE.md</code></p>
+    </section>
+
+    <section id="workspace">
+      <h2>5. Workspace (Desktop) — rdzeń vs szum</h2>
+      <div class="diagram">
+        <div class="mermaid">
+flowchart TB
+  subgraph canonical["Repozytoria kanoniczne"]
+    kalk[kalk-top]
+    gen[top-instal-generator]
+    mail[topinstal-mail-ingress]
+    orch[topinstal-cieplo-orchestrator]
+    rag[RAG Chat Asystent]
+    zordon[agent-zordon]
+  end
+
+  subgraph extra["Obok — deploy / runtime / eksperymenty"]
+    other[TOP-INSTAL, wp-runtime, inne]
+  end
+
+  subgraph archive["Archiwum — nie źródło prawdy"]
+    proj[PROJEKTY-DEV]
+    moved[moved-from-kalk-top]
+  end
+
+  canonical --> other
+        </div>
+      </div>
+    </section>
+
+    <section id="oneliner">
+      <h2>6. Jedna linia: gdzie jest logika</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Obszar</th>
+            <th>Repo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Liczenie, dobór, cena, <code>OfferDTO</code></td><td><strong>kalk-top</strong></td></tr>
+          <tr><td>DOCX / PDF</td><td><strong>top-instal-generator</strong></td></tr>
+          <tr><td>Gmail → payload</td><td><strong>topinstal-mail-ingress</strong></td></tr>
+          <tr><td>Po ingress: HTML → request → kalk → PDF (VPS)</td><td><strong>topinstal-cieplo-orchestrator</strong></td></tr>
+          <tr><td>Baza wiedzy, retrieval</td><td><strong>RAG Chat Asystent</strong></td></tr>
+          <tr><td>Chat z toolami (kalk / generator / RAG)</td><td><strong>agent-zordon</strong></td></tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</body>
+</html>
