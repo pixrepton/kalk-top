@@ -1414,6 +1414,79 @@
   margin: 0;
 }
 
+#configurator-app [data-step-key="summary"] .pdf-lead-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 12000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+#configurator-app [data-step-key="summary"] .pdf-lead-modal.hidden {
+  display: none !important;
+}
+
+#configurator-app [data-step-key="summary"] .pdf-lead-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+}
+
+#configurator-app [data-step-key="summary"] .pdf-lead-modal__panel {
+  position: relative;
+  z-index: 1;
+  width: min(440px, 100%);
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.18);
+  padding: 22px 22px 18px;
+}
+
+#configurator-app [data-step-key="summary"] .pdf-lead-modal__close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: 0;
+  background: transparent;
+  font-size: 24px;
+  line-height: 1;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+#configurator-app [data-step-key="summary"] .pdf-lead-modal__title {
+  margin: 0 36px 8px 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: #1a202c;
+}
+
+#configurator-app [data-step-key="summary"] .pdf-lead-modal__subtitle {
+  margin: 0 0 18px 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #6b7280;
+}
+
+#configurator-app [data-step-key="summary"] .pdf-lead-modal__fields {
+  display: grid;
+  gap: 16px;
+}
+
+#configurator-app [data-step-key="summary"] .pdf-lead-modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+body.pdf-lead-modal-open {
+  overflow: hidden;
+}
+
 #configurator-app [data-step-key="summary"] .offer-lead .field-note {
   display: block;
   margin-top: 8px;

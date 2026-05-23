@@ -1299,49 +1299,64 @@
       // while results/configurator load in background.
       // We trigger this here (resultsRenderer) to avoid relying on apiCaller versions/caching.
       // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-      let completionRequested = false;
-      try {
-        const alreadyShown =
-          typeof getAppState === "function"
-            ? !!(
-              getAppState()?.uiFlags?.completionAnimationShown ||
-              getAppState()?.completionAnimationShown
-            )
-            : false;
-        completionRequested = !alreadyShown;
+      const hasFreshCalcResult =
+        !!result &&
+        (Number.isFinite(Number(result.max_heating_power)) ||
+          Number.isFinite(Number(result.recommended_power_kw)));
 
-        if (!alreadyShown) {
-          if (window.__HP_DEBUG__) {
-            LOG.info(
-              "flow",
-              "[FLOW-9A] Dispatching workflow completion event (screen 0)..."
-            );
-          }
-          root.dispatchEvent(
-            new CustomEvent("heatpump:showWorkflowCompletion", {
-              detail: { result },
-              bubbles: true,
-            })
+      let completionRequested = hasFreshCalcResult;
+      try {
+        if (!completionRequested) {
+          const alreadyShown =
+            typeof getAppState === "function"
+              ? !!(
+                getAppState()?.uiFlags?.completionAnimationShown ||
+                getAppState()?.completionAnimationShown
+              )
+              : false;
+          completionRequested = !alreadyShown;
+        }
+
+        if (completionRequested && window.__HP_DEBUG__) {
+          LOG.info(
+            "flow",
+            "[FLOW-9A] Workflow completion will dispatch after config_data save"
           );
-          if (window.__HP_DEBUG__) {
-            LOG.info("flow", "[FLOW-9A] Workflow completion event dispatched");
-          }
-        } else {
-          if (window.__HP_DEBUG__) {
-            LOG.info(
-              "flow",
-              "[FLOW-9A] Workflow completion already shown - skipping"
-            );
-          }
         }
       } catch (e) {
         LOG.warn(
           "flow",
-          "[FLOW-9A] Failed to dispatch workflow completion event",
+          "[FLOW-9A] Failed to evaluate workflow completion gate",
           e
         );
-        // On error, default to requesting completion to ensure UX flow continues
         completionRequested = true;
+      }
+
+      function dispatchWorkflowCompletionEvent() {
+        root.dispatchEvent(
+          new CustomEvent("heatpump:showWorkflowCompletion", {
+            detail: { result },
+            bubbles: true,
+          })
+        );
+      }
+
+      function isWorkflowCtaVisible() {
+        const cta = dom.qs('[data-action="start-config"]');
+        if (!cta) {
+          return false;
+        }
+        try {
+          const view = root?.ownerDocument?.defaultView || window;
+          const style = view.getComputedStyle(cta);
+          return (
+            style.display !== "none" &&
+            style.visibility !== "hidden" &&
+            cta.getClientRects().length > 0
+          );
+        } catch (_) {
+          return false;
+        }
       }
 
       // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -1847,6 +1862,23 @@
           pumpSelectionResult,
         });
 
+        const shouldDispatchWorkflowCompletion =
+          completionRequested || !isWorkflowCtaVisible();
+
+        if (shouldDispatchWorkflowCompletion) {
+          if (window.__HP_DEBUG__) {
+            LOG.info(
+              "flow",
+              "[FLOW-9A] Dispatching workflow completion event (screen 0)..."
+            );
+          }
+          dispatchWorkflowCompletionEvent();
+          completionRequested = false;
+          if (window.__HP_DEBUG__) {
+            LOG.info("flow", "[FLOW-9A] Workflow completion event dispatched");
+          }
+        }
+
         // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
         // APP STATE PERSISTENCE — zapisz wynik obliczeń
         // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -1871,6 +1903,19 @@
         );
         console.error("   Błąd:", e);
         console.error("   Stack:", e.stack);
+      }
+
+      if (completionRequested || (hasFreshCalcResult && !isWorkflowCtaVisible())) {
+        try {
+          dispatchWorkflowCompletionEvent();
+          completionRequested = false;
+        } catch (completionError) {
+          LOG.warn(
+            "flow",
+            "[FLOW-9A] Failed to dispatch workflow completion fallback",
+            completionError
+          );
+        }
       }
 
       // === ONBOARDING MODAL DLA KONFIGURATORA ===
@@ -3057,18 +3102,47 @@
       };
 
       bindAction('[data-action="open-lead-form"]', (_event, btn) => {
-        const formEl = getLeadForm();
         const rawIntent = btn?.getAttribute?.("data-intent") || "email_pdf";
-        const intent = rawIntent === "order_contact" ? "contact_confirm" : "email_pdf";
-        if (formEl) {
-          formEl.setAttribute("data-intent", intent === "contact_confirm" ? "order_contact" : "email_pdf");
-          const submitEmailBtn = formEl.querySelector('[data-action="submit-email-pdf"]');
-          const submitContactBtn = formEl.querySelector('[data-action="submit-order-contact"]');
-          if (submitEmailBtn) submitEmailBtn.hidden = intent !== "email_pdf";
-          if (submitContactBtn) submitContactBtn.hidden = intent !== "contact_confirm";
+        if (rawIntent === "order_contact") {
+          const formEl = getLeadForm();
+          if (formEl) {
+            formEl.setAttribute("data-intent", "order_contact");
+            const submitEmailBtn = formEl.querySelector('[data-action="submit-email-pdf"]');
+            const submitContactBtn = formEl.querySelector('[data-action="submit-order-contact"]');
+            if (submitEmailBtn) submitEmailBtn.hidden = true;
+            if (submitContactBtn) submitContactBtn.hidden = false;
+          }
+          showPDFContactForm();
+          return;
         }
-        showPDFContactForm();
+        hidePDFContactForm();
+        const leadGate = window.__topinstalPdfLeadGate;
+        if (leadGate && typeof leadGate.openLeadForIntent === "function") {
+          leadGate.openLeadForIntent(dom, { root, dom, state }, "email_pdf");
+        }
       });
+
+      global.__topinstalHandleLeadModalSubmit = async function (detail) {
+        if (!detail || detail.mode !== "email_pdf") {
+          return;
+        }
+        const values = {
+          intent: "email_pdf",
+          name: "",
+          email: detail.email || "",
+          phone: detail.phone || "",
+          city: "",
+          postal_code: "",
+          preferred_contact_time: null,
+          consents: {
+            terms_accept: true,
+            rodo_contact: true,
+            marketing_opt_in: false,
+            photo_confirm: false,
+          },
+        };
+        await sendOfferEmail(values);
+      };
 
       bindAction('[data-action="send-email"]', showPDFContactForm);
       bindAction('[data-action="collect-customer-data"]', () => {

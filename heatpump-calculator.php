@@ -221,6 +221,20 @@ class HeatPump_Calculator {
     }
 
     /**
+     * Strip UTF-8 BOM from strings passed to browser config (breaks fetch header ByteString).
+     *
+     * @param mixed $value
+     * @return string
+     */
+    private function sanitize_js_config_string($value) {
+        $value = (string) $value;
+        if (strncmp($value, "\xEF\xBB\xBF", 3) === 0) {
+            $value = substr($value, 3);
+        }
+        return $value;
+    }
+
+    /**
      * Engineering policy snapshot for configurator UI (buffer capacities, CWU rules, thresholds).
      *
      * @return array<string,mixed>
@@ -3046,11 +3060,24 @@ class HeatPump_Calculator {
         wp_register_script('heatpump-runtime-config', '', array(), self::VERSION, true);
         wp_enqueue_script('heatpump-runtime-config');
 
+        wp_enqueue_script(
+            'heatpump-hydraulics-offer-normalize',
+            $konfigurator_url . '/hydraulics-offer-normalize.js',
+            array('heatpump-runtime-config'),
+            $this->get_local_asset_version('konfigurator/hydraulics-offer-normalize.js'),
+            true
+        );
+
         // Konfigurator (musi być znany zanim inne skrypty dadzą go w deps)
         wp_enqueue_script(
             'heatpump-configurator',
             $konfigurator_url . '/configurator-unified.js',
-            array('heatpump-runtime-config', 'heatpump-motionSystem', 'heatpump-pumpMatchingTable'),
+            array(
+                'heatpump-runtime-config',
+                'heatpump-motionSystem',
+                'heatpump-pumpMatchingTable',
+                'heatpump-hydraulics-offer-normalize',
+            ),
             $this->get_local_asset_version('konfigurator/configurator-unified.js'),
             true
         );
@@ -3100,12 +3127,14 @@ class HeatPump_Calculator {
             'bufferRules' => $this->get_frontend_buffer_rules(),
             'imgUrl' => $img_url,
             'librariesUrl' => $libraries_url,
-            'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('heatpump_calc_nonce'),
-            'restNonce' => $rest_cookie_auth_enabled ? wp_create_nonce('wp_rest') : '',
+            'ajaxUrl' => $this->sanitize_js_config_string(admin_url('admin-ajax.php')),
+            'nonce' => $this->sanitize_js_config_string(wp_create_nonce('heatpump_calc_nonce')),
+            'restNonce' => $rest_cookie_auth_enabled
+                ? $this->sanitize_js_config_string(wp_create_nonce('wp_rest'))
+                : '',
             'restCookieAuthEnabled' => $rest_cookie_auth_enabled,
             'useBackendCalc' => $this->is_backend_calc_enabled(),
-            'calculateOfferEndpoint' => $this->get_calculate_offer_endpoint(),
+            'calculateOfferEndpoint' => $this->sanitize_js_config_string($this->get_calculate_offer_endpoint()),
             'calculateOfferTimeoutMs' => 15000,
             'offerDocumentEndpoint' => admin_url('admin-ajax.php'),
             'offerDocumentAction' => 'heatpump_generate_offer_document',
@@ -3118,7 +3147,7 @@ class HeatPump_Calculator {
             'dualRunDebugAction' => 'heatpump_dual_run_log',
             'dualRunDebugEndpoint' => admin_url('admin-ajax.php'),
             'trackEventAction' => 'heatpump_track_event',
-            'trackEventEndpoint' => admin_url('admin-ajax.php'),
+            'trackEventEndpoint' => $this->sanitize_js_config_string(admin_url('admin-ajax.php')),
             'trackEventBatchSize' => 10,
             'trackEventFlushMs' => 5000,
             'skipPdfLeadGate' => $skip_pdf_lead_gate,

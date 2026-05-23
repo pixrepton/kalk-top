@@ -40,3 +40,8 @@ npm-debug.log*
 
 # PHP (if present locally)
 vendor/
+
+# WordPress runtime (local dev mirror)
+.runtime-wp/wordpress/wp-content/uploads/
+.runtime-wp/wordpress/wp-content/database/
+*.sqlite

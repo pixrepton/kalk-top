@@ -529,15 +529,24 @@
         offer: backendOutput.offer || null,
       });
 
-      if (typeof window.showWorkflowCompletion === "function") {
-        window.showWorkflowCompletion(finalResult);
+      // Fresh calculation: allow workflow completion to run again after config_data save.
+      if (typeof window.updateAppState === "function") {
+        window.updateAppState({
+          completionAnimationShown: false,
+          uiFlags: {
+            completionAnimationShown: false,
+          },
+        });
       }
 
-      setTimeout(() => {
+      // Workflow completion (Gratulacje) is owned by displayResults after saveConfigData.
+      try {
         if (typeof window.displayResults === "function") {
           window.displayResults(finalResult);
         }
-      }, 500);
+      } catch (displayError) {
+        LOG.warn("flow", "displayResults failed", displayError);
+      }
 
       if (isDualRunEnabled()) {
         runDualRunValidation(payload || {}, backendOutput);
@@ -573,19 +582,25 @@
     } catch (error) {
       LOG.error("flow", "API call failed", error);
 
+      const rawMessage = String(error?.message || "");
+      const isFetchHeaderBug =
+        rawMessage.includes("Cannot convert value in record branch") ||
+        rawMessage.includes("greater than 255");
       const backendMessage =
         error && error.data && error.data.message
           ? error.data.message
-          : error.message &&
-            (error.message.includes("Failed to fetch") ||
-              error.message.includes("NetworkError"))
-            ? "Serwer chwilowo nie odpowiada. Kliknij ?Spr?buj ponownie?."
-            : error.message || "Nie uda?o si? pobra? wyniku. Spr?buj ponownie za chwil?.";
+          : isFetchHeaderBug
+            ? "Błąd konfiguracji żądania (nieprawidłowy nagłówek). Odśwież stronę (Ctrl+F5) i spróbuj ponownie."
+            : rawMessage &&
+              (rawMessage.includes("Failed to fetch") ||
+                rawMessage.includes("NetworkError"))
+              ? "Serwer chwilowo nie odpowiada. Spróbuj ponownie."
+              : rawMessage || "Nie udało się pobrać wyniku. Spróbuj ponownie za chwilę.";
 
       if (typeof ErrorHandler !== "undefined" && ErrorHandler.showToast) {
-        ErrorHandler.showToast(`? ${backendMessage}`, "error");
+        ErrorHandler.showToast(backendMessage, "error");
       } else {
-        alert(`? ${backendMessage}`);
+        alert(backendMessage);
       }
 
       trackCalcEvent("calc_error", {

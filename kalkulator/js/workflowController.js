@@ -233,14 +233,25 @@
 
       const instanceId = getWorkflowInstanceId();
       const configDataKeys = [`config_data::${String(instanceId)}`, "config_data"];
+      let fallbackCandidate = null;
       for (let i = 0; i < configDataKeys.length; i += 1) {
         const raw = storage.getItem(configDataKeys[i]);
         if (!raw) continue;
 
         try {
           const parsed = JSON.parse(raw);
+          if (!parsed || typeof parsed !== "object") {
+            continue;
+          }
           if (matchesWorkflowInputIdentity(parsed)) {
             return parsed;
+          }
+          if (
+            !fallbackCandidate &&
+            parsed.from_calculator === true &&
+            toFiniteWorkflowNumber(parsed.max_heating_power) != null
+          ) {
+            fallbackCandidate = parsed;
           }
         } catch (error) {
           console.warn(
@@ -250,7 +261,32 @@
         }
       }
 
+      if (!fallbackCandidate || !latestWorkflowResult) {
+        return null;
+      }
+
+      const currentPower = toFiniteWorkflowNumber(
+        latestWorkflowResult.max_heating_power ??
+        latestWorkflowResult.recommended_power_kw
+      );
+      const candidatePower = toFiniteWorkflowNumber(
+        fallbackCandidate.max_heating_power ??
+        fallbackCandidate.recommended_power_kw
+      );
+      if (
+        currentPower != null &&
+        candidatePower != null &&
+        Math.abs(currentPower - candidatePower) < 0.01
+      ) {
+        return fallbackCandidate;
+      }
+
       return null;
+    }
+
+    function toFiniteWorkflowNumber(value) {
+      const numberValue = typeof value === "number" ? value : Number(value);
+      return Number.isFinite(numberValue) ? numberValue : null;
     }
 
     function resolveBestConfiguratorInput() {
@@ -428,13 +464,8 @@
           appState?.uiFlags?.completionAnimationShown === true ||
           appState?.completionAnimationShown === true;
 
-        if (
-          !typewriterActive &&
-          !typewriterCompleted &&
-          !animationAlreadyShown
-        ) {
-          startCompletion();
-        } else if (animationAlreadyShown) {
+        // Gratulacje + CTA: only after saveConfigData via heatpump:showWorkflowCompletion.
+        if (animationAlreadyShown) {
           typewriterCompleted = true;
         }
       } else if (tabIndex === 0) {

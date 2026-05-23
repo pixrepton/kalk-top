@@ -106,7 +106,7 @@ function loadYesNoResetHooks({ fieldElements = {}, cardElements = {}, stateValue
     },
   };
 
-  function FakeNodeList() {}
+  function FakeNodeList() { }
 
   function FakeEvent(type, init = {}) {
     this.type = type;
@@ -414,6 +414,95 @@ test("configurator runtime no longer ships hardcoded retail price fallback table
   assert.equal(configuratorSource.includes(': "backend_required";'), true);
 });
 
+test("configurator populate uses canonical calc input for backend pump profiles", () => {
+  const configuratorSource = fs.readFileSync(configuratorPath, "utf8");
+
+  assert.equal(
+    configuratorSource.includes("function resolveConfiguratorCalcInput(override = null)"),
+    true
+  );
+  assert.equal(
+    configuratorSource.includes("const pumpCalcInput = resolveConfiguratorCalcInput(calcData);"),
+    true
+  );
+  assert.equal(
+    configuratorSource.includes("const pumpProfiles = preparePumpProfiles(pumpCalcInput);"),
+    true
+  );
+  assert.equal(configuratorSource.includes("preparePumpProfiles(state.meta)"), false);
+  assert.equal(
+    configuratorSource.includes(
+      'if (!isBackendCalcEnabled()) {\n          console.warn("[Configurator] No pump profiles; aborting populate");'
+    ),
+    true
+  );
+});
+
+test("resultsRenderer dispatches workflow completion after saveConfigData", () => {
+  const resultsRendererSource = fs.readFileSync(
+    path.join(repoRoot, "kalkulator", "js", "resultsRenderer.js"),
+    "utf8"
+  );
+
+  assert.equal(
+    resultsRendererSource.includes(
+      "[FLOW-9A] Workflow completion will dispatch after config_data save"
+    ),
+    true
+  );
+  const consolidationMarker = resultsRendererSource.indexOf(
+    "P1.2: KONSOLIDACJA ZAPISU config_data"
+  );
+  assert.ok(consolidationMarker > -1);
+  const saveMarker = resultsRendererSource.indexOf(
+    "saveConfigData({",
+    consolidationMarker
+  );
+  const dispatchCallMarker = resultsRendererSource.indexOf(
+    "dispatchWorkflowCompletionEvent();",
+    saveMarker
+  );
+  assert.ok(saveMarker > consolidationMarker);
+  assert.ok(dispatchCallMarker > saveMarker);
+  assert.equal(
+    resultsRendererSource.includes("showWorkflowCompletion(finalResult)"),
+    false
+  );
+});
+
+test("apiCaller defers workflow completion to displayResults", () => {
+  const apiCallerSource = fs.readFileSync(
+    path.join(repoRoot, "kalkulator", "js", "apiCaller.js"),
+    "utf8"
+  );
+
+  assert.equal(apiCallerSource.includes("showWorkflowCompletion(finalResult)"), false);
+  assert.equal(apiCallerSource.includes("displayResults(finalResult)"), true);
+  assert.equal(
+    apiCallerSource.includes(
+      "Workflow completion (Gratulacje) is owned by displayResults after saveConfigData."
+    ),
+    true
+  );
+  assert.equal(apiCallerSource.includes("completionAnimationShown: false"), true);
+});
+
+test("resultsRenderer re-dispatches workflow completion when CTA is still hidden", () => {
+  const resultsRendererSource = fs.readFileSync(
+    path.join(repoRoot, "kalkulator", "js", "resultsRenderer.js"),
+    "utf8"
+  );
+
+  assert.equal(
+    resultsRendererSource.includes("const shouldDispatchWorkflowCompletion ="),
+    true
+  );
+  assert.equal(
+    resultsRendererSource.includes("completionRequested || !isWorkflowCtaVisible()"),
+    true
+  );
+});
+
 test("configurator backend mode keeps rendering later steps after canonical pump cards", () => {
   const configuratorSource = fs.readFileSync(configuratorPath, "utf8");
 
@@ -484,7 +573,11 @@ test("configurator hydraulics step blocks stale buffer cards until dependent ans
     true
   );
   assert.equal(
-    configuratorSource.includes("refreshHydraulicsInputsStepIfActive()"),
+    configuratorSource.includes("renderHydraulicsInputsStep()"),
+    true
+  );
+  assert.equal(
+    configuratorSource.includes("renderHydraulicsPendingState("),
     true
   );
   assert.equal(
@@ -506,18 +599,28 @@ test("configurator hydraulics step blocks stale buffer cards until dependent ans
 });
 
 test("configurator maps backend buffer sizing details into hydraulics UI snapshot", () => {
+  const normalizePath = path.join(__dirname, "..", "..", "konfigurator", "hydraulics-offer-normalize.js");
+  const normalizeSource = fs.readFileSync(normalizePath, "utf8");
   const configuratorSource = fs.readFileSync(configuratorPath, "utf8");
 
   assert.equal(
-    configuratorSource.includes("recommendationPayload?.buffer_liters"),
+    normalizeSource.includes("recommendationPayload.buffer_liters"),
     true
   );
   assert.equal(
-    configuratorSource.includes("sizingPayload?.calculatedCapacity_liters"),
+    normalizeSource.includes("sizingPayload?.calculatedCapacity_liters"),
     true
   );
   assert.equal(
-    configuratorSource.includes("sizingComponents: sizingComponents"),
+    normalizeSource.includes("sizingComponents"),
+    true
+  );
+  assert.equal(
+    configuratorSource.includes("TopinstalHydraulicsOfferNormalize"),
+    true
+  );
+  assert.equal(
+    configuratorSource.includes("hydraulicsRequestSignature === lastBackendHydraulicsSignature"),
     true
   );
 });
@@ -622,7 +725,7 @@ test("configurator service cloud step uses evaluated scRules without auto-select
   );
   assert.equal(
     configuratorSource.includes("${card.title || \"Service Cloud\"}") ||
-      configuratorSource.includes("<h4 class=\"product-title\">Service Cloud</h4>"),
+    configuratorSource.includes("<h4 class=\"product-title\">Service Cloud</h4>"),
     true
   );
 });
@@ -668,8 +771,14 @@ test("configurator water treatment recommendation and mounting pricing stay alig
     true
   );
   assert.equal(
-    configuratorSource.includes("optionId: \"posadowienie-sciana\""),
-    true
+    configuratorSource.includes("return gruntCard + ekoCard"),
+    true,
+    "foundation UI must expose only client foundation + stand"
+  );
+  assert.equal(
+    configuratorSource.includes('renderFoundationCard("sciana"'),
+    false,
+    "wall console mounting must not be offered in foundation step"
   );
   assert.equal(
     configuratorSource.includes("pricesData?.foundation?.[\"fundament-klienta\"] !== undefined"),
@@ -743,20 +852,24 @@ test("configurator buffer step treats pending backend recommendation as incomple
   );
 });
 
-test("configurator buffer step can reuse persisted backend hydraulics recommendation when fresh signature is unavailable", () => {
+test("configurator buffer step does not render stale persisted hydraulics when backend offer is not fresh", () => {
   const configuratorSource = fs.readFileSync(configuratorPath, "utf8");
 
   assert.equal(
-    configuratorSource.includes("const persistedRecommendation ="),
+    configuratorSource.includes("Do not render stale persisted hydraulics"),
+    true
+  );
+  assert.equal(
+    configuratorSource.includes('source: "pending"'),
+    true
+  );
+  assert.equal(
+    configuratorSource.includes("getFreshCanonicalHydraulicsOffer()"),
     true
   );
   assert.equal(
     configuratorSource.includes('source: "backend_persisted"'),
-    true
-  );
-  assert.equal(
-    configuratorSource.includes("state?.recommendations?.hydraulics"),
-    true
+    false
   );
 });
 
@@ -838,7 +951,6 @@ test("sequential gate inputs start empty instead of auto-answering later questio
     "building_width",
     "number_balcony_doors",
     "wall_size",
-    "internal_wall_isolation_size",
     "number_windows",
     "number_huge_windows",
     "external_wall_isolation_size",
@@ -852,6 +964,25 @@ test("sequential gate inputs start empty instead of auto-answering later questio
       `${fieldId} should start empty`
     );
   });
+});
+
+test("internal wall insulation size is rules-driven, not a static PHP default", () => {
+  const calculatorPhp = fs.readFileSync(calculatorPath, "utf8");
+  const rulesSource = fs.readFileSync(
+    path.join(__dirname, "rules.js"),
+    "utf8"
+  );
+
+  assert.equal(
+    calculatorPhp.includes('id="internal_wall_isolation_size"'),
+    false,
+    "legacy id internal_wall_isolation_size must not be hardcoded in calculator.php"
+  );
+  assert.equal(
+    rulesSource.includes("'internal_wall_isolation[size]'"),
+    true,
+    "canonical field is internal_wall_isolation[size] in rules.js"
+  );
 });
 
 test("heated floors renderer does not assume steep roof before selection", () => {
@@ -929,7 +1060,7 @@ test("yes/no reset map covers critical dependent branches", () => {
 test("yes/no reset clears dependent CWU fields and slider UI on toggle", () => {
   const sliderContainer = {
     querySelectorAll() {
-      return [{ classList: { remove() {} } }];
+      return [{ classList: { remove() { } } }];
     },
   };
   const personsField = createFieldElement({

@@ -24,12 +24,12 @@
           meta: details,
         });
       }
-    } catch (_) {}
+    } catch (_) { }
     try {
       if (typeof console !== 'undefined' && typeof console.warn === 'function') {
         console.warn(`[emailSender] ${eventName}`, details);
       }
-    } catch (_) {}
+    } catch (_) { }
   }
 
   function getEmailPayload(bundle) {
@@ -178,7 +178,12 @@
         };
 
         if (window.HEATPUMP_CONFIG && window.HEATPUMP_CONFIG.nonce) {
-          headers['X-WP-Nonce'] = window.HEATPUMP_CONFIG.nonce;
+          const safeNonce = String(window.HEATPUMP_CONFIG.nonce)
+            .replace(/^\uFEFF+/, '')
+            .replace(/[^\u0000-\u00FF]/g, '');
+          if (safeNonce) {
+            headers['X-WP-Nonce'] = safeNonce;
+          }
         }
 
         const response = await fetch(emailProxyUrl, {
@@ -277,27 +282,24 @@
                 <div style="background: #faf9f9; padding: 20px; border-radius: 4px; margin: 20px 0; border-left: 4px solid #d4a574;">
                     <h3 style="color: #d4a574; margin-top: 0;">Podsumowanie Państwa konfiguracji:</h3>
                     <ul style="margin: 10px 0; padding-left: 20px;">
-                        <li><strong>Powierzchnia:</strong> ${
-                          offerDto?.engineering?.ozc?.heatedArea_m2 || configData.heated_area || 'Nie podano'
-                        } m²</li>
+                        <li><strong>Powierzchnia:</strong> ${offerDto?.engineering?.ozc?.heatedArea_m2 || configData.heated_area || 'Nie podano'
+      } m²</li>
                         <li><strong>Typ budynku:</strong> ${getBuildingTypeText(configData, offerDto)}</li>
                         <li><strong>System ogrzewania:</strong> ${getHeatingTypeText(
-                          configData,
-                          offerDto
-                        )}</li>
+        configData,
+        offerDto
+      )}</li>
                         <li><strong>Rekomendowana pompa:</strong> ${pumpModel}</li>
-                        ${
-                          heatLoadKw != null
-                            ? `<li><strong>Moc budynku (OZC):</strong> ${String(
-                                Math.round(heatLoadKw * 100) / 100
-                              )} kW</li>`
-                            : ''
-                        }
-                        ${
-                          totalGross != null
-                            ? `<li><strong>Cena brutto:</strong> ${fmtPln(totalGross)}</li>`
-                            : ''
-                        }
+                        ${heatLoadKw != null
+        ? `<li><strong>Moc budynku (OZC):</strong> ${String(
+          Math.round(heatLoadKw * 100) / 100
+        )} kW</li>`
+        : ''
+      }
+                        ${totalGross != null
+        ? `<li><strong>Cena brutto:</strong> ${fmtPln(totalGross)}</li>`
+        : ''
+      }
                     </ul>
                 </div>
 

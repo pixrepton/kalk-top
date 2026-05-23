@@ -5,20 +5,32 @@
     return global.HEATPUMP_CONFIG || {};
   }
 
+  function sanitizeLatin1HeaderValue(value) {
+    if (value == null) return '';
+    return String(value)
+      .replace(/^\uFEFF+/, '')
+      .replace(/[^\u0000-\u00FF]/g, '');
+  }
+
+  function sanitizeFetchUrl(value) {
+    if (value == null) return '';
+    return String(value).replace(/^\uFEFF+/, '').trim();
+  }
+
   function resolveNonce(options) {
     if (options && typeof options.nonce === 'string' && options.nonce.trim() !== '') {
-      return options.nonce.trim();
+      return sanitizeLatin1HeaderValue(options.nonce.trim());
     }
     const configNonce = getConfig().nonce;
-    return typeof configNonce === 'string' ? configNonce : '';
+    return typeof configNonce === 'string' ? sanitizeLatin1HeaderValue(configNonce) : '';
   }
 
   function resolveWpNonce(options) {
     if (options && typeof options.wpNonce === 'string' && options.wpNonce.trim() !== '') {
-      return options.wpNonce.trim();
+      return sanitizeLatin1HeaderValue(options.wpNonce.trim());
     }
     const configWpNonce = getConfig().restNonce;
-    return typeof configWpNonce === 'string' ? configWpNonce : '';
+    return typeof configWpNonce === 'string' ? sanitizeLatin1HeaderValue(configWpNonce) : '';
   }
 
   function isTruthyFlag(value) {
@@ -136,10 +148,11 @@
 
   async function calculateOffer(dto, options) {
     const opts = options || {};
-    const endpoint =
+    const endpoint = sanitizeFetchUrl(
       opts.endpoint ||
       getConfig().calculateOfferEndpoint ||
-      '/wp-json/topinstal/v1/calculate-offer';
+      '/wp-json/topinstal/v1/calculate-offer'
+    );
     const timeoutMs = resolveTimeout(opts);
     const retryCount = Number.isFinite(Number(opts.retryCount)) ? Number(opts.retryCount) : 1;
     const nonce = resolveNonce(opts);
@@ -199,11 +212,12 @@
 
   async function generateOfferDocument(payload, options) {
     const opts = options || {};
-    const endpoint =
+    const endpoint = sanitizeFetchUrl(
       opts.endpoint ||
       getConfig().offerDocumentEndpoint ||
       getConfig().ajaxUrl ||
-      '/wp-admin/admin-ajax.php';
+      '/wp-admin/admin-ajax.php'
+    );
     const action =
       opts.action ||
       getConfig().offerDocumentAction ||

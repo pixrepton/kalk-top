@@ -54,6 +54,32 @@ const apiPaths = [
       assert.equal(calls[0].init.headers["X-WP-Nonce"], "rest-nonce");
     });
 
+    await test(`${apiPath} strips BOM from nonce headers`, async () => {
+      const calculateOffer = loadApi(apiPath);
+      const calls = [];
+
+      global.HEATPUMP_CONFIG = {
+        nonce: "\uFEFFcalc-nonce",
+        restNonce: "\uFEFFrest-nonce",
+        restCookieAuthEnabled: true,
+        calculateOfferEndpoint: "https://example.test/wp-json/topinstal/v1/calculate-offer",
+        calculateOfferTimeoutMs: 50,
+      };
+      global.fetch = async function fetchStub(url, init) {
+        calls.push({ url, init });
+        return {
+          ok: true,
+          text: async () => JSON.stringify({ ok: true }),
+        };
+      };
+
+      await calculateOffer({ building: {} });
+
+      assert.equal(calls.length, 1);
+      assert.equal(calls[0].init.headers["X-Topinstal-Nonce"], "calc-nonce");
+      assert.equal(calls[0].init.headers["X-WP-Nonce"], "rest-nonce");
+    });
+
     await test(`${apiPath} keeps public requests on custom nonce only`, async () => {
       const calculateOffer = loadApi(apiPath);
       const calls = [];

@@ -64,13 +64,28 @@
     } catch (_) { }
   }
 
+  function sanitizeLatin1HeaderValue(value) {
+    if (value == null) return "";
+    return String(value)
+      .replace(/^\uFEFF+/, "")
+      .replace(/[^\u0000-\u00FF]/g, "");
+  }
+
+  function sanitizeFetchUrl(value) {
+    if (value == null) return "";
+    return String(value).replace(/^\uFEFF+/, "").trim();
+  }
+
   function createEmitter(ctx) {
     const root = ctx?.root || null;
     const state = ctx?.state || {};
     const cfg = global.HEATPUMP_CONFIG || {};
-    const endpoint = typeof cfg.trackEventEndpoint === "string" ? cfg.trackEventEndpoint : cfg.ajaxUrl;
+    const endpoint = sanitizeFetchUrl(
+      typeof cfg.trackEventEndpoint === "string" ? cfg.trackEventEndpoint : cfg.ajaxUrl
+    );
     const action = typeof cfg.trackEventAction === "string" ? cfg.trackEventAction : "heatpump_track_event";
-    const nonce = typeof cfg.nonce === "string" ? cfg.nonce : "";
+    const nonce =
+      typeof cfg.nonce === "string" ? sanitizeLatin1HeaderValue(cfg.nonce) : "";
     const batchSize = Number.isFinite(Number(cfg.trackEventBatchSize)) ? Math.max(1, Number(cfg.trackEventBatchSize)) : 10;
     const flushMs = Number.isFinite(Number(cfg.trackEventFlushMs)) ? Math.max(500, Number(cfg.trackEventFlushMs)) : 5000;
 

@@ -2572,6 +2572,75 @@ if (!isset($pictures_url)) {
 
                   <!-- D) Lead form (hidden until intent) -->
                   <section class="offer-lead" aria-label="Formularz kontaktowy">
+                    <div
+                      id="pdf-lead-modal"
+                      class="pdf-lead-modal hidden"
+                      role="dialog"
+                      aria-modal="true"
+                      aria-labelledby="pdf-lead-modal-title"
+                    >
+                      <div
+                        class="pdf-lead-modal__backdrop"
+                        data-action="close-pdf-lead-modal"
+                        tabindex="-1"
+                        aria-hidden="true"
+                      ></div>
+                      <div class="pdf-lead-modal__panel">
+                        <button
+                          type="button"
+                          class="pdf-lead-modal__close"
+                          data-action="close-pdf-lead-modal"
+                          aria-label="Zamknij"
+                        >
+                          &times;
+                        </button>
+                        <h4 id="pdf-lead-modal-title" class="pdf-lead-modal__title" data-role="pdf-lead-modal-title">
+                          Pobierz ofertę PDF
+                        </h4>
+                        <p class="pdf-lead-modal__subtitle" data-role="pdf-lead-modal-subtitle">
+                          Podaj e-mail i telefon — od razu wygenerujemy raport techniczny do pobrania.
+                        </p>
+                        <div class="pdf-lead-modal__fields">
+                          <div class="form-field">
+                            <label for="pdf-lead-email">E-mail <span class="required">*</span></label>
+                            <input
+                              type="email"
+                              id="pdf-lead-email"
+                              class="contact-input"
+                              placeholder="Twój e-mail"
+                              autocomplete="email"
+                            />
+                            <div class="field-error" data-error-for="pdf-lead-email"></div>
+                          </div>
+                          <div class="form-field">
+                            <label for="pdf-lead-phone">Telefon <span class="required">*</span></label>
+                            <input
+                              type="tel"
+                              id="pdf-lead-phone"
+                              class="contact-input"
+                              placeholder="+48 600 000 000"
+                              autocomplete="tel"
+                              inputmode="tel"
+                            />
+                            <div class="field-error" data-error-for="pdf-lead-phone"></div>
+                          </div>
+                        </div>
+                        <div class="pdf-lead-modal__actions">
+                          <button
+                            type="button"
+                            class="btn-primary"
+                            data-action="confirm-pdf-lead-submit"
+                            data-role="pdf-lead-modal-confirm"
+                          >
+                            Pobierz PDF
+                          </button>
+                          <button type="button" class="btn-secondary" data-action="close-pdf-lead-modal">
+                            Anuluj
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
                     <div id="pdf-contact-form" class="pdf-contact-form hidden" data-intent="">
                       <div class="contact-form-content">
                         <div class="form-header">

@@ -282,6 +282,54 @@ $scenarios = array(
         'expectedSetupType' => 'PARALLEL_CLUTCH',
     ),
     array(
+        'name' => 'underfloor-actuators-series',
+        'meta' => array(
+            'heating_type' => 'underfloor',
+            'recommended_power_kw' => 9,
+            'max_heating_power' => 9,
+            'heated_area' => 130,
+            'total_area' => 130,
+            'generation' => 'K',
+        ),
+        'selectedPump' => array(
+            'optionId' => 'hp',
+            'model' => 'KIT-WC09K3E5',
+            'type' => 'split',
+            'power_kw' => 9,
+            'phase' => 1,
+            'series' => 'K',
+        ),
+        'hydraulicsInputs' => array(
+            'has_underfloor_actuators' => true,
+        ),
+        'expectedSetupType' => 'SERIES_BYPASS',
+    ),
+    array(
+        'name' => 'underfloor-actuators-gas',
+        'meta' => array(
+            'heating_type' => 'underfloor',
+            'recommended_power_kw' => 9,
+            'max_heating_power' => 9,
+            'heated_area' => 130,
+            'total_area' => 130,
+            'generation' => 'K',
+        ),
+        'selectedPump' => array(
+            'optionId' => 'hp',
+            'model' => 'KIT-WC09K3E5',
+            'type' => 'split',
+            'power_kw' => 9,
+            'phase' => 1,
+            'series' => 'K',
+        ),
+        'hydraulicsInputs' => array(
+            'has_underfloor_actuators' => true,
+            'bivalent_enabled' => true,
+            'bivalent_source_type' => 'gas',
+        ),
+        'expectedSetupType' => 'PARALLEL_CLUTCH',
+    ),
+    array(
         'name' => 'bivalent-fireplace',
         'meta' => array(
             'heating_type' => 'underfloor',
