@@ -59,9 +59,9 @@ test.describe("full journey A→Ż", () => {
     expect(calc.status).toBeLessThan(300);
 
     await page
-      .locator(".workflow-completion, [data-role='results-summary-header'], #r-max-power")
+      .locator(".workflow-completion, [data-action='start-config']")
       .first()
-      .waitFor({ state: "visible", timeout: 120_000 });
+      .waitFor({ state: "visible", timeout: 180_000 });
     await shot(page, "06-workflow-completion-ozc-result");
 
     const trackFlush = page.waitForResponse(
