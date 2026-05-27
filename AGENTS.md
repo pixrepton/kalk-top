@@ -56,7 +56,8 @@ For Gmail Intake / Daszek / moved mail-ingress bridge work, the canonical root n
 ## Verification defaults
 
 - Use the lightest relevant verification first.
-- Prefer `npm run verify` for broad repo checks.
+- After changes in **kalkulator** or **konfigurator**, run `npm run proof` before deploy (see `docs/runbooks/PROOF_BEFORE_DEPLOY.md`).
+- Prefer `npm run verify` / `verify:engine` for engine-only checks without Playwright.
 - Prefer `npm run test:contract`, `npm run test:fixtures`, or `npm run test:rest` for offer-boundary work.
 - Mail-ingress integration smoke: run in **`topinstal-mail-ingress`**; scripts of the same name in this repo are stubs that only print a pointer.
 - Prefer Browser for visible UI verification and Debug Mode for evidence-first debugging.

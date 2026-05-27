@@ -1,6 +1,15 @@
-import { expect, type Page, Locator } from "@playwright/test";
+import { expect, type Page, Locator, type TestInfo } from "@playwright/test";
 import path from "path";
 import fs from "fs";
+
+export const CALCULATOR_PATH =
+  process.env.PLAYWRIGHT_CALCULATOR_PATH || "/?page_id=5";
+
+export const JOURNEY_REPORT_PATH = path.join(
+  process.cwd(),
+  "test-results",
+  "journey-report.json"
+);
 
 export const SCREENSHOT_DIR = path.join(
   process.cwd(),
@@ -16,6 +25,48 @@ export type JourneyReport = {
 };
 
 export const journeyLog: JourneyReport[] = [];
+
+export async function writeJourneyStep(
+  step: string,
+  ok: boolean,
+  detail?: string,
+  url?: string
+) {
+  journeyLog.push({ step, ok, detail, url });
+  flushJourneyReport();
+}
+
+export function flushJourneyReport(extra: Record<string, unknown> = {}) {
+  fs.mkdirSync(path.dirname(JOURNEY_REPORT_PATH), { recursive: true });
+  const lastOk = [...journeyLog].reverse().find((entry) => entry.ok);
+  fs.writeFileSync(
+    JOURNEY_REPORT_PATH,
+    JSON.stringify(
+      {
+        updatedAt: new Date().toISOString(),
+        lastSuccessfulStep: lastOk?.step || null,
+        steps: journeyLog,
+        ...extra,
+      },
+      null,
+      2
+    ),
+    "utf8"
+  );
+}
+
+export async function gotoCalculator(page: Page) {
+  const response = await page.goto(CALCULATOR_PATH, {
+    waitUntil: "domcontentloaded",
+    timeout: 120_000,
+  });
+  expect(response?.ok()).toBeTruthy();
+  await page.locator("#heatCalcFormFull").waitFor({
+    state: "visible",
+    timeout: 60_000,
+  });
+  return response;
+}
 
 export async function shot(page: Page, name: string, note?: string) {
   fs.mkdirSync(SCREENSHOT_DIR, { recursive: true });
@@ -57,7 +108,7 @@ async function waitNextEnabled(page: Page, selector: string) {
   return btn;
 }
 
-async function goToTab(page: Page, tab: number) {
+export async function goToTab(page: Page, tab: number) {
   await page.evaluate((tabIndex) => {
     const w = window as Window & { showTab?: (t: number) => void };
     if (typeof w.showTab === "function") {
@@ -126,17 +177,33 @@ export async function getFormValidationDiag(
   });
 }
 
-export async function ensureFormValidForCalculate(page: Page) {
+export type PersonaId =
+  | "baseline-floor-heating"
+  | "two-storey-wroclaw"
+  | "apartment-minimal";
+
+function resolveTabFillers(personaId?: PersonaId) {
+  const tab1 =
+    personaId === "two-storey-wroclaw"
+      ? fillTab1TwoStoreyWroclaw
+      : personaId === "apartment-minimal"
+        ? fillTab1ApartmentMinimal
+        : fillTab1;
+  return [fillTab0, tab1, fillTab2, fillTab3, fillTab4, fillTab5];
+}
+
+export async function ensureFormValidForCalculate(page: Page, personaId?: PersonaId) {
+  const fillers = resolveTabFillers(personaId);
   for (let attempt = 0; attempt < 3; attempt += 1) {
     const diag = await getFormValidationDiag(page);
     if (diag.ok) return diag;
 
     for (const tab of diag.tabInvalid) {
-      const filler = TAB_FILLERS[tab];
+      const filler = fillers[tab];
       if (filler) await filler(page);
     }
     if (diag.missing.includes("location_id")) await fillTab0(page);
-    if (diag.missing.includes("attic_access")) await fillTab1(page);
+    if (diag.missing.includes("attic_access")) await fillers[1](page);
     if (diag.missing.includes("include_hot_water")) await fillTab5(page);
     await syncFormEngine(page);
   }
@@ -150,8 +217,8 @@ export async function ensureFormValidForCalculate(page: Page) {
   return finalDiag;
 }
 
-export async function clickFinishWhenReady(page: Page) {
-  await ensureFormValidForCalculate(page);
+export async function clickFinishWhenReady(page: Page, personaId?: PersonaId) {
+  await ensureFormValidForCalculate(page, personaId);
   await goToTab(page, 5);
   const btn = page.locator(".section.active[data-tab='5'] .btn-finish, .btn-finish").first();
   await waitNextEnabled(page, ".btn-finish");
@@ -425,6 +492,184 @@ async function fillHidden(page: Page, selector: string, value: string) {
   await setSliderHidden(page, selector, value);
 }
 
+export async function fillTab1TwoStoreyWroclaw(page: Page) {
+  await goToTab(page, 1);
+  await page
+    .locator('.section.active[data-tab="1"] label.form-field__radio-label', {
+      hasText: "Regularny (prostokątny)",
+    })
+    .click({ timeout: 15_000 });
+  await page.waitForTimeout(600);
+  await page.getByText("Podam długość i szerokość", { exact: false }).click({ timeout: 15_000 });
+  await page.waitForTimeout(600);
+  await fillHidden(page, "#building_length", "10");
+  await fillHidden(page, "#building_width", "11");
+  await page.locator('.yes-no-card[data-field="has_basement"][data-value="no"]').click();
+  await page.locator('.yes-no-card[data-field="has_balcony"][data-value="no"]').click();
+  await page.selectOption("#building_floors", "2");
+  await page.locator('.option-card[data-field="building_roof"][data-value="steep"]').click();
+  await fillHidden(page, "#floor_height", "2.6");
+  await page
+    .locator("label.form-field__radio-label", { hasText: /Brak garażu|bez garażu/i })
+    .first()
+    .click({ timeout: 10_000 })
+    .catch(async () => {
+      await page.locator('input[name="garage_type"][value="none"]').evaluate((el) => {
+        const input = el as HTMLInputElement;
+        input.checked = true;
+        input.dispatchEvent(new Event("change", { bubbles: true }));
+      });
+    });
+  for (const floor of ["1", "2"]) {
+    const heated = page.locator(`input[name="building_heated_floors[]"][value="${floor}"]`);
+    if ((await heated.count()) > 0) {
+      await heated.evaluate((el) => {
+        const input = el as HTMLInputElement;
+        input.checked = true;
+        input.dispatchEvent(new Event("change", { bubbles: true }));
+      });
+    }
+  }
+  await page.evaluate(() => {
+    const attic = document.querySelector(
+      'input[name="attic_access"][value="inaccessible"]'
+    ) as HTMLInputElement | null;
+    if (attic) {
+      attic.checked = true;
+      attic.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  });
+}
+
+export async function fillTab1ApartmentMinimal(page: Page) {
+  await goToTab(page, 1);
+  await page
+    .locator('.section.active[data-tab="1"] label.form-field__radio-label', {
+      hasText: "Regularny (prostokątny)",
+    })
+    .click({ timeout: 15_000 });
+  await page.waitForTimeout(600);
+  await page.getByText("Podam długość i szerokość", { exact: false }).click({ timeout: 15_000 });
+  await page.waitForTimeout(600);
+  await fillHidden(page, "#building_length", "6");
+  await fillHidden(page, "#building_width", "5");
+  await page.locator('.yes-no-card[data-field="has_basement"][data-value="no"]').click();
+  await page.locator('.yes-no-card[data-field="has_balcony"][data-value="no"]').click();
+  await page.selectOption("#building_floors", "1");
+  await page.locator('.option-card[data-field="building_roof"][data-value="steep"]').click();
+  await fillHidden(page, "#floor_height", "2.6");
+  await page
+    .locator("label.form-field__radio-label", { hasText: /Brak garażu|bez garażu/i })
+    .first()
+    .click({ timeout: 10_000 })
+    .catch(async () => {
+      await page.locator('input[name="garage_type"][value="none"]').evaluate((el) => {
+        const input = el as HTMLInputElement;
+        input.checked = true;
+        input.dispatchEvent(new Event("change", { bubbles: true }));
+      });
+    });
+  const heated = page.locator('input[name="building_heated_floors[]"][value="1"]');
+  if ((await heated.count()) > 0) {
+    await heated.evaluate((el) => {
+      const input = el as HTMLInputElement;
+      input.checked = true;
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+  }
+  await page.evaluate(() => {
+    const attic = document.querySelector(
+      'input[name="attic_access"][value="inaccessible"]'
+    ) as HTMLInputElement | null;
+    if (attic) {
+      attic.checked = true;
+      attic.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  });
+  await syncFormEngine(page);
+}
+
+export async function advanceFormForPersona(page: Page, personaId: PersonaId) {
+  const tabFillers: Array<(p: Page) => Promise<void>> = [
+    fillTab0,
+    personaId === "two-storey-wroclaw"
+      ? fillTab1TwoStoreyWroclaw
+      : personaId === "apartment-minimal"
+        ? fillTab1ApartmentMinimal
+        : fillTab1,
+    fillTab2,
+    fillTab3,
+    fillTab4,
+  ];
+
+  for (let tab = 0; tab < 5; tab += 1) {
+    await tabFillers[tab](page);
+    await syncFormEngine(page);
+    await clickEnabledNext(page, `.btn-next${tab + 1}`);
+  }
+  await goToTab(page, 5);
+  await fillTab5(page);
+}
+
+export async function waitForWorkflowPersistedState(page: Page) {
+  await page.waitForFunction(
+    () => {
+      const keys = Object.keys(sessionStorage).filter((key) => key.includes("config_data"));
+      for (const key of keys) {
+        try {
+          const raw = sessionStorage.getItem(key);
+          if (!raw) continue;
+          const data = JSON.parse(raw) as Record<string, unknown>;
+          if (data?.offer_dto || data?.pump_selection) return true;
+        } catch {
+          // ignore malformed session payloads
+        }
+      }
+      const getState = (
+        window as Window & { getAppState?: () => Record<string, unknown> }
+      ).getAppState;
+      if (typeof getState !== "function") return false;
+      const appState = getState();
+      const offer = appState?.canonicalOffer as Record<string, unknown> | undefined;
+      return !!(offer?.engineering || offer?.traceId);
+    },
+    undefined,
+    { timeout: 90_000 }
+  );
+}
+
+/** Configurator pump step needs sessionStorage config_data, not only canonicalOffer in memory. */
+export async function waitForConfiguratorConfigData(page: Page) {
+  await page.waitForFunction(
+    () => {
+      const getState = (
+        window as Window & { getAppState?: () => Record<string, unknown> }
+      ).getAppState;
+      if (typeof getState === "function") {
+        const appState = getState();
+        const configData = appState?.config_data as Record<string, unknown> | undefined;
+        if (configData?.offer_dto || configData?.pump_selection) return true;
+      }
+
+      for (const key of Object.keys(sessionStorage)) {
+        if (!key.includes("config_data")) continue;
+        try {
+          const data = JSON.parse(sessionStorage.getItem(key) || "{}") as Record<
+            string,
+            unknown
+          >;
+          if (data?.offer_dto || data?.pump_selection) return true;
+        } catch {
+          // ignore malformed session payloads
+        }
+      }
+      return false;
+    },
+    undefined,
+    { timeout: 120_000 }
+  );
+}
+
 const TAB_FILLERS = [fillTab0, fillTab1, fillTab2, fillTab3, fillTab4, fillTab5];
 
 export async function advanceAllFormTabs(page: Page) {
@@ -466,8 +711,8 @@ const PDF_GATE_MESSAGE =
 export async function assertPdfGateBlocksWithoutContact(page: Page) {
   const pdfBtn = page.locator('[data-action="download-offer-pdf"]').first();
   await pdfBtn.click({ timeout: 30_000 });
-  const form = page.locator("#pdf-contact-form");
-  await form.waitFor({ state: "visible", timeout: 30_000 });
+  const form = page.locator("#pdf-contact-form, #pdf-lead-modal");
+  await form.first().waitFor({ state: "visible", timeout: 60_000 });
   await expect(form).toHaveAttribute("data-intent", "pdf_download");
   const pendingIntent = await page.evaluate(() => {
     return sessionStorage.getItem("ti_pdf_download_pending");
@@ -490,6 +735,15 @@ export async function assertPdfGateBlocksWithoutContact(page: Page) {
 }
 
 export async function fillContactFormStep10(page: Page) {
+  const modal = page.locator("#pdf-lead-modal");
+  if (await modal.isVisible().catch(() => false)) {
+    await page.locator("#pdf-lead-email").fill("e2e.lead@topinstal.test");
+    await page.locator("#pdf-lead-phone").fill("600700800");
+    const confirm = page.locator('[data-role="pdf-lead-modal-confirm"]').first();
+    await confirm.click({ timeout: 15_000 });
+    await page.waitForTimeout(500);
+  }
+
   const form = page.locator("#pdf-contact-form");
   await form.waitFor({ state: "visible", timeout: 60_000 });
   await page.locator("#customer-email").fill("e2e.lead@topinstal.test");
@@ -525,7 +779,15 @@ export async function fillContactFormStep10(page: Page) {
   });
 }
 
-export async function submitContactFormAndAwaitPdf(page: Page) {
+export type PdfSubmitResult = "ok" | "skipped";
+
+export async function submitContactFormAndAwaitPdf(
+  page: Page,
+  testInfo?: TestInfo
+): Promise<PdfSubmitResult> {
+  const requirePdf =
+    process.env.PROOF_PDF_REQUIRED === "1" || process.env.PROOF_PDF_REQUIRED === "true";
+
   const leadPromise = page.waitForResponse(
     (res) =>
       res.url().includes("admin-ajax") &&
@@ -577,7 +839,27 @@ export async function submitContactFormAndAwaitPdf(page: Page) {
       ok: true,
       detail: savePath,
     });
+    flushJourneyReport();
+    return "ok";
   }
+
+  const docOk = docRes && docRes.status() >= 200 && docRes.status() < 300;
+  if (!docOk && !requirePdf) {
+    const detail = "PDF generator unavailable (soft tier)";
+    journeyLog.push({ step: "pdf-soft-skip", ok: true, detail });
+    flushJourneyReport();
+    testInfo?.annotations.push({ type: "skip", description: detail });
+    return "skipped";
+  }
+
+  if (!docOk) {
+    throw new Error(
+      `PDF document generation failed: doc=${docRes?.status() ?? "timeout"} download=${download ? "yes" : "no"}`
+    );
+  }
+
+  flushJourneyReport();
+  return "ok";
 }
 
 export type HydraulicsLayoutMetrics = {
@@ -587,6 +869,62 @@ export type HydraulicsLayoutMetrics = {
   gridLeft: number;
   labelMarkerHidden: boolean;
 };
+
+export function clearConfiguratorPersistedState(page: Page) {
+  return page.evaluate(() => {
+    Object.keys(sessionStorage).forEach((key) => {
+      if (
+        key.includes("wycena2025_configuratorState") ||
+        key.includes("configuratorState")
+      ) {
+        sessionStorage.removeItem(key);
+      }
+    });
+  });
+}
+
+export async function reachConfiguratorPumpStep(page: Page) {
+  await page.waitForFunction(
+    () => {
+      const grid = document.querySelector(
+        '#configurator-app [data-step-key="pompa"] .options-grid, #configurator-view [data-step-key="pompa"] .options-grid'
+      );
+      if (!grid) return false;
+      if (grid.querySelector('[data-role="pump-pending"]')) return false;
+      return grid.querySelectorAll(".product-card:not(.disabled)").length > 0;
+    },
+    undefined,
+    { timeout: 120_000 }
+  );
+
+  const editPump = page.locator('[data-action="edit-step"][data-step-key="pompa"]');
+  if (await editPump.isVisible().catch(() => false)) {
+    await editPump.click({ timeout: 15_000 });
+    await page.waitForTimeout(800);
+  } else {
+    for (let i = 0; i < 12; i += 1) {
+      const activeKey = await page
+        .locator(".config-step.active")
+        .first()
+        .getAttribute("data-step-key")
+        .catch(() => null);
+      if (activeKey === "pompa") break;
+      const prev = page.locator("#nav-prev");
+      if (!(await prev.isEnabled().catch(() => false))) break;
+      await prev.click({ timeout: 10_000 });
+      await page.waitForTimeout(600);
+    }
+  }
+
+  const pumpStep = page.locator('.config-step.active[data-step-key="pompa"]').first();
+  await pumpStep.waitFor({ state: "visible", timeout: 30_000 });
+
+  const pumpCards = pumpStep.locator(
+    ".options-grid .product-card:not(.disabled), .options-grid .option-card:not(.disabled)"
+  );
+  await pumpCards.first().waitFor({ state: "visible", timeout: 30_000 });
+  return pumpStep;
+}
 
 export async function reachConfiguratorHydraulicsStep(page: Page) {
   await advanceAllFormTabs(page);

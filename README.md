@@ -2,6 +2,8 @@
 
 **TOP-INSTAL** — warstwa decyzyjna: kalkulacja HVAC, dobór, bufor, wycena, oferta (`CalcRequestDTO` → `POST /wp-json/topinstal/v1/calculate-offer` → `OfferDTO`).
 
+**Dokumentacja produktu:** [`PROJECT_README.md`](PROJECT_README.md) · **Cały ekosystem:** [`../knowledge/OS_README.md`](../knowledge/OS_README.md)
+
 | Doc                                                                                                      | Purpose                                      |
 | -------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
 | [docs/overview/README_TOP-INSTAL_HVAC_Calculator.md](docs/overview/README_TOP-INSTAL_HVAC_Calculator.md) | Pełny opis repo, workflow, mapa dokumentacji |

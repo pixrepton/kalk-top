@@ -9,12 +9,15 @@ try {
     $r = Invoke-WebRequest -Uri $Url -UseBasicParsing -TimeoutSec $TimeoutSec
     $html = $r.Content
     [PSCustomObject]@{
-        Ok           = $true
-        Status       = $r.StatusCode
-        Bytes        = $html.Length
-        HasAiCoach   = $html -match "ai-coach"
-        HasSourceLbl = $html -match "Główne źródło"
-        HasHiddenHp  = $html -match 'name="source_type"[^>]*value="air_to_water_hp"|value="air_to_water_hp"[^>]*name="source_type"'
+        Ok              = $true
+        Status          = $r.StatusCode
+        Bytes           = $html.Length
+        HasAiCoach      = $html -match "ai-coach"
+        HasSourceLbl    = $html -match "Główne źródło"
+        HasHiddenHp     = $html -match 'name="source_type"[^>]*value="air_to_water_hp"|value="air_to_water_hp"[^>]*name="source_type"'
+        HasConfigurator = $html -match "configurator-unified"
+        HasResultsJs    = $html -match "resultsRenderer"
+        HasWorkflowCtrl = $html -match "workflowController"
     }
 } catch {
     [PSCustomObject]@{

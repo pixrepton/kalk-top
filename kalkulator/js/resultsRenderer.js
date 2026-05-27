@@ -1299,12 +1299,18 @@
       // while results/configurator load in background.
       // We trigger this here (resultsRenderer) to avoid relying on apiCaller versions/caching.
       // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+      const ozcDesignKw =
+        result?.offer_dto?.engineering?.ozc?.designHeatLoss_kW ??
+        result?.offer_dto?.engineering?.ozc?.recommendedPower_kW ??
+        null;
       const hasFreshCalcResult =
         !!result &&
         (Number.isFinite(Number(result.max_heating_power)) ||
-          Number.isFinite(Number(result.recommended_power_kw)));
+          Number.isFinite(Number(result.recommended_power_kw)) ||
+          Number.isFinite(Number(ozcDesignKw)));
 
       let completionRequested = hasFreshCalcResult;
+      let workflowCompletionDispatched = false;
       try {
         if (!completionRequested) {
           const alreadyShown =
@@ -1320,7 +1326,7 @@
         if (completionRequested && window.__HP_DEBUG__) {
           LOG.info(
             "flow",
-            "[FLOW-9A] Workflow completion will dispatch after config_data save"
+            "[FLOW-9A] Workflow completion scheduled after form hide"
           );
         }
       } catch (e) {
@@ -1356,6 +1362,34 @@
           );
         } catch (_) {
           return false;
+        }
+      }
+
+      function maybeDispatchWorkflowCompletion() {
+        if (workflowCompletionDispatched) {
+          return;
+        }
+        const shouldDispatch =
+          completionRequested || !isWorkflowCtaVisible();
+        if (!shouldDispatch) {
+          return;
+        }
+        try {
+          if (window.__HP_DEBUG__) {
+            LOG.info(
+              "flow",
+              "[FLOW-9A] Dispatching workflow completion event (screen 0)..."
+            );
+          }
+          dispatchWorkflowCompletionEvent();
+          workflowCompletionDispatched = true;
+          completionRequested = false;
+        } catch (dispatchError) {
+          LOG.warn(
+            "flow",
+            "[FLOW-9A] Workflow completion dispatch failed",
+            dispatchError
+          );
         }
       }
 
@@ -1422,6 +1456,41 @@
           "❌ [FLOW-12] Results container (.hp-results) not found!"
         );
       }
+
+      // Persist config_data before workflow CTA — user can open configurator immediately.
+      const canonicalOfferDto =
+        result?.offer_dto ??
+        (typeof getAppState === "function"
+          ? getAppState()?.canonicalOffer || getAppState()?.offer
+          : null);
+      if (canonicalOfferDto) {
+        try {
+          const normalizedResult = Object.assign({}, result, {
+            offer_dto: canonicalOfferDto,
+          });
+          const earlyPumpSelection = buildPumpSelectionResultFromOffer(
+            canonicalOfferDto,
+            normalizedResult
+          );
+          saveConfigData({
+            configuratorInput: {
+              ...normalizedResult,
+              pump_selection: earlyPumpSelection?.pump_selection || null,
+            },
+            result: normalizedResult,
+            pumpSelectionResult: earlyPumpSelection,
+          });
+        } catch (earlySaveError) {
+          LOG.warn(
+            "flow",
+            "[FLOW-9B] Early config_data persist failed",
+            earlySaveError
+          );
+        }
+      }
+
+      // UX: show Gratulacje immediately after config_data is available for configurator.
+      maybeDispatchWorkflowCompletion();
 
       // Results wrapper section removed (no longer exists in HTML - was legacy code)
 
@@ -1862,22 +1931,7 @@
           pumpSelectionResult,
         });
 
-        const shouldDispatchWorkflowCompletion =
-          completionRequested || !isWorkflowCtaVisible();
-
-        if (shouldDispatchWorkflowCompletion) {
-          if (window.__HP_DEBUG__) {
-            LOG.info(
-              "flow",
-              "[FLOW-9A] Dispatching workflow completion event (screen 0)..."
-            );
-          }
-          dispatchWorkflowCompletionEvent();
-          completionRequested = false;
-          if (window.__HP_DEBUG__) {
-            LOG.info("flow", "[FLOW-9A] Workflow completion event dispatched");
-          }
-        }
+        maybeDispatchWorkflowCompletion();
 
         // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
         // APP STATE PERSISTENCE — zapisz wynik obliczeń
@@ -1905,18 +1959,7 @@
         console.error("   Stack:", e.stack);
       }
 
-      if (completionRequested || (hasFreshCalcResult && !isWorkflowCtaVisible())) {
-        try {
-          dispatchWorkflowCompletionEvent();
-          completionRequested = false;
-        } catch (completionError) {
-          LOG.warn(
-            "flow",
-            "[FLOW-9A] Failed to dispatch workflow completion fallback",
-            completionError
-          );
-        }
-      }
+      maybeDispatchWorkflowCompletion();
 
       // === ONBOARDING MODAL DLA KONFIGURATORA ===
       // Modal konfiguratora wyłączony - zastąpiony animacją typewriter w WorkflowController

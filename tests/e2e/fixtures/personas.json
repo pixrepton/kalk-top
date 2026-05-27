@@ -1,0 +1,17 @@
+[
+  {
+    "id": "baseline-floor-heating",
+    "label": "Dom jednorodzinny, podłogówka (baseline)",
+    "maxDurationMs": 90000
+  },
+  {
+    "id": "two-storey-wroclaw",
+    "label": "Dom 10×11 m, 2 kondygnacje, Wrocław (produkcja)",
+    "maxDurationMs": 90000
+  },
+  {
+    "id": "apartment-minimal",
+    "label": "Mieszkanie minimalne, szybka ścieżka",
+    "maxDurationMs": 90000
+  }
+]

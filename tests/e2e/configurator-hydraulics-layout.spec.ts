@@ -2,13 +2,11 @@ import { test, expect } from "@playwright/test";
 import path from "path";
 import fs from "fs";
 import {
+  gotoCalculator,
   reachConfiguratorHydraulicsStep,
   readHydraulicsLayoutMetrics,
   shot,
 } from "./helpers/calculator-flow";
-
-const calculatorPath =
-  process.env.PLAYWRIGHT_CALCULATOR_PATH || "/?page_id=5";
 
 const SCREENSHOT_DIR = path.join(
   process.cwd(),
@@ -16,7 +14,7 @@ const SCREENSHOT_DIR = path.join(
   "hydraulics-layout-screenshots"
 );
 
-test.describe("configurator hydraulics mini-form layout", () => {
+test.describe("configurator hydraulics mini-form layout @soft", () => {
   test.setTimeout(480_000);
 
   test("krok 3/10 — stabilny układ i brak przesuwania przy kliknięciach", async ({
@@ -25,12 +23,7 @@ test.describe("configurator hydraulics mini-form layout", () => {
     fs.mkdirSync(SCREENSHOT_DIR, { recursive: true });
 
     await page.setViewportSize({ width: 1440, height: 2200 });
-    const landing = await page.goto(calculatorPath, {
-      waitUntil: "networkidle",
-      timeout: 120_000,
-    });
-    expect(landing?.ok()).toBeTruthy();
-    await page.locator("#heatCalcFormFull").waitFor({ state: "visible", timeout: 60_000 });
+    await gotoCalculator(page);
 
     await reachConfiguratorHydraulicsStep(page);
     await shot(page, "hydraulics-step-initial");

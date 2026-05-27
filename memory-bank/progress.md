@@ -1,5 +1,17 @@
 # Progress
 
+## Ekosystem TOP-INSTAL (wpisy poza samym kalk-top)
+
+Chronologia cross-repo **2026-05-15…23:** `knowledge/timeline/2026-05.md`. Szczegóły gmail-agent: `../gmail-agent/memory-bank/agent-handover.md`. Cieplo worker: `../topinstal-cieplo-orchestrator/memory-bank/agent-handover.md`.
+
+| Data          | Powiązanie z kalk-top                                                                                |
+| ------------- | ---------------------------------------------------------------------------------------------------- |
+| 2026-05-20–21 | Cieplo worker VPS — wspólny Postgres/env z pipeline oferty; brak pełnego `poll` do `calculate-offer` |
+| 2026-05-22    | P0 registry — korelacja spraw mailowych z workflow Cieplo (`case_id` ↔ `workflow_id`)                |
+| 2026-05-23    | Daszek feed — sprawy z mailbox memory; kalk-top nadal SoT OfferDTO                                   |
+
+---
+
 - 2026-05-20: audyt detektyw silników obliczeniowych (`docs/architecture/engine-calculation-detective-report-2026-05-20.md`): P0 w OZC (addytywne kW, HDD bez eta_rec, geometria poddasza, floor_area vs heated_area, koszty SCOP/CWU); CWU/buffer/pricing bez P0 w izolacji; harnessy PHP PASS oprócz `engine-parity.php` (brak `clonePumpTableFallback` w configurator JS). Zaktualizowano wszystkie `*.graph.md` + `engine-graphs.json` po `--force` (8615/15106).
 - 2026-05-20: powtórzono eksport grafów silników z GitNexus MCP (repo `kalk-top` zindeksowane: 8604 nodes, 15096 edges). Zaktualizowano `docs/architecture/engine-graphs/engine-graphs.json` (blok `gitnexus`, UIDs klas/metod, CALLS z `context`/`cypher`, orchestracja `CalculateOfferUseCase.execute`) oraz README grafów. Potwierdzono łańcuch ryzyka OZC: `calculateOZC` → `computeAdditiveCorrectionsKw` (L680) + parity JS `kalkulator/engine/ozc/ozc-engine.js`. Weryfikacja: MCP `list_repos` pokazuje `kalk-top`; `context`/`cypher` na silnikach OK; `query` nadal ostrzega o braku FTS do pełnego `--force` rebuild.
 - 2026-05-20: wyrównano agent harness do poziomu gmail-agent (Fazy A+B+C). Dodano: `LOCAL_WORKSPACE_RULES.md`, `.agents/SKILL_ROUTER.md`, `00-kalk-top-core-router.mdc` (jedyna reguła always-on), MCP `kalk-top-repo-assistant` + Playwright w `.cursor/mcp.json`, `.cursorignore`, skille współdzielone (karpathy, cursor-codex-harness, context-budget, gitnexus, kalk-top-offerdto-contract), `docs/dev/KALK_TOP_AGENT_HARNESS.md`, `KALK_TOP_GITNEXUS.md`, `memory-bank/navigation.md`, hook `after-file-edit-lint`, slash commands `verify-*`, `scripts/agent-harness-preflight.mjs`, `.codex/` (reviewer, php-pro, typescript-pro). Weryfikacja: `node scripts/agent-harness-preflight.mjs` OK, `npm run test:contract` PASS, `npm run verify:js` PASS.

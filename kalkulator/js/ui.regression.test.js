@@ -438,17 +438,28 @@ test("configurator populate uses canonical calc input for backend pump profiles"
   );
 });
 
-test("resultsRenderer dispatches workflow completion after saveConfigData", () => {
+test("resultsRenderer persists config_data before workflow CTA and re-dispatches after FLOW-17 save", () => {
   const resultsRendererSource = fs.readFileSync(
     path.join(repoRoot, "kalkulator", "js", "resultsRenderer.js"),
     "utf8"
   );
 
   assert.equal(
-    resultsRendererSource.includes(
-      "[FLOW-9A] Workflow completion will dispatch after config_data save"
-    ),
+    resultsRendererSource.includes("maybeDispatchWorkflowCompletion"),
     true
+  );
+  assert.equal(
+    resultsRendererSource.includes("[FLOW-9B] Early config_data persist"),
+    true
+  );
+  const flow12Marker = resultsRendererSource.indexOf("[FLOW-12]");
+  const earlySaveMarker = resultsRendererSource.indexOf(
+    "saveConfigData({",
+    flow12Marker
+  );
+  const earlyDispatchMarker = resultsRendererSource.indexOf(
+    "maybeDispatchWorkflowCompletion();",
+    flow12Marker
   );
   const consolidationMarker = resultsRendererSource.indexOf(
     "P1.2: KONSOLIDACJA ZAPISU config_data"
@@ -458,12 +469,14 @@ test("resultsRenderer dispatches workflow completion after saveConfigData", () =
     "saveConfigData({",
     consolidationMarker
   );
-  const dispatchCallMarker = resultsRendererSource.indexOf(
-    "dispatchWorkflowCompletionEvent();",
+  const lateDispatchMarker = resultsRendererSource.indexOf(
+    "maybeDispatchWorkflowCompletion();",
     saveMarker
   );
+  assert.ok(earlySaveMarker > flow12Marker);
+  assert.ok(earlyDispatchMarker > earlySaveMarker);
   assert.ok(saveMarker > consolidationMarker);
-  assert.ok(dispatchCallMarker > saveMarker);
+  assert.ok(lateDispatchMarker > saveMarker);
   assert.equal(
     resultsRendererSource.includes("showWorkflowCompletion(finalResult)"),
     false
@@ -476,15 +489,16 @@ test("apiCaller defers workflow completion to displayResults", () => {
     "utf8"
   );
 
-  assert.equal(apiCallerSource.includes("showWorkflowCompletion(finalResult)"), false);
   assert.equal(apiCallerSource.includes("displayResults(finalResult)"), true);
   assert.equal(
     apiCallerSource.includes(
-      "Workflow completion (Gratulacje) is owned by displayResults after saveConfigData."
+      "Workflow completion (Gratulacje) is owned by displayResults"
     ),
     true
   );
+  assert.equal(apiCallerSource.includes("ensureWorkflowCompletionShown(finalResult)"), true);
   assert.equal(apiCallerSource.includes("completionAnimationShown: false"), true);
+  assert.equal(apiCallerSource.includes("ensureWorkflowCompletionShown"), true);
 });
 
 test("resultsRenderer re-dispatches workflow completion when CTA is still hidden", () => {
@@ -494,7 +508,7 @@ test("resultsRenderer re-dispatches workflow completion when CTA is still hidden
   );
 
   assert.equal(
-    resultsRendererSource.includes("const shouldDispatchWorkflowCompletion ="),
+    resultsRendererSource.includes("function maybeDispatchWorkflowCompletion()"),
     true
   );
   assert.equal(

@@ -42,6 +42,82 @@
     } catch (_) { }
   }
 
+  function persistConfiguratorBridgeConfig(offer, result) {
+    if (!offer || typeof offer !== "object") {
+      return;
+    }
+    try {
+      const storage =
+        typeof sessionStorage !== "undefined" ? sessionStorage : null;
+      const root =
+        document.querySelector("#configurator-app, #configurator-view") ||
+        document.querySelector("[data-hp-instance]") ||
+        document.body;
+      const instanceId =
+        root?.getAttribute?.("data-hp-instance") ||
+        (typeof window.getAppState === "function"
+          ? window.getAppState()?.instanceId
+          : null) ||
+        "default";
+      const configDataKey = `config_data::${String(instanceId)}`;
+      let existing = {};
+      if (storage) {
+        for (const key of [configDataKey, "config_data"]) {
+          try {
+            const raw = storage.getItem(key);
+            if (!raw) continue;
+            const parsed = JSON.parse(raw);
+            if (parsed && typeof parsed === "object") {
+              existing = parsed;
+              break;
+            }
+          } catch (_) {
+            // ignore malformed persisted payloads
+          }
+        }
+      }
+      const configData = Object.assign({}, existing, result || {}, {
+        from_calculator: true,
+        offer_dto: offer,
+      });
+      if (storage) {
+        storage.setItem(configDataKey, JSON.stringify(configData));
+      }
+      if (typeof window.updateAppState === "function") {
+        window.updateAppState({ config_data: configData, canonicalOffer: offer });
+      }
+    } catch (error) {
+      LOG.warn("flow", "persistConfiguratorBridgeConfig failed", error);
+    }
+  }
+
+  function ensureWorkflowCompletionShown(result) {
+    const view = window;
+    if (typeof view.setTimeout !== "function") {
+      return;
+    }
+    view.setTimeout(() => {
+      try {
+        const activeRoot =
+          window.__HP_ACTIVE_ROOT__ ||
+          document.querySelector(".heatpump-calculator");
+        const completionContainer = activeRoot?.querySelector?.(
+          ".workflow-completion"
+        );
+        const visible =
+          !!completionContainer &&
+          completionContainer.style.display !== "none" &&
+          completionContainer.getClientRects?.().length > 0;
+        if (!visible && typeof window.showWorkflowCompletion === "function") {
+          LOG.warn("flow", "Workflow completion fallback triggered");
+          window.showWorkflowCompletion(result);
+        }
+      } catch (fallbackError) {
+        LOG.warn("flow", "Workflow completion fallback failed", fallbackError);
+      }
+    }, 120);
+  }
+
   function trackBackendFallbackTelemetry(offer, traceId) {
     if (!offer || typeof offer !== "object") {
       return;
@@ -529,6 +605,8 @@
         offer: backendOutput.offer || null,
       });
 
+      persistConfiguratorBridgeConfig(backendOutput.offer, finalResult);
+
       // Fresh calculation: allow workflow completion to run again after config_data save.
       if (typeof window.updateAppState === "function") {
         window.updateAppState({
@@ -539,14 +617,23 @@
         });
       }
 
-      // Workflow completion (Gratulacje) is owned by displayResults after saveConfigData.
+      // Workflow completion (Gratulacje) is owned by displayResults; fallback if UI did not open.
       try {
         if (typeof window.displayResults === "function") {
           window.displayResults(finalResult);
+        } else {
+          LOG.warn("flow", "displayResults is not available");
+          if (typeof window.showWorkflowCompletion === "function") {
+            window.showWorkflowCompletion(finalResult);
+          }
         }
       } catch (displayError) {
-        LOG.warn("flow", "displayResults failed", displayError);
+        LOG.error("flow", "displayResults failed", displayError);
+        if (typeof window.showWorkflowCompletion === "function") {
+          window.showWorkflowCompletion(finalResult);
+        }
       }
+      ensureWorkflowCompletionShown(finalResult);
 
       if (isDualRunEnabled()) {
         runDualRunValidation(payload || {}, backendOutput);

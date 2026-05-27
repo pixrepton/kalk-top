@@ -99,7 +99,6 @@ Gmail polling runtime is no longer owned by WordPress in this repo.
 
 Current operational note:
 
-
 ## Common edit points
 
 ### Backend orchestration
@@ -136,10 +135,26 @@ Current operational note:
 
 Use the lightest relevant verification first.
 
-Broad repo checks:
+**Before deploy** (kalkulator / konfigurator / OfferDTO): run the full local proof gate:
+
+```powershell
+npm run proof
+```
+
+See [PROOF_BEFORE_DEPLOY.md](runbooks/PROOF_BEFORE_DEPLOY.md) for tiers, PDF soft skip, and artifacts.
+
+Broad engine-only checks (no Playwright):
 
 ```powershell
 npm run verify
+# alias:
+npm run verify:engine
+```
+
+Critical UI only:
+
+```powershell
+npm run verify:ui:critical
 ```
 
 Offer-boundary checks:
