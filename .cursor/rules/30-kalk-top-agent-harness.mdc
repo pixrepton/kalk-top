@@ -23,7 +23,7 @@ Use when the task touches Cursor/Codex workflow, `.cursor/rules`, skills, MCP, h
 ## MCP and Tooling
 
 - Default MCP: `kalk-top-repo-assistant` (contract surface, runtime preflight, route/auth, architecture inputs).
-- `playwright` for allowed-host UI smoke when Browser is insufficient.
+- Workspace `playwright` (`.cursor/mcp.json` at workspace root) for allowed-host UI smoke when Browser is insufficient.
 - Animation MCPs are **not** in project `mcp.json`; use `npm run mcp:framer-motion` / `mcp:animation` if needed.
 - Verify MCP hints with file reads and `npm run test:contract` / targeted harnesses.
 - Full map: [KALK_TOP_AGENT_HARNESS.md](../../docs/dev/KALK_TOP_AGENT_HARNESS.md).

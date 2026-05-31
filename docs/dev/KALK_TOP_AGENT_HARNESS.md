@@ -37,10 +37,12 @@ Tell agents what to read first, what to load on demand, and how to verify withou
 
 ## MCP
 
+UI smoke przez workspace **playwright** (`top-code workspace/.cursor/mcp.json`, hosts `topinstal.com.pl`) — nie w `kalk-top/.cursor/mcp.json`.
+
 | Server                    | Use                                                                         |
 | ------------------------- | --------------------------------------------------------------------------- |
 | `kalk-top-repo-assistant` | Contract surface, runtime preflight, route/auth, architecture review inputs |
-| `playwright`              | UI smoke on allowed hosts                                                   |
+| `playwright` (workspace)  | UI smoke on allowed hosts — workspace MCP, shared with gmail-agent          |
 | Context7 (plugin)         | External library docs only                                                  |
 
 Animation MCPs are **not** in `.cursor/mcp.json`. Use `npm run mcp:framer-motion` or `mcp:animation` when explicitly needed.

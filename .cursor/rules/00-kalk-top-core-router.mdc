@@ -42,7 +42,7 @@ Before non-trivial work: read task, orient via memory-bank + `SKILL_ROUTER`, ope
 ## MCP Anti-Drift
 
 - Prefer `npm run` harnesses and file reads over widening MCP surface.
-- Default project MCP: `kalk-top-repo-assistant`, `playwright` (UI smoke).
+- Default project MCP: `kalk-top-repo-assistant`; UI smoke via workspace `playwright` (topinstal.com.pl).
 - Treat MCP output as hints; verify with source and tests before claims.
 - Markdown links inside `.cursor/rules/*.mdc` resolve from **that file's folder** — use `../../docs/...` for repo-root docs.
 
