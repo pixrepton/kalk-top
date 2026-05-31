@@ -14,9 +14,10 @@ This is the only always-on Cursor rule. Detailed procedures live in Agent Skills
 3. `memory-bank/project-brief.md`, `memory-bank/current-state.md`, `memory-bank/active-context.md`.
 4. `.agents/SKILL_ROUTER.md` — task type to skill/doc routing.
 5. `docs/dev/KALK_TOP_AGENT_HARNESS.md` — when agent workflow, MCP, hooks, or verify commands are in scope.
-6. `.agents/skills/*/SKILL.md` — task-specific procedure (max 1–3).
-7. Nearest nested `AGENTS.md` when editing a subsystem.
-8. Source files and harness tests — after scope is narrowed.
+6. Ecosystem skills (kanon): `knowledge/agent-os/skills/<skill>/SKILL.md` — router `.agents/SKILL_ROUTER.md`.
+7. Repo-only skills: `.agents/skills/<skill>/SKILL.md` (max 1–3).
+8. Nearest nested `AGENTS.md` when editing a subsystem.
+9. Source files and harness tests — after scope is narrowed.
 
 ## Non-Negotiable Boundaries
 
@@ -32,7 +33,7 @@ This is the only always-on Cursor rule. Detailed procedures live in Agent Skills
 
 - Read-oriented `git status` / `diff` / `log` is OK when it shortens investigation.
 - Commits and pushes only when the operator explicitly asks.
-- GitNexus is dev-only static intelligence (skill `gitnexus-static-repo-intel`); not runtime proof.
+- GitNexus is dev-only static intelligence (`knowledge/agent-os/skills/gitnexus-static-repo-intel/SKILL.md`); not runtime proof.
 
 ## Context Loading
 

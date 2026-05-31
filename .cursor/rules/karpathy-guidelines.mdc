@@ -13,7 +13,7 @@ globs:
 
 Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
 
-Repo activation: only `00-kalk-top-core-router.mdc` is always-on. Use this rule or skill `karpathy-guidelines` for coding, review, refactor, and debugging.
+Repo activation: only `00-kalk-top-core-router.mdc` is always-on. Use this rule or `knowledge/agent-os/skills/karpathy-guidelines/SKILL.md` for coding, review, refactor, and debugging.
 
 **Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
 

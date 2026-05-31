@@ -15,9 +15,9 @@ Use when the task touches Cursor/Codex workflow, `.cursor/rules`, skills, MCP, h
 
 ## Prefer Skills First
 
-- `cursor-codex-harness` — prompts, read order, Definition of Done.
-- `context-budget-audit` — rules/skills/token audits.
-- `gitnexus-static-repo-intel` — graph/impact (dev-only).
+- `knowledge/agent-os/skills/cursor-codex-harness/SKILL.md` — prompts, read order, Definition of Done.
+- `knowledge/agent-os/skills/context-budget-audit/SKILL.md` — rules/skills/token audits.
+- `knowledge/agent-os/skills/gitnexus-static-repo-intel/SKILL.md` — graph/impact (dev-only).
 - Domain skills via `.agents/SKILL_ROUTER.md`.
 
 ## MCP and Tooling

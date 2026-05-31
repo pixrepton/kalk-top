@@ -23,11 +23,11 @@ Status: active routing file for `kalk-top`. Route only; do not duplicate skill p
 | Architecture / multi-layer              | `.agents/skills/kalk-top-architecture-review/SKILL.md`, `docs/architecture/*`                                                                       |
 | Change surface / ownership              | `.agents/skills/kalk-top-change-surface-map/SKILL.md`, `docs/architecture/change-surface-checklist.md`                                              |
 | Debug / regression                      | `.agents/skills/kalk-top-debug-repro-loop/SKILL.md`                                                                                                 |
-| OfferDTO / pricing / generator boundary | `.agents/skills/kalk-top-offerdto-contract/SKILL.md`, `docs/ecosystem/TOPINSTAL_ECOSYSTEM_STATE.md`                                                 |
-| Coding, review, refactor discipline     | `.agents/skills/karpathy-guidelines/SKILL.md`                                                                                                       |
-| Prompt / handoff / agent DoD            | `.agents/skills/cursor-codex-harness/SKILL.md`, `docs/dev/KALK_TOP_AGENT_HARNESS.md`                                                                |
-| Rules/skills/context bloat audit        | `.agents/skills/context-budget-audit/SKILL.md`                                                                                                      |
-| Static graph / impact / call chain      | `.agents/skills/gitnexus-static-repo-intel/SKILL.md`, `docs/dev/KALK_TOP_GITNEXUS.md`                                                               |
+| OfferDTO / pricing / generator boundary | `knowledge/agent-os/skills/kalk-top-offerdto-contract/SKILL.md`, `docs/ecosystem/TOPINSTAL_ECOSYSTEM_STATE.md`                                      |
+| Coding, review, refactor discipline     | `knowledge/agent-os/skills/karpathy-guidelines/SKILL.md`                                                                                            |
+| Prompt / handoff / agent DoD            | `knowledge/agent-os/skills/cursor-codex-harness/SKILL.md`, `docs/dev/KALK_TOP_AGENT_HARNESS.md`                                                     |
+| Rules/skills/context bloat audit        | `knowledge/agent-os/skills/context-budget-audit/SKILL.md`                                                                                           |
+| Static graph / impact / call chain      | `knowledge/agent-os/skills/gitnexus-static-repo-intel/SKILL.md`, `docs/dev/KALK_TOP_GITNEXUS.md`                                                    |
 | Gmail / Daszek / Node B proof           | `gmail-agent/AGENTS.md`, `gmail-agent/.agents/skills/gmail-agent-proof-run/SKILL.md` (other repo)                                                   |
 
 ## Do Not Use As Default Context
