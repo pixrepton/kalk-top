@@ -9,6 +9,7 @@ Per-repo agent memory for **kalk-top only**. Cross-repo chronology and ecosystem
 | `current-state.md`                                                           | Stable operational summary for kalk-top |
 | `progress.md`                                                                | Rare milestones                         |
 | `navigation.md`                                                              | Task routing inside kalk-top            |
+| `agent-handover.md` | Per-session handover (`## YYYY-MM-DD`) |
 | `project-brief.md`, `decisions.md`, `open-questions.md`, `active-context.md` | Scoped context — **P7 PDF mapping in `open-questions.md`** |
 | `docs/architecture/BACKLOG_RESOLUTIONS_2026-06-04.md` | Session closeout: problems 1–8, owner model, verification |
 
