@@ -2,7 +2,7 @@
 
 > Status: comprehensive audit after GitNexus indexing (findings below); code sync table kept current
 > Owner: TOP-INSTAL engineering / OZC
-> Last verified against code/runtime: 2026-06-04
+> Last verified against code/runtime: 2026-06-04 (post-commit `152cca1`: poddasze fix, annual utilization 0.72)
 > Source-of-truth level: L2
 > Related graphs: `docs/architecture/engine-graphs/ozc.graph.md`, GitNexus repo `kalk-top`
 > Runtime: PHP canonical backend only (`TopInstal_OzcEngine_Full`); browser `ozc-engine.js` and JS parity harness removed
@@ -20,7 +20,22 @@ This section tracks **open vs fixed** findings against `core/domain/ozc/OzcEngin
 | P0-5 | Static SCOP / default tariff vs selected pump | **Open** — hardcoded SCOP/tariff path; `panasonic.json` SCOP not wired into cost breakdown | No (cost display) |
 | P0-6 | `annual_cost_co_pln` hidden when CWU = 0 | **Open** — CO split null unless `annual_cwu_kwh > 0` | No (cost display) |
 
-**Verification:** `npm run test:contract` (includes `ozc-full-audit.regression.php`, `ozc-heating-costs.regression.php`), `npm run verify`, `npm run proof`.
+**Verification:** `npm run test:contract` (includes `ozc-full-audit.regression.php`, `ozc-heating-costs.regression.php`), `npm run verify`, `npm run proof` (runtime port **8091**).
+
+**Session resolutions (owner-aligned):** [`BACKLOG_RESOLUTIONS_2026-06-04.md`](BACKLOG_RESOLUTIONS_2026-06-04.md) — form gates vs engine edge paths, removed backlog items 4–6, Problem 7 PDF audit pointer.
+
+### Form ↔ engine gates (Problem 1, 2026-06-04)
+
+The calculator form is an integral part of the pipeline; most audit “edge paths” are **not reachable** from the UI:
+
+| Engine path | UI reachable? |
+|-------------|---------------|
+| Missing `wall_size` | No — `rules.js` `wallGateSatisfied()` + required slider |
+| `convertToCieploAppFormat` netto=brutto without wall subtract | No in normal flow — `geometry.floorArea` always set by `computeGeometry()` |
+| `floor_area` only (no length/width) | Yes — `regular_method=area`; engine uses square heuristic + `wall_size` (intended) |
+| No geometry at all | Only `ozcResult` REST bypass (owner: keep) |
+
+Authoritative field semantics: `floor_area` = brutto footprint; heated area derived from `building_heated_floors[]` — see `BACKLOG_RESOLUTIONS_2026-06-04.md` §2.
 
 ## Executive Summary
 

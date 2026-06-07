@@ -1,5 +1,41 @@
 # Decisions
 
+## 2026-06-04 - Steep attic correction requires explicit Poddasze
+
+- Decision: attic volume/heated-area multipliers apply only when `building_roof === 'steep'` **and** `building_heated_floors` contains `building_floors + 1` (Poddasze checkbox). `oblique` never triggers attic correction.
+- Why: heating last full floor under a steep roof without checking Poddasze inflated volume and heated area.
+- Impact: `OzcEngine::resolveAtticHeatingContext()`; regression in `ozc-full-audit.regression.php`. See `BACKLOG_RESOLUTIONS_2026-06-04.md` §5.
+
+## 2026-06-04 - Annual HDD estimate uses utilization factor 0.72
+
+- Decision: `computeAnnualEnergy_kWh()` scales HDD gross estimate by `utilizationFactor=0.72` (internal gains / non-full-load allowance; explicitly non-certificate).
+- Why: raw `H × HDD × 24` systematically overstated annual kWh and downstream heat-pump costs; owner accepted SCOP 4 unchanged and declined CO/CWU split fix.
+- Impact: `OzcEngine.php` `DEFAULTS['annualEnergy']`; assumptions logged in OZC result. P0-4 remains partial (no balance-temperature model).
+
+## 2026-06-04 - Building area semantics and form authority
+
+- Decision: `floor_area` in the calculator is **brutto** (footprint including walls); netto after `wall_size`. Users do not enter `heated_area` — it is derived from `building_heated_floors[]` and roof/basement rules.
+- Why: owner business model; audit P0-2 was misread as missing user field.
+- Impact: document in `BACKLOG_RESOLUTIONS_2026-06-04.md` §2; form `rules.js` gates invalid payloads; `regular_method=area` remains valid with square heuristic in engine.
+
+## 2026-06-04 - Backlog items removed (not bugs)
+
+- Decision: do not track as backlog — (1) ~0.1 kW pump catalog gaps, (2) `catalog_items.jsonl` vs `equipment-catalog.json` sync, (3) `ozcResult` REST bypass, (4) P0-6 CO cost split when CWU=0, (5) static SCOP 4.
+- Why: owner explicit product/engineering acceptance.
+- Impact: `BACKLOG_RESOLUTIONS_2026-06-04.md` §7; agents must not re-open without owner request.
+
+## 2026-06-04 - kalk-top local runtime default port 8091
+
+- Decision: kalk-top WordPress runtime and Playwright proof use port **8091** (8090 reserved for Daszek Local).
+- Why: port collision in multi-service desktop workspace.
+- Impact: `scripts/configure-runtime-wp.php`, `scripts/start-runtime-wp.ps1`, `playwright.config.ts`, `KALK_TOP_AGENT_HARNESS.md`.
+
+## 2026-06-04 - Problem 7: PDF mapping audited, implementation deferred
+
+- Decision: complete field-level audit of `OfferDTO` → `top-instal-generator` commercial offer PDF; implement mapping in generator as next P0 track.
+- Why: highest business priority after OZC fixes; lossy mapping (`floorArea=100` defaults, no OZC in offer PDF) documented.
+- Impact: `offer-dto-pdf-mapping-audit.md`, `open-questions.md`; energy report PDF (`pdfGenerator.js`) remains separate path.
+
 ## 2026-04-14 - Panasonic catalog pipeline (JSON-first, profiled extraction)
 
 - Decision: a repo-local JSON-first pipeline (`scripts/panasonic_catalog_extract_v2.py`) now generates all Panasonic product/price artifacts from source PDFs in `panasonic/`; the pipeline uses per-section profiles and coordinate-based price matching.

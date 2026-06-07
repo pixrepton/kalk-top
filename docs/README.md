@@ -2,7 +2,7 @@
 
 > Status: canonical
 > Owner: TOP-INSTAL documentation governance
-> Last verified against code/runtime: 2026-04-14 (Panasonic pipeline and offer-PDF bootstrap additions)
+> Last verified against code/runtime: 2026-06-04 (OZC backlog resolutions, PDF mapping audit, runtime 8091)
 > Source-of-truth level: L1
 > Supersedes: none
 > Related docs: `docs/SOURCE_OF_TRUTH_INDEX.md`, `docs/DOC_GOVERNANCE.md`, `docs/READ_PRIORITY_MATRIX.md`
@@ -14,37 +14,30 @@ Canonical documentation for `kalk-top` lives under **`docs/`** (this folder). Th
 1. [../README.md](../README.md) — short landing (links here and to the overview)
 2. [SOURCE_OF_TRUTH_INDEX.md](SOURCE_OF_TRUTH_INDEX.md) — strict authority index
 3. [READ_PRIORITY_MATRIX.md](READ_PRIORITY_MATRIX.md) — what the agent should read by task type
-4. [HANDBOOK.md](HANDBOOK.md) — operator / contributor quick path
-5. [overview/README_TOP-INSTAL_HVAC_Calculator.md](overview/README_TOP-INSTAL_HVAC_Calculator.md) — full repo overview and documentation map
-6. [architecture/APPLICATION_WORKFLOW_AND_ENGINES_README.md](architecture/APPLICATION_WORKFLOW_AND_ENGINES_README.md) — end-to-end workflow
+4. [HANDBOOK.md](HANDBOOK.md) — operator / contributor quick path (layer map)
+5. [architecture/APPLICATION_WORKFLOW_AND_ENGINES_README.md](architecture/APPLICATION_WORKFLOW_AND_ENGINES_README.md) — end-to-end workflow
 
 ### Governance and operating model
 
-| Document                                                                   | Role                                                           |
-| -------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| [SOURCE_OF_TRUTH_INDEX.md](SOURCE_OF_TRUTH_INDEX.md)                       | Strict authority index for what is canonical and what is not   |
-| [DOC_GOVERNANCE.md](DOC_GOVERNANCE.md)                                     | Documentation classes, metadata standard, and anti-drift rules |
-| [AGENT_EXECUTION_STANDARD.md](AGENT_EXECUTION_STANDARD.md)                 | How Cursor agents should operate in this repo                  |
-| [READ_PRIORITY_MATRIX.md](READ_PRIORITY_MATRIX.md)                         | Read-first matrix by task type                                 |
-| [DOC_INVENTORY_AND_CLASSIFICATION.md](DOC_INVENTORY_AND_CLASSIFICATION.md) | Inventory of important docs by class/trust                     |
-| [DOC_CONFLICTS_AND_GAPS.md](DOC_CONFLICTS_AND_GAPS.md)                     | Explicit list of conflicts, overlap, and missing docs          |
-| [IMPLEMENTATION_BACKLOG_FROM_DOCS.md](IMPLEMENTATION_BACKLOG_FROM_DOCS.md) | Actionable backlog derived from the docs corpus                |
+| Document                                                   | Role                                                           |
+| ---------------------------------------------------------- | -------------------------------------------------------------- |
+| [SOURCE_OF_TRUTH_INDEX.md](SOURCE_OF_TRUTH_INDEX.md)       | Strict authority index for what is canonical and what is not   |
+| [DOC_GOVERNANCE.md](DOC_GOVERNANCE.md)                     | Documentation classes, metadata standard, and anti-drift rules |
+| [AGENT_EXECUTION_STANDARD.md](AGENT_EXECUTION_STANDARD.md) | How Cursor agents should operate in this repo                  |
+| [READ_PRIORITY_MATRIX.md](READ_PRIORITY_MATRIX.md)         | Read-first matrix by task type                                 |
+| Gaps / conflicts                                           | `SOURCE_OF_TRUTH_INDEX.md` §3; history: offloaded archive      |
 
 ### AI OS and company model
 
-| Document                                                                   | Role                                   |
-| -------------------------------------------------------------------------- | -------------------------------------- |
-| [TOPINSTAL_AI_OS_BLUEPRINT.md](TOPINSTAL_AI_OS_BLUEPRINT.md)               | Future-state operating model blueprint |
-| [TOPINSTAL_CANONICAL_ENTITY_MODEL.md](TOPINSTAL_CANONICAL_ENTITY_MODEL.md) | Cross-system entity vocabulary         |
-| [TOPINSTAL_EVENT_MODEL.md](TOPINSTAL_EVENT_MODEL.md)                       | Cross-system event vocabulary          |
+| Document                                                                   | Role                                 |
+| -------------------------------------------------------------------------- | ------------------------------------ |
+| Future AI OS blueprint                                                     | offloaded archive / `knowledge/rfc/` |
+| [TOPINSTAL_CANONICAL_ENTITY_MODEL.md](TOPINSTAL_CANONICAL_ENTITY_MODEL.md) | Cross-system entity vocabulary       |
+| [TOPINSTAL_EVENT_MODEL.md](TOPINSTAL_EVENT_MODEL.md)                       | Cross-system event vocabulary        |
 
-### Module READMEs (per layer)
+### Layers
 
-- [Core](overview/README_TOP-INSTAL_HVAC_Calculator_Core.md)
-- [WP Adapter](overview/README_TOP-INSTAL_HVAC_Calculator_WP-Adapter.md)
-- [Kalkulator](overview/README_TOP-INSTAL_HVAC_Calculator_Kalkulator_Layer.md)
-- [Konfigurator](overview/README_TOP-INSTAL_HVAC_Calculator_Konfigurator.md)
-- [Frontend API](overview/README_TOP-INSTAL_HVAC_Calculator_Frontend_API_Layer.md)
+See [HANDBOOK.md](HANDBOOK.md) § Layer map. Long per-layer overviews: offloaded `gmail-agent-offloaded-archive/kalk-top-docs-2026-05-30/docs/overview/`.
 
 ### Konfigurator — inventory (prices / images)
 
@@ -61,6 +54,9 @@ Canonical documentation for `kalk-top` lives under **`docs/`** (this folder). Th
 | [architecture/change-surface-checklist.md](architecture/change-surface-checklist.md)                               | Change review                   |
 | [architecture/decision-criteria.md](architecture/decision-criteria.md)                                             | Decision criteria               |
 | [architecture/APPLICATION_WORKFLOW_AND_ENGINES_README.md](architecture/APPLICATION_WORKFLOW_AND_ENGINES_README.md) | Use case and engines            |
+| [architecture/BACKLOG_RESOLUTIONS_2026-06-04.md](architecture/BACKLOG_RESOLUTIONS_2026-06-04.md)                   | OZC/PDF backlog 1–8 closeout    |
+| [architecture/ozc-professional-method-audit.md](architecture/ozc-professional-method-audit.md)                   | OZC P0/P1 audit + code sync     |
+| [architecture/offer-dto-pdf-mapping-audit.md](architecture/offer-dto-pdf-mapping-audit.md)                           | OfferDTO→PDF audit (**P7 open**) |
 | [architecture/adr-template.md](architecture/adr-template.md)                                                       | ADR template                    |
 
 ### Contracts (API + DTOs)
@@ -75,14 +71,14 @@ Canonical documentation for `kalk-top` lives under **`docs/`** (this folder). Th
 
 ### Runbooks (runtime, ops, integrations)
 
-| Document                                                                                             | Role                                                  |
-| ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
-| [runbooks/manual-runtime-setup.md](runbooks/manual-runtime-setup.md)                                 | Local / dev runtime setup                             |
-| [runbooks/RUNTIME_CONFIG_MATRIX.md](runbooks/RUNTIME_CONFIG_MATRIX.md)                               | Env var names and roles                               |
-| [runbooks/configurator-smoke.md](runbooks/configurator-smoke.md)                                     | Configurator smoke checks                             |
-| [runbooks/REST_AUTH_AND_AGENT_KEY_VERIFICATION.md](runbooks/REST_AUTH_AND_AGENT_KEY_VERIFICATION.md) | REST auth / agent key                                 |
-| [runbooks/PDF_CONVERTER_RUNTIME_VERIFICATION.md](runbooks/PDF_CONVERTER_RUNTIME_VERIFICATION.md)     | PDF converter runtime                                 |
-| [runbooks/offer-generator-integration-audit.md](runbooks/offer-generator-integration-audit.md)       | Offer PDF / generator handoff audit                   |
+| Document                                                                                             | Role                                |
+| ---------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| [runbooks/manual-runtime-setup.md](runbooks/manual-runtime-setup.md)                                 | Local / dev runtime setup           |
+| [runbooks/RUNTIME_CONFIG_MATRIX.md](runbooks/RUNTIME_CONFIG_MATRIX.md)                               | Env var names and roles             |
+| [runbooks/configurator-smoke.md](runbooks/configurator-smoke.md)                                     | Configurator smoke checks           |
+| [runbooks/REST_AUTH_AND_AGENT_KEY_VERIFICATION.md](runbooks/REST_AUTH_AND_AGENT_KEY_VERIFICATION.md) | REST auth / agent key               |
+| [runbooks/PDF_CONVERTER_RUNTIME_VERIFICATION.md](runbooks/PDF_CONVERTER_RUNTIME_VERIFICATION.md)     | PDF converter runtime               |
+| [runbooks/offer-generator-integration-audit.md](runbooks/offer-generator-integration-audit.md)       | Offer PDF / generator handoff audit |
 
 ### Ecosystem (cross-repo)
 
@@ -101,7 +97,8 @@ Canonical documentation for `kalk-top` lives under **`docs/`** (this folder). Th
 | Document                                                   | Role               |
 | ---------------------------------------------------------- | ------------------ |
 | [discovery/repo-discovery.md](discovery/repo-discovery.md) | Repo discovery map |
-| [plans/migration-plan.md](plans/migration-plan.md)         | Migration plan     |
+| Migration plan (`docs/plans/migration-plan.md`)            | **Offloaded** — not in active repo; historical copy may live in workspace archive (`gmail-agent-offloaded-archive/`). Use `docs/architecture/repo-rules.md` and `memory-bank/decisions.md` for current direction. |
+| Implementation backlog (`docs/IMPLEMENTATION_BACKLOG_FROM_DOCS.md`) | **Offloaded** — same archive; track open work via `memory-bank/active-context.md` and engine audits. |
 
 ### Tooling
 

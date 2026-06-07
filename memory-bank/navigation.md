@@ -32,9 +32,16 @@ Short map for agents. Details live in source and canonical docs.
 - `docs/ecosystem/TOPINSTAL_ECOSYSTEM_STATE.md`
 - `docs/SOURCE_OF_TRUTH_INDEX.md`
 
+## OZC / backlog (2026-06-04)
+
+- Session closeout: `docs/architecture/BACKLOG_RESOLUTIONS_2026-06-04.md`
+- OZC audit + code sync: `docs/architecture/ozc-professional-method-audit.md`
+- **Open P7:** `docs/architecture/offer-dto-pdf-mapping-audit.md` → `memory-bank/open-questions.md`
+
 ## Verification
 
-- `npm run test:contract` — offer boundary
+- `npm run test:contract` — offer boundary + OZC regressions
+- `npm run proof` — runtime **8091** + Playwright `@critical`
 - `npm run test:fixtures`
 - `npm run verify:js` — JS syntax sweep
 - `npm run test:rest` — needs `TOPINSTAL_REST_BASE_URL`

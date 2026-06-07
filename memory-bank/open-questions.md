@@ -1,35 +1,59 @@
 # Open Questions
 
-## Current status
+## Active — Problem 7 (OfferDTO → commercial offer PDF)
 
-No unresolved blockers or open architecture questions at the moment.
+**Status:** Analysis complete (2026-06-04); **implementation not started.**
 
-## Architecture questions
+**Goal:** Extend `top-instal-generator` so the commercial offer PDF (not the energy report) carries business-critical fields from `OfferDTO` + `machineRoomSnapshot`.
 
-Add unresolved architecture questions here when blocked by:
+**Canonical audit:** `docs/architecture/offer-dto-pdf-mapping-audit.md`  
+**Backlog / references:** `docs/architecture/BACKLOG_RESOLUTIONS_2026-06-04.md` §8
 
-- unclear layer ownership
-- unclear backend-vs-frontend authority
-- unclear contract or downstream impact
-- unclear rollback path for a cross-cutting change
+### P0 implementation tasks
 
-## Implementation blockers
+1. Map `engineering.ozc.designHeatLoss_kW` and `heatedArea_m2` into Word template placeholders.
+2. Map `pricing.items[]` (line summary + total) — configurator already computes items in `OfferDTO`.
 
-Add unresolved implementation blockers here when blocked by:
+### P1 follow-ups
 
-- missing runtime access or credentials
-- missing reproduction steps
-- conflicting evidence from legacy and canonical paths
-- missing test or verification surface
+3. Remove hardcoded defaults in `OfferDocumentInputMapper::map_from_offer_dto()` (`floorArea=100`, etc.).
+4. Indoor/outdoor unit names from `pumpSelection` / snapshot instead of catalog fallbacks.
+
+### Key files
+
+| Repo | Path |
+|------|------|
+| top-instal-generator | `core/application/OfferDocumentInputMapper.php` |
+| top-instal-generator | `wp-adapter/services/PlaceholderBuilderService.php` |
+| top-instal-generator | `core/application/harness/from-offer-dto-machine-room.regression.php` |
+| kalk-top | `kalkulator/js/downloadPDF.js` (`buildOfferDocumentContext`) |
+| kalk-top | `heatpump-calculator.php` (`ajax_generate_offer_document`) |
+| kalk-top | `wp-adapter/mail-ingress/OfferDocumentsGeneratorClient.php` |
+
+### Do not confuse
+
+- **Energy report PDF** — `kalk-top/kalkulator/js/pdfGenerator.js` (already has OZC/costs)
+- **Commercial offer PDF** — `top-instal-generator` via `from-offer-dto` mode
+
+---
+
+## Architecture — P0-2 floor_area semantics
+
+**Status:** Open (model alignment, not form bypass).
+
+`computeGeometry()` subtracts `wall_size` from footprint. Owner model: `floor_area` input is brutto. Form path `regular_method=area` uses square heuristic when length/width absent — intentional.
+
+See `BACKLOG_RESOLUTIONS_2026-06-04.md` §4.
+
+---
+
+## Resolved this session (removed from open list)
+
+- Steep attic without Poddasze — **fixed**
+- Annual HDD inflation (partial) — **utilizationFactor 0.72**
+- Form “empty bubble” to engine — **not reachable** in normal UI (documented)
+- Pump gaps, catalog sync, ozcResult bypass — **owner: not backlog**
 
 ## Usage rule
 
-Add an entry here when safe progress is blocked by:
-
-- unclear ownership
-- unclear producer/consumer path
-- missing runtime access or credentials
-- ambiguous contract impact
-- conflicting legacy vs canonical behavior
-
-Close or remove entries when resolved.
+Add entries when blocked. Remove or move to `decisions.md` / `BACKLOG_RESOLUTIONS` when resolved.

@@ -2,7 +2,7 @@
 
 > Status: operational
 > Owner: TOP-INSTAL documentation governance
-> Last verified against code/runtime: 2026-04-14 (offer PDF bootstrap and Panasonic catalog additions)
+> Last verified against code/runtime: 2026-06-04 (OZC backlog closeout, PDF mapping audit, runtime 8091)
 > Source-of-truth level: L2
 > Supersedes: none
 > Related docs: `docs/SOURCE_OF_TRUTH_INDEX.md`, `docs/READ_PRIORITY_MATRIX.md`, `docs/AGENT_EXECUTION_STANDARD.md`
@@ -176,11 +176,22 @@ Targeted backend harnesses:
 
 - `core/application/harness/`
 
-Engine parity (PHP vs canonical JS reference, run when changing OZC/selection/buffer/pricing behavior):
+Engine regressions (PHP harnesses — run when changing OZC/selection/buffer/pricing):
 
 ```powershell
-npm run test:engine-parity
+npm run test:contract
+npm run test:fixtures
 ```
+
+Full local gate (includes Playwright `@critical` + soft tier when runtime is up):
+
+```powershell
+$env:KALK_TOP_RUNTIME_PORT = "8091"
+npm run runtime:start
+npm run proof
+```
+
+> **Note:** `npm run test:engine-parity` removed. OZC status: `ozc-professional-method-audit.md` § Code sync status. Session closeout (problems 1–8, owner model, open P7): `architecture/BACKLOG_RESOLUTIONS_2026-06-04.md`.
 
 ## Documentation map
 
@@ -190,12 +201,10 @@ Start:
 2. [SOURCE_OF_TRUTH_INDEX.md](SOURCE_OF_TRUTH_INDEX.md)
 3. [READ_PRIORITY_MATRIX.md](READ_PRIORITY_MATRIX.md)
 4. [architecture/repo-rules.md](architecture/repo-rules.md)
-5. [overview/README_TOP-INSTAL_HVAC_Calculator.md](overview/README_TOP-INSTAL_HVAC_Calculator.md)
-6. [architecture/APPLICATION_WORKFLOW_AND_ENGINES_README.md](architecture/APPLICATION_WORKFLOW_AND_ENGINES_README.md)
-
-Per-layer deep dives (under `docs/overview/`):
-
-- [Core](overview/README_TOP-INSTAL_HVAC_Calculator_Core.md) · [WP Adapter](overview/README_TOP-INSTAL_HVAC_Calculator_WP-Adapter.md) · [Kalkulator](overview/README_TOP-INSTAL_HVAC_Calculator_Kalkulator_Layer.md) · [Konfigurator](overview/README_TOP-INSTAL_HVAC_Calculator_Konfigurator.md) · [Frontend API](overview/README_TOP-INSTAL_HVAC_Calculator_Frontend_API_Layer.md)
+5. [architecture/APPLICATION_WORKFLOW_AND_ENGINES_README.md](architecture/APPLICATION_WORKFLOW_AND_ENGINES_README.md)
+6. [architecture/BACKLOG_RESOLUTIONS_2026-06-04.md](architecture/BACKLOG_RESOLUTIONS_2026-06-04.md) — OZC/PDF backlog, fixes, open Problem 7
+7. [architecture/offer-dto-pdf-mapping-audit.md](architecture/offer-dto-pdf-mapping-audit.md) — OfferDTO → commercial offer PDF (implementation open)
+8. Layer map (§ below) — long overviews: offloaded archive
 
 Then branch by task:
 
@@ -211,9 +220,20 @@ Then branch by task:
   - [ecosystem/TOPINSTAL_ECOSYSTEM_STATE.md](ecosystem/TOPINSTAL_ECOSYSTEM_STATE.md)
   - [ecosystem/TOPINSTAL_ECOSYSTEM_UPDATE_PROTOCOL.md](ecosystem/TOPINSTAL_ECOSYSTEM_UPDATE_PROTOCOL.md)
 
+## Layer map (skrót)
+
+| Warstwa       | Folder                       | Kanon                                                                           |
+| ------------- | ---------------------------- | ------------------------------------------------------------------------------- |
+| Core engines  | `core/`                      | `docs/architecture/repo-rules.md`, `APPLICATION_WORKFLOW_AND_ENGINES_README.md` |
+| REST / WP     | `wp-adapter/`                | `docs/contracts/API_CALCULATE_OFFER.md`                                         |
+| Frontend      | `frontend/`, `konfigurator/` | `docs/contracts/field-mapping.md`                                               |
+| Kalkulator UI | `kalkulator/`                | runbooki smoke w `docs/runbooks/`                                               |
+
+Długie overview per warstwa: offloaded archive `gmail-agent-offloaded-archive/kalk-top-docs-2026-05-30/docs/overview/`.
+
 Historical material:
 
-- [archive/README.md](archive/README.md)
+- offloaded: `gmail-agent-offloaded-archive/kalk-top-docs-2026-05-30/docs/archive/`
 
 ## Offer PDF generator integration
 

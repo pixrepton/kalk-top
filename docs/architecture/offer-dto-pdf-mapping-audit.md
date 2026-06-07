@@ -1,9 +1,31 @@
 # OfferDTO → PDF generator mapping audit
 
+> Status: canonical audit (analysis complete; **implementation not started**)
+> Owner: TOP-INSTAL / kalk-top + top-instal-generator
+> Last verified against code/runtime: 2026-06-04
+> Source-of-truth level: L2
+> Related: `BACKLOG_RESOLUTIONS_2026-06-04.md` §8 (Problem 7), `memory-bank/open-questions.md`
+
 **Date:** 2026-06-04  
 **Producer:** `kalk-top` (`CalculateOfferUseCase`, `downloadPDF.js`)  
 **Consumer:** `top-instal-generator` (`OfferDocumentInputMapper`, `PlaceholderBuilderService`)  
 **Mode:** `from-offer-dto` (calculator offer download / email attachment)
+
+## OPEN WORK (Problem 7 — save for next session)
+
+**Analysis done in this session; code changes belong primarily in `top-instal-generator`.**
+
+| Priority | Task | Files |
+|----------|------|-------|
+| **P0** | Map `engineering.ozc.designHeatLoss_kW`, `heatedArea_m2` into offer PDF placeholders | Generator template, `PlaceholderBuilderService.php` |
+| **P0** | Map `pricing.items[]` line summary + total | `OfferDocumentInputMapper.php`, template |
+| **P1** | Remove hardcoded `floorArea=100`, `heatingType`, `buildingType`, `customPriceFloorGross` from `map_from_offer_dto()` | `OfferDocumentInputMapper.php` L281–284 |
+| **P1** | Indoor/outdoor units from `pumpSelection` or snapshot (avoid catalog defaults) | kalk-top `downloadPDF.js` + mapper |
+| **P2** | Unify doc: energy PDF (`pdfGenerator.js`) vs offer PDF (generator) | both repos |
+
+**Regression to extend after implementation:** `top-instal-generator/core/application/harness/from-offer-dto-machine-room.regression.php`
+
+**Do not confuse with:** energy report PDF built in kalk-top (`kalkulator/js/pdfGenerator.js`) — that path already renders OZC/costs; commercial offer PDF does not.
 
 ## Executive summary
 
