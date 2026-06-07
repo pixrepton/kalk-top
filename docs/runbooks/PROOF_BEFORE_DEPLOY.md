@@ -26,9 +26,9 @@ npm run runtime:sync
 npm run runtime:start
 ```
 
-Playwright `global-setup` uruchomi sync/start automatycznie, jeśli port `8090` nie nasłuchuje.
+Playwright `global-setup` uruchomi sync/start automatycznie, jeśli port `8091` (lub `KALK_TOP_RUNTIME_PORT`) nie nasłuchuje.
 
-Domyślny URL: `http://127.0.0.1:8090/?page_id=5`
+Domyślny URL: `http://127.0.0.1:8091/?page_id=5`
 Zmienne: `PLAYWRIGHT_BASE_URL`, `PLAYWRIGHT_CALCULATOR_PATH`.
 
 ## Tylko wybrane tiery

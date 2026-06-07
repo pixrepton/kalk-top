@@ -184,8 +184,8 @@ foreach ($endpoints as $endpoint) {
         continue;
     }
 
-    $decoded = json_decode($response_body, true);
-    if (!is_array($decoded)) {
+    $decoded = topinstal_harness_decode_json($response_body);
+    if ($decoded === null) {
         $failures[] = $endpoint . ' -> invalid JSON body=' . substr($response_body, 0, 220);
         continue;
     }

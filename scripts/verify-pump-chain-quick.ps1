@@ -1,6 +1,6 @@
 # Lekka weryfikacja lancucha pompa -> configurator (bez Playwright).
 param(
-    [string]$CalculatorUrl = "http://127.0.0.1:8090/?page_id=5"
+    [string]$CalculatorUrl = "http://127.0.0.1:8091/?page_id=5"
 )
 
 $ErrorActionPreference = "Stop"

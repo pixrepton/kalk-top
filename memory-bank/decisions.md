@@ -130,7 +130,7 @@
 
 - Decision: `OZC`, `Buffer`, `Selection`, and `Pricing` now run canonically in PHP on the backend-first path; JS engines are retained only as parity/reference assets
 - Why: active runtime ownership must be unambiguous at the `CalcRequestDTO -> OfferDTO` boundary and must not depend on duplicated browser or Node logic
-- Impact: default `calculate-offer` runtime no longer depends on Node for OZC, configurator backend mode renders canonical pump/hydraulics/pricing from backend `OfferDTO`, and JS parity moved behind dedicated harnesses like `test:engine-parity`
+- Impact: default `calculate-offer` runtime no longer depends on Node for OZC, configurator backend mode renders canonical pump/hydraulics/pricing from backend `OfferDTO`. *(2026-06: `test:engine-parity` / `engine-parity.php` removed; verify via `test:contract` + `proof`.)*
 
 ## 2026-03-22 - Step-10 offer documents must come from top-instal-generator
 

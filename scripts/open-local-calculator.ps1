@@ -8,7 +8,10 @@ Set-StrictMode -Version Latest
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $startScript = Join-Path $PSScriptRoot "start-runtime-wp.ps1"
-$runtimePort = 8090
+$runtimePort = 8091
+if ($env:KALK_TOP_RUNTIME_PORT -and [int]::TryParse([string]$env:KALK_TOP_RUNTIME_PORT, [ref]$null)) {
+    $runtimePort = [int]$env:KALK_TOP_RUNTIME_PORT
+}
 $baseUrl = "http://127.0.0.1:$runtimePort"
 $appUrl = "$baseUrl/?page_id=5"
 $freshUrl = "$appUrl&launcher_ts=$([DateTime]::Now.ToString('yyyyMMddHHmmss'))"

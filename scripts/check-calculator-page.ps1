@@ -1,6 +1,6 @@
 # Szybki check strony kalkulatora (bez wiszącego curl + całego HTML w pipe).
 param(
-    [string]$Url = "http://127.0.0.1:8090/?page_id=5",
+    [string]$Url = "http://127.0.0.1:8091/?page_id=5",
     [int]$TimeoutSec = 15
 )
 

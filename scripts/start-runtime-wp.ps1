@@ -2,11 +2,18 @@ $ErrorActionPreference = 'Stop'
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $runtimeRoot = Join-Path $repoRoot '.runtime-wp\wordpress'
-$routerPath = Join-Path $runtimeRoot '_router.php'
 $stdoutLogPath = Join-Path $runtimeRoot '_wp_server.out.log'
 $stderrLogPath = Join-Path $runtimeRoot '_wp_server.err.log'
-$port = 8090
+$configureScript = Join-Path $PSScriptRoot 'configure-runtime-wp.php'
+
+$port = 8091
+if ($env:KALK_TOP_RUNTIME_PORT -and [int]::TryParse([string]$env:KALK_TOP_RUNTIME_PORT, [ref]$null)) {
+    $port = [int]$env:KALK_TOP_RUNTIME_PORT
+}
+
 $baseUrl = "http://127.0.0.1:$port"
+$env:KALK_TOP_RUNTIME_PORT = [string]$port
+$env:KALK_TOP_RUNTIME_BASE_URL = $baseUrl
 
 if (-not (Test-Path $runtimeRoot)) {
     throw "Runtime root not found: $runtimeRoot"
@@ -14,9 +21,17 @@ if (-not (Test-Path $runtimeRoot)) {
 
 & (Join-Path $PSScriptRoot 'sync-runtime-plugin.ps1')
 
+function Invoke-RuntimeConfigure {
+    if (-not (Test-Path -LiteralPath $configureScript)) {
+        throw "Missing configure script: $configureScript"
+    }
+    & php $configureScript
+}
+
 $listener = Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1
 if ($listener) {
-    Write-Output "WP runtime already listening on $baseUrl (PID $($listener.OwningProcess)); canonical repo files are linked into the runtime plugin"
+    Invoke-RuntimeConfigure | Out-Null
+    Write-Output "WP runtime already listening on $baseUrl (PID $($listener.OwningProcess)); siteurl synced"
     exit 0
 }
 
@@ -35,4 +50,5 @@ if (-not $listener) {
     throw "WP runtime did not start. Check $stdoutLogPath and $stderrLogPath"
 }
 
-Write-Output "WP runtime started at $baseUrl (PID $($proc.Id)); canonical repo files are linked into the runtime plugin"
+Invoke-RuntimeConfigure | Out-Null
+Write-Output "WP runtime started at $baseUrl (PID $($proc.Id)); siteurl synced"

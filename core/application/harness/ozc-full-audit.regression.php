@@ -69,6 +69,74 @@ topinstal_ozc_regression_assert(
 );
 echo '[PASS] Full OZC sparse indoor_temperature matches explicit 21C design load' . PHP_EOL;
 
+$atticBaseBuilding = $building;
+$atticBaseBuilding['building_roof'] = 'steep';
+$atticBaseBuilding['building_floors'] = 1;
+$atticBaseBuilding['building_heated_floors'] = array(1);
+$atticSteepWithoutPoddasze = $engine->computeDesignHeatLoss($atticBaseBuilding, $preferencesControl);
+$atticBaseBuilding['building_heated_floors'] = array(1, 2);
+$atticSteepWithPoddasze = $engine->computeDesignHeatLoss($atticBaseBuilding, $preferencesControl);
+
+$atticAssumptionNeedle = 'Poddasze (dach skosny z poddaszem)';
+$atticAssumptionMatches = static function ($item) use ($atticAssumptionNeedle) {
+    if (is_string($item)) {
+        return strpos($item, $atticAssumptionNeedle) !== false;
+    }
+    if (!is_array($item)) {
+        return false;
+    }
+    if (isset($item['message']) && is_string($item['message']) && strpos($item['message'], $atticAssumptionNeedle) !== false) {
+        return true;
+    }
+    if (
+        isset($item['params']['message']) &&
+        is_string($item['params']['message']) &&
+        strpos($item['params']['message'], $atticAssumptionNeedle) !== false
+    ) {
+        return true;
+    }
+    return false;
+};
+$atticAssumptionsWithout = isset($atticSteepWithoutPoddasze['assumptions']) && is_array($atticSteepWithoutPoddasze['assumptions'])
+    ? $atticSteepWithoutPoddasze['assumptions']
+    : array();
+$hasAtticAssumptionWithout = false;
+foreach ($atticAssumptionsWithout as $atticAssumptionItem) {
+    if ($atticAssumptionMatches($atticAssumptionItem)) {
+        $hasAtticAssumptionWithout = true;
+        break;
+    }
+}
+topinstal_ozc_regression_assert(
+    !$hasAtticAssumptionWithout,
+    'Steep without poddasze must not apply attic volume correction.'
+);
+$atticAssumptionsWith = isset($atticSteepWithPoddasze['assumptions']) && is_array($atticSteepWithPoddasze['assumptions'])
+    ? $atticSteepWithPoddasze['assumptions']
+    : array();
+$hasAtticAssumptionWith = false;
+foreach ($atticAssumptionsWith as $atticAssumptionItem) {
+    if ($atticAssumptionMatches($atticAssumptionItem)) {
+        $hasAtticAssumptionWith = true;
+        break;
+    }
+}
+topinstal_ozc_regression_assert(
+    $hasAtticAssumptionWith,
+    'Steep with explicit poddasze must apply attic volume correction.'
+);
+$heatedWithout = isset($atticSteepWithoutPoddasze['heatedArea_m2'])
+    ? (float) $atticSteepWithoutPoddasze['heatedArea_m2']
+    : null;
+$heatedWith = isset($atticSteepWithPoddasze['heatedArea_m2'])
+    ? (float) $atticSteepWithPoddasze['heatedArea_m2']
+    : null;
+topinstal_ozc_regression_assert(
+    is_numeric($heatedWithout) && is_numeric($heatedWith) && $heatedWith > $heatedWithout,
+    'Steep attic heated area must grow only when poddasze is explicitly heated.'
+);
+echo '[PASS] Full OZC steep attic correction requires explicit poddasze floor' . PHP_EOL;
+
 topinstal_ozc_regression_assert(
     isset($sparseResult['metrics']['avg_heating_power']) && is_numeric($sparseResult['metrics']['avg_heating_power']) && (float) $sparseResult['metrics']['avg_heating_power'] >= 0.0,
     'Full OZC avg_heating_power must be non-negative.'

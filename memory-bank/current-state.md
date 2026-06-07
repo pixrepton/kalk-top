@@ -24,7 +24,7 @@
 - bootstrap: `heatpump-calculator.php`
 - application orchestration: `core/application/CalculateOfferUseCase.php`
 - domain engines: `core/domain/*` (`ozc`, `selection`, `buffer`, `pricing`, `cwu`)
-- WP adapters: `wp-adapter/rest/*`; outer-root `wp-adapter/mail-ingress/*` is now compatibility-only and the canonical bridge lives under `gmail-agent/wp-adapter/mail-ingress/*`
+- WP adapters: `wp-adapter/rest/*`; mail-ingress wrappers load canonical bridge from `../wp-bridges/mail-ingress/*`
 - calculator UI: `kalkulator/*`, `frontend/*`, `konfigurator/*`
 
 ## Local instruction map
@@ -46,9 +46,11 @@
 - `npm run verify` — JS syntax + regressions, pricing presentation parity, canonical pricebook guard, PHP lint, `test:contract`, `test:fixtures`, optional REST (env-gated); **does not** run mail-ingress (that integration lives outside this workspace)
 - `npm run test:contract`
 - `npm run test:fixtures`
-- `npm run test:engine-parity` — reference parity (PHP vs canonical JS); run explicitly when touching engines/pricing selection
-- `npm run test:mail-ingress-workflow` / `test:mail-ingress-live` — no-op stubs that print a pointer to `topinstal-mail-ingress` (legacy npm script names preserved)
 - `npm run test:rest`
+- `npm run proof` — `verify` + Playwright `@critical` + soft tier (`verify:ui:soft`)
+- `npm run test:e2e:*` — targeted Playwright specs (`@critical` / `@soft`)
+- **Removed:** `npm run test:engine-parity` — `engine-parity.php` / `js-canonical-engine-parity-runner.js` no longer in repo; use `test:contract` + `ozc-full-audit.regression.php` when touching OZC/engines
+- `npm run test:mail-ingress-workflow` / `test:mail-ingress-live` — no-op stubs that print a pointer to `topinstal-mail-ingress` (legacy npm script names preserved)
 
 ## Agent harness (2026-05)
 
@@ -81,7 +83,8 @@
 - broader future agent runtime and cross-project Cursor/process docs are intentionally expected to live outside `kalk-top`; this repo keeps only local execution rules and boundary-facing summaries
 - repo-local agent operating system now uses memory bank + compact rules + category docs + repo skills
 - V3 adds subsystem-local `AGENTS.md`, architecture review artifacts, and evidence-first workflow routing
-- PHP parity OZC still exists as rollback/comparison path, and direct JS parity now exists only as reference harness rather than active runtime
+- PHP parity OZC still exists as rollback/comparison path (`USE_FULL_OZC_ENGINE=false`); browser `ozc-engine.js` and PHP↔JS engine-parity harness were removed — engine regressions are PHP harnesses under `core/application/harness/*`
+- OZC open risks (design load + annual cost presentation): see code sync table in `docs/architecture/ozc-professional-method-audit.md` (2026-06-04)
 
 ## Update rule
 

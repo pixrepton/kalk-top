@@ -2,7 +2,7 @@ import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
 
-const baseURL = process.env.PLAYWRIGHT_BASE_URL || "http://127.0.0.1:8090";
+const baseURL = process.env.PLAYWRIGHT_BASE_URL || "http://127.0.0.1:8091";
 const calculatorPath = process.env.PLAYWRIGHT_CALCULATOR_PATH || "/?page_id=5";
 const repoRoot = process.cwd();
 const statePath = path.join(repoRoot, "test-results", "e2e-runtime-state.json");
@@ -12,7 +12,7 @@ function parsePort(url: string): number {
     const parsed = new URL(url);
     return parsed.port ? Number(parsed.port) : parsed.protocol === "https:" ? 443 : 80;
   } catch {
-    return 8090;
+    return 8091;
   }
 }
 
@@ -45,6 +45,18 @@ async function healthcheckCalculator(): Promise<void> {
   }
 }
 
+function configureRuntimeWp(port: number) {
+  execSync("php scripts/configure-runtime-wp.php", {
+    cwd: repoRoot,
+    stdio: "inherit",
+    env: {
+      ...process.env,
+      KALK_TOP_RUNTIME_PORT: String(port),
+      KALK_TOP_RUNTIME_BASE_URL: baseURL,
+    },
+  });
+}
+
 export default async function globalSetup() {
   fs.mkdirSync(path.dirname(statePath), { recursive: true });
 
@@ -53,13 +65,38 @@ export default async function globalSetup() {
   let startedBySetup = false;
 
   if (!wasListening) {
-    execSync("npm run runtime:sync", { cwd: repoRoot, stdio: "inherit" });
-    execSync("npm run runtime:start", { cwd: repoRoot, stdio: "inherit" });
+    execSync("npm run runtime:sync", {
+      cwd: repoRoot,
+      stdio: "inherit",
+      env: {
+        ...process.env,
+        KALK_TOP_RUNTIME_PORT: String(port),
+        KALK_TOP_RUNTIME_BASE_URL: baseURL,
+      },
+    });
+    execSync("npm run runtime:start", {
+      cwd: repoRoot,
+      stdio: "inherit",
+      env: {
+        ...process.env,
+        KALK_TOP_RUNTIME_PORT: String(port),
+        KALK_TOP_RUNTIME_BASE_URL: baseURL,
+      },
+    });
     startedBySetup = true;
     await new Promise((resolve) => setTimeout(resolve, 2500));
   }
 
-  await healthcheckCalculator();
+  try {
+    await healthcheckCalculator();
+  } catch (firstError) {
+    configureRuntimeWp(port);
+    try {
+      await healthcheckCalculator();
+    } catch {
+      throw firstError;
+    }
+  }
 
   fs.writeFileSync(
     statePath,

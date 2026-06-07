@@ -401,3 +401,30 @@ if (!function_exists('topinstal_harness_normalize_offer_for_stability')) {
         return $offer;
     }
 }
+
+if (!function_exists('topinstal_harness_strip_bom')) {
+    /**
+     * @param string $body
+     * @return string
+     */
+    function topinstal_harness_strip_bom(string $body): string
+    {
+        if (strncmp($body, "\xEF\xBB\xBF", 3) === 0) {
+            return substr($body, 3);
+        }
+        return $body;
+    }
+}
+
+if (!function_exists('topinstal_harness_decode_json')) {
+    /**
+     * @param string $body
+     * @return array<string,mixed>|null
+     */
+    function topinstal_harness_decode_json(string $body): ?array
+    {
+        $body = topinstal_harness_strip_bom($body);
+        $decoded = json_decode($body, true);
+        return is_array($decoded) ? $decoded : null;
+    }
+}

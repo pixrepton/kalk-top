@@ -1,7 +1,8 @@
 # Active Context
 
 - **OZC / engine graph audit (2026-05-06):** Dodano repo-lokalny odpowiednik eksportu GitNexus dla silników `ozc`, `selection`, `cwu`, `buffer`, `pricing`: `docs/architecture/engine-graphs/*` oraz maszynowy `engine-graphs.json`. GitNexus MCP nie był dostępny jako wywoływalne narzędzie w tej sesji, więc grafy zapisano jako Markdown + JSON. Najważniejszy wynik audytu OZC: prawdopodobny podział "50% realistyczne / 50% oddalone" koreluje z warunkowymi korektami addytywnymi w OZC. Okna, drzwi, rekuperacja i piwnica są reprezentowane w fizycznym modelu `U*A*dT` / wentylacji, a potem część z nich jest liczona ponownie jako `computeAdditiveCorrectionsKw()`. Osobny błąd dotyczy annual/HDD: `H_total_for_HDD` dodaje pełne `HV`, bez redukcji `eta_rec`, więc roczna energia/koszty dla rekuperacji mogą być zawyżone. Szczegóły: `docs/architecture/ozc-professional-method-audit.md`.
-- **Dokumentacja zaktualizowana (2026-04-14):** Pełny audyt 114 plików `.md`. Kluczowe zmiany: `docs/discovery/repo-discovery.md` — dodano sekcje Panasonic pipeline i offer-PDF bootstrap; `docs/DOC_INVENTORY_AND_CLASSIFICATION.md` — sekcja 2b; `docs/IMPLEMENTATION_BACKLOG_FROM_DOCS.md` — pozycje zrealizowane; `docs/SOURCE_OF_TRUTH_INDEX.md` — sekcja 5b; `docs/HANDBOOK.md` — nowe sekcje Offer PDF i Panasonic; `docs/ecosystem/TOPINSTAL_ECOSYSTEM_STATE.md` — changelog 04-14; `knowledge/panasonic/accessories_and_controls.md` — poprawka klasyfikacji; `memory-bank/decisions.md` — dwa wpisy.
+- **Dokumentacja zsynchronizowana z kodem (2026-06-04):** `docs/architecture/ozc-professional-method-audit.md` — tabela Code sync status (P0-1 fixed, P0-3/P0-4 partial, P0-2/5/6 open); usunięto martwe odniesienia do `test:engine-parity`; `docs/README.md` — offload `migration-plan` / `IMPLEMENTATION_BACKLOG`; `memory-bank/current-state.md`, `HANDBOOK.md`, `repo-rules.md`, `KALK_TOP_AGENT_HARNESS.md`, `TOPINSTAL_ECOSYSTEM_STATE.md` — powierzchnia weryfikacji i port runtime **8091**.
+- **Dokumentacja zaktualizowana (2026-04-14):** Pełny audyt 114 plików `.md`. Kluczowe zmiany: `docs/discovery/repo-discovery.md` — Panasonic pipeline i offer-PDF bootstrap; `docs/DOC_INVENTORY_AND_CLASSIFICATION.md` — sekcja 2b; `docs/SOURCE_OF_TRUTH_INDEX.md` — sekcja 5b; `docs/HANDBOOK.md` — Offer PDF i Panasonic; `docs/ecosystem/TOPINSTAL_ECOSYSTEM_STATE.md` — changelog 04-14; `memory-bank/decisions.md` — dwa wpisy. (`IMPLEMENTATION_BACKLOG_FROM_DOCS.md` — później offloadowany z aktywnego repo.)
 - **Panasonic catalog pass 2 hardening (2026-04-14):** `panasonic_catalog_extract_v2.py` zastąpił pass-1. Nowy ekstraktor: profil per sekcja (str. 2-8=pompy, 9-10=zbiorniki, 11=bufory/DHW, 12-13=akcesoria/komunikacja, 14=rekuperacja, 15=klimakonwektory), ekstrakcja po współrzędnych słów + min_price per model. Wynik: 237 rekordów, 10 kategorii pokrytych, 0 brakujących modeli w heat_pumps, 235/237 z ceną, golden test 41/41 PASS. Kluczowe nowe pliki: `scripts/panasonic_catalog_extract_v2.py`, `tests/fixtures/panasonic_catalog_golden_records.json`, `tests/fixtures/panasonic_catalog_golden_test.py`, `reports/panasonic_pass2_repair_summary.md`.
 
 - **Offer PDF generator bootstrap hotfix (2026-04-14):** Przywrócono dostępność klienta `TopInstal_OfferDocumentsGeneratorClient` po regresji wrapperów `wp-adapter/mail-ingress/*`. Wrappery nie próbują już tylko jednej nieprawidłowej ścieżki `kalk-top/gmail-agent/...`; mają teraz wielościeżkowy include (lokalny + sibling workspace) i bezpieczny fallback klas in-repo, więc AJAX `heatpump_generate_offer_document` nie kończy się już gałęzią `Offer documents generator client unavailable` wyłącznie z powodu bootstrapa. Dodano też log diagnostyczny w `ajax_generate_offer_document()` z kontekstem class lookup/bootstrap (`workflowBootstrap`, `clientBootstrap`) oraz prosty probe `scripts/probes/offer-doc-client-probe.php` do regresji availability.
@@ -43,7 +44,7 @@
   - `docs/TOPINSTAL_AI_OS_BLUEPRINT.md`
   - `docs/DOC_INVENTORY_AND_CLASSIFICATION.md`
   - `docs/DOC_CONFLICTS_AND_GAPS.md`
-  - `docs/IMPLEMENTATION_BACKLOG_FROM_DOCS.md`
+  - Implementation backlog — offloaded (see `docs/README.md` § Discovery and plans)
 
 ## Canonical truths to preserve
 
@@ -95,9 +96,13 @@
 - Keep this file short, current, and high-signal.
 - Move durable truth into canonical docs.
 - Move stable major decisions into `memory-bank/decisions.md`.
-## 2026-05-06 GitNexus OZC Comprehensive Audit
+## 2026-06-04 OZC audit ↔ code sync
 
-- Installed GitNexus MCP via `npx gitnexus setup` and indexed repo `kalk-top` (`8,113 nodes`, `14,142 edges`, `311 clusters`, `300 flows`).
-- Replaced the OZC method audit with a comprehensive P0/P1/P2 report at `docs/architecture/ozc-professional-method-audit.md`.
-- Key P0 risks: additive kW corrections double-count physics; gross/net area semantics shrink heated area; sloped roof is inferred as attic; annual heat-pump cost is inflated by HDD model, missing recovery in annual ventilation, static SCOP/tariff, and CWU/CO cost split bug.
-- Recommendation: fix canonical design load first, then annual/cost semantics, then ISO 13370/ISO 52016-grade professional model.
+- Audyt `ozc-professional-method-audit.md` ma tabelę **Code sync status** — nie traktuj całego raportu 2026-05-20 jako listy otwartych bugów.
+- **Naprawione w kodzie:** addytywne korekty kW (P0-1); `oblique` dach bez fałszywego poddasza; `eta_rec` w `resolveHddHeatTransfer()` dla rocznej wentylacji.
+- **Nadal otwarte:** kurczenie `floor_area` (P0-2); `steep` + ostatnie piętro (P0-3 partial); model roczny HDD (P0-4 partial); statyczny SCOP (P0-5); ukryty `annual_cost_co_pln` przy CWU=0 (P0-6).
+- **Harness:** `engine-parity.php` usunięty — weryfikacja: `npm run test:contract`, `npm run proof` (runtime :8091).
+
+## 2026-05-06 GitNexus OZC Comprehensive Audit (historical)
+
+- Comprehensive P0/P1/P2 report at `docs/architecture/ozc-professional-method-audit.md` (findings narrative; see 2026-06-04 sync for current open/closed status).

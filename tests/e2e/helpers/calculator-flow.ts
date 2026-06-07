@@ -121,10 +121,83 @@ export async function goToTab(page: Page, tab: number) {
   await page.waitForTimeout(400);
 }
 
+async function waitForActiveTabStable(page: Page, tab: number) {
+  await page
+    .waitForFunction(
+      (tabIndex) => {
+        const section = document.querySelector(
+          `.section.active[data-tab="${tabIndex}"]`
+        );
+        if (!section) return false;
+        const rect = section.getBoundingClientRect();
+        const key = `${rect.top}|${rect.left}|${rect.height}|${rect.width}`;
+        const w = window as Window & {
+          __e2eTabStable?: { tab: number; key: string; hits: number };
+        };
+        if (
+          !w.__e2eTabStable ||
+          w.__e2eTabStable.tab !== tabIndex ||
+          w.__e2eTabStable.key !== key
+        ) {
+          w.__e2eTabStable = { tab: tabIndex, key, hits: 1 };
+          return false;
+        }
+        w.__e2eTabStable.hits += 1;
+        return w.__e2eTabStable.hits >= 2;
+      },
+      tab,
+      { timeout: 15_000 }
+    )
+    .catch(() => null);
+}
+
+async function isTabValid(page: Page, tab: number): Promise<boolean> {
+  return page.evaluate((tabIndex) => {
+    const validateTab = (
+      window as Window & { validateTab?: (t: number, o?: object) => boolean }
+    ).validateTab;
+    return typeof validateTab === "function"
+      ? validateTab(tabIndex, { focusSummary: false })
+      : false;
+  }, tab);
+}
+
+async function advanceToNextTab(page: Page, currentTab: number, nextSelector: string) {
+  await waitForActiveTabStable(page, currentTab);
+  if (await isTabValid(page, currentTab)) {
+    await goToTab(page, currentTab + 1);
+    return;
+  }
+
+  const btn = await waitNextEnabled(page, nextSelector);
+  await btn.scrollIntoViewIfNeeded();
+  try {
+    await btn.click({ timeout: 8_000 });
+  } catch {
+    try {
+      await btn.evaluate((el) => (el as HTMLButtonElement).click());
+    } catch {
+      await btn.click({ force: true, timeout: 15_000 });
+    }
+  }
+  await page.waitForTimeout(700);
+}
+
 async function clickEnabledNext(page: Page, selector: string) {
+  const match = selector.match(/btn-next(\d+)/);
+  const currentTab = match ? Number(match[1]) - 1 : null;
+  if (currentTab !== null && currentTab >= 0) {
+    await advanceToNextTab(page, currentTab, selector);
+    return;
+  }
+
   const btn = await waitNextEnabled(page, selector);
   await btn.scrollIntoViewIfNeeded();
-  await btn.click({ timeout: 30_000 });
+  try {
+    await btn.click({ timeout: 30_000 });
+  } catch {
+    await btn.evaluate((el) => (el as HTMLButtonElement).click());
+  }
   await page.waitForTimeout(700);
 }
 
@@ -605,7 +678,7 @@ export async function advanceFormForPersona(page: Page, personaId: PersonaId) {
   for (let tab = 0; tab < 5; tab += 1) {
     await tabFillers[tab](page);
     await syncFormEngine(page);
-    await clickEnabledNext(page, `.btn-next${tab + 1}`);
+    await advanceToNextTab(page, tab, `.btn-next${tab + 1}`);
   }
   await goToTab(page, 5);
   await fillTab5(page);
@@ -677,7 +750,7 @@ export async function advanceAllFormTabs(page: Page) {
     await TAB_FILLERS[tab](page);
     await syncFormEngine(page);
     await shot(page, `tab-${tab}-filled`);
-    await clickEnabledNext(page, `.btn-next${tab + 1}`);
+    await advanceToNextTab(page, tab, `.btn-next${tab + 1}`);
   }
   await goToTab(page, 5);
   await fillTab5(page);
@@ -1064,4 +1137,158 @@ export async function advanceConfigurator(page: Page, maxSteps = 16) {
     }
   }
   return false;
+}
+
+export type CanonicalOffer = Record<string, unknown>;
+
+export async function readCanonicalOffer(page: Page): Promise<CanonicalOffer | null> {
+  return page.evaluate(() => {
+    const getState = (
+      window as Window & { getAppState?: () => Record<string, unknown> }
+    ).getAppState;
+    if (typeof getState !== "function") return null;
+    const app = getState();
+    return (app?.canonicalOffer || app?.offer || null) as Record<string, unknown> | null;
+  });
+}
+
+export function readPricingGross(offer: CanonicalOffer | null): number | null {
+  const pricing = offer?.pricing as Record<string, unknown> | undefined;
+  const totals = pricing?.totals as Record<string, unknown> | undefined;
+  const gross = totals?.gross;
+  if (typeof gross === "number" && Number.isFinite(gross)) return gross;
+  if (typeof gross === "string" && gross.trim() !== "") {
+    const parsed = Number(gross);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+  return null;
+}
+
+export async function waitForConfiguratorOfferRefresh(
+  page: Page,
+  prevGross?: number | null,
+  options: { requireGrossChange?: boolean } = {}
+) {
+  const response = await page.waitForResponse(
+    (res) =>
+      res.url().includes("calculate-offer") && res.request().method() === "POST",
+    { timeout: 120_000 }
+  );
+  expect(response.status()).toBeGreaterThanOrEqual(200);
+  expect(response.status()).toBeLessThan(300);
+
+  if (options.requireGrossChange === false || prevGross == null) {
+    await page.waitForTimeout(800);
+    return readPricingGross(await readCanonicalOffer(page));
+  }
+
+  await page.waitForFunction(
+    (previous) => {
+      const getState = (
+        window as Window & { getAppState?: () => Record<string, unknown> }
+      ).getAppState;
+      if (typeof getState !== "function") return false;
+      const app = getState();
+      const offer = (app?.canonicalOffer || app?.offer) as
+        | Record<string, unknown>
+        | undefined;
+      const totals = offer?.pricing as Record<string, unknown> | undefined;
+      const grossRaw = (totals?.totals as Record<string, unknown> | undefined)?.gross;
+      const gross =
+        typeof grossRaw === "number"
+          ? grossRaw
+          : typeof grossRaw === "string"
+            ? Number(grossRaw)
+            : NaN;
+      return Number.isFinite(gross) && gross !== previous;
+    },
+    prevGross,
+    { timeout: 60_000 }
+  );
+
+  return readPricingGross(await readCanonicalOffer(page));
+}
+
+export async function getActiveConfiguratorStepKey(page: Page): Promise<string | null> {
+  return page
+    .locator(".config-step.active, .config-step:visible")
+    .first()
+    .getAttribute("data-step-key");
+}
+
+export async function reachConfiguratorStep(page: Page, stepKey: string, maxSteps = 20) {
+  for (let i = 0; i < maxSteps; i += 1) {
+    const active = await getActiveConfiguratorStepKey(page);
+    if (active === stepKey) {
+      await page
+        .locator(`.config-step.active[data-step-key="${stepKey}"], .config-step:visible[data-step-key="${stepKey}"]`)
+        .first()
+        .waitFor({ state: "visible", timeout: 30_000 });
+      return;
+    }
+
+    const cards = page.locator(
+      ".config-step:visible .product-card.recommended, .config-step:visible .product-card:not(.disabled), .config-step:visible .option-card:not(.disabled)"
+    );
+    if ((await cards.count()) > 0) {
+      await cards.first().click({ timeout: 20_000 }).catch(() => null);
+      await page.waitForTimeout(700);
+    }
+
+    const next = page.locator("#nav-next");
+    if (await next.isEnabled().catch(() => false)) {
+      await next.click({ timeout: 20_000 });
+      await page.waitForTimeout(700);
+      continue;
+    }
+
+    await page.waitForTimeout(1000);
+  }
+
+  await page
+    .locator(`[data-step-key="${stepKey}"].config-step:visible`)
+    .first()
+    .waitFor({ state: "visible", timeout: 60_000 });
+}
+
+export async function selectConfiguratorOption(
+  page: Page,
+  optionId: string,
+  stepKey?: string,
+  options: { requireGrossChange?: boolean } = {}
+) {
+  const scope = stepKey
+    ? page.locator(`.config-step[data-step-key="${stepKey}"]`)
+    : page.locator(".config-step.active").first();
+  const card = scope.locator(`[data-option-id="${optionId}"]`).first();
+  await card.waitFor({ state: "visible", timeout: 30_000 });
+  const beforeGross = readPricingGross(await readCanonicalOffer(page));
+  await card.scrollIntoViewIfNeeded();
+  await card.click({ timeout: 20_000 });
+  return waitForConfiguratorOfferRefresh(page, beforeGross, options);
+}
+
+export async function advanceConfiguratorThrough(
+  page: Page,
+  stepKeys: string[]
+) {
+  for (const stepKey of stepKeys) {
+    await reachConfiguratorStep(page, stepKey);
+    const cards = page.locator(
+      `.config-step:visible[data-step-key="${stepKey}"] .product-card.recommended, .config-step:visible[data-step-key="${stepKey}"] .product-card:not(.disabled), .config-step:visible[data-step-key="${stepKey}"] .option-card:not(.disabled)`
+    );
+    if ((await cards.count()) > 0) {
+      await cards.first().click({ timeout: 20_000 });
+      await page.waitForTimeout(800);
+    }
+    if (stepKey === "hydraulics_inputs") {
+      await page.waitForTimeout(1500);
+      const next = page.locator("#nav-next");
+      if (await next.isEnabled().catch(() => false)) {
+        const beforeGross = readPricingGross(await readCanonicalOffer(page));
+        await next.click({ timeout: 20_000 });
+        await waitForConfiguratorOfferRefresh(page, beforeGross).catch(() => null);
+      }
+    }
+  }
 }
