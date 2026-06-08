@@ -265,5 +265,5 @@ Full workflow: [panasonic_catalog_update_workflow.md](panasonic_catalog_update_w
 ## Notes on historical documents
 
 - Legacy root filenames are listed in **`COMPAT_POINTERS.md`** at the repo root.
-- Historical runtime reports and migration execution notes were moved out of active `docs/` paths into `docs/archive/`.
+- Historical runtime reports and migration execution notes were offloaded to `gmail-agent-offloaded-archive/kalk-top-docs-2026-05-30/docs/archive/` (not in active repo).
 - Active docs should describe current runtime behavior, not transitional behavior that has already been retired.

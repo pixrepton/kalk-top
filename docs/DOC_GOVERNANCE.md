@@ -5,7 +5,7 @@
 > Last verified against code/runtime: 2026-04-02 (repo documentation audit)
 > Source-of-truth level: L1
 > Supersedes: none
-> Related docs: `docs/SOURCE_OF_TRUTH_INDEX.md`, `docs/DOC_INVENTORY_AND_CLASSIFICATION.md`, `docs/AGENT_EXECUTION_STANDARD.md`, `docs/READ_PRIORITY_MATRIX.md`
+> Related docs: `docs/SOURCE_OF_TRUTH_INDEX.md`, `docs/AGENT_EXECUTION_STANDARD.md`, `docs/READ_PRIORITY_MATRIX.md` (historical inventory: `gmail-agent-offloaded-archive/kalk-top-docs-2026-05-30/`)
 
 ## 1. Purpose
 

@@ -48,7 +48,7 @@ Read only when you need orientation, not authority:
 
 Read as non-canonical unless explicitly needed:
 
-- `docs/archive/*`
+- offloaded `docs/archive/*` (see `gmail-agent-offloaded-archive/kalk-top-docs-2026-05-30/docs/archive/`)
 - `docs/agent/AGENT_TOPINSTAL_FULL_SPEC.md`
 - `docs/agent/AGENT_HVAC_SKILLS_RESEARCH.md`
 - `memory-bank/progress.md` for current milestones only, not canonical architecture

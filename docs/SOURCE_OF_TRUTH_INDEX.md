@@ -58,7 +58,7 @@ These materials may be useful, but they are not canonical engineering truth by t
 
 | Path/group                                       | Why not canonical                                                                                             |
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
-| `docs/archive/*`                                 | historical and transitional reference only                                                                    |
+| offloaded `docs/archive/*`                       | historical only — `gmail-agent-offloaded-archive/kalk-top-docs-2026-05-30/docs/archive/`                    |
 | `docs/agent/AGENT_TOPINSTAL_FULL_SPEC.md`        | future-state/narrative agent design, not current runtime authority                                            |
 | `docs/agent/AGENT_HVAC_SKILLS_RESEARCH.md`       | research only                                                                                                 |
 | `docs/agent/AI_INPUT_CHANNELS_FUTURE_OPTIONS.md` | future backlog of channels, not runtime truth                                                                 |
