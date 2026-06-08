@@ -11,6 +11,9 @@ if (!function_exists('topinstal_register_routes')) {
      * @return void
      */
     function topinstal_register_routes() {
+        if (class_exists('TopInstal_RestJsonGuard')) {
+            TopInstal_RestJsonGuard::register();
+        }
         if (class_exists('TopInstal_CalculateOffer_Controller')) {
             TopInstal_CalculateOffer_Controller::register_routes();
         }

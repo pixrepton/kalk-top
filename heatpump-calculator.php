@@ -37,6 +37,7 @@ $topinstal_bootstrap_files = array(
     __DIR__ . '/core/contracts/ReasonCodes.php',
     __DIR__ . '/wp-adapter/rest/RequestValidator.php',
     __DIR__ . '/wp-adapter/rest/RestErrors.php',
+    __DIR__ . '/wp-adapter/rest/RestJsonGuard.php',
     __DIR__ . '/core/domain/cwu/CwuEngine.php',
     __DIR__ . '/core/domain/ozc/OzcEngine.php',
     __DIR__ . '/core/domain/selection/SelectionEngine.php',
