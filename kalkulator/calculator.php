@@ -2342,9 +2342,9 @@ if (!isset($pictures_url)) {
                     <div class="section-icon">🏗️</div>
                     <div>
                       <div class="section-step">KROK 7/10</div>
-                      <h2 class="section-title">Posadowienie jednostki zewnętrznej</h2>
+                      <h2 class="section-title">Fundament pod jednostkę zewnętrzną</h2>
                       <p class="section-description">
-                        Wybierz sposób montażu jednostki zewnętrznej pompy ciepła wraz z fundamentem.
+                        Czy masz gotowy fundament betonowy pod jednostkę zewnętrzną?
                       </p>
                     </div>
                   </div>
@@ -2363,7 +2363,7 @@ if (!isset($pictures_url)) {
                       <div class="section-step">KROK 8/10</div>
                       <h2 class="section-title">Reduktor ciśnienia</h2>
                       <p class="section-description">
-                        Reduktor ciśnienia chroni instalację przed nadmiernym ciśnieniem wody sieciowej.
+                        Chroni zasobnik CWU i warunki gwarancji instalacji.
                       </p>
                     </div>
                   </div>

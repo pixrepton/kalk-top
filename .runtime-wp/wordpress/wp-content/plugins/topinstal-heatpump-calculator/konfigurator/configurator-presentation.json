@@ -177,13 +177,13 @@
   "foundation": {
     "cards": {
       "grunt": {
-        "subtitle": "Fundament po stronie inwestora",
-        "title": "Fundament przygotowany samodzielnie",
-        "description": "Montaż jednostki zewnętrznej na przygotowanym fundamencie klienta. Oferta nie dolicza osobnej pozycji za podstawę.",
+        "subtitle": "Tak",
+        "title": "Tak — mam gotową podstawę betonową / przygotuję podstawę",
+        "description": "Montaż na Twoim fundamencie. Nie doliczamy stojaka — oszczędzasz na tym etapie montażu.",
         "specs": [
           {
             "label": "Przygotowanie",
-            "value": "Po stronie inwestora"
+            "value": "Po Twojej stronie"
           }
         ],
         "option_id": "posadowienie-grunt"
@@ -201,9 +201,9 @@
         "option_id": "posadowienie-sciana"
       },
       "eko": {
-        "subtitle": "Montaż naziemny",
-        "title": "Montaż na stojaku",
-        "description": "Montaż jednostki zewnętrznej na stojaku z gumową podstawą antywibracyjną.",
+        "subtitle": "Nie",
+        "title": "Nie — przygotujcie podstawę / stojak",
+        "description": "Montaż na stojaku z naszej strony (podstawa antywibracyjna).",
         "specs": [
           {
             "label": "Wymiary stopy",
@@ -216,9 +216,9 @@
   },
   "pressure_reducer": {
     "with": {
-      "subtitle": "Zalecane przy ciśnieniu wody sieciowej powyżej 4 bar",
+      "subtitle": "Zalecany przy montażu zasobnika CWU",
       "title": "Z reduktorem ciśnienia",
-      "description": "Reduktor ciśnienia nastawny z manometrem i filtrem mechanicznym.",
+      "description": "Reduktor zabezpiecza instalację i zasobnik CWU przed zbyt wysokim ciśnieniem wody. W nowych domach bywa już na instalacji — warto to sprawdzić, zapytać hydraulika na budowie, a przy wiekowym reduktorze wymienić na nowy.",
       "specs": [
         {
           "label": "Zakres",
@@ -229,13 +229,13 @@
       "badge_recommended": "✓ Rekomendowane"
     },
     "without": {
-      "subtitle": "Dla niskiego i stabilnego ciśnienia wody",
+      "subtitle": "Reduktor jest już w instalacji",
       "title": "Bez reduktora ciśnienia",
-      "description": "Instalacja bez dodatkowego reduktora. To wariant dla stabilnego ciśnienia zasilania i prostych warunków pracy.",
+      "description": "Nie doliczamy reduktora do oferty. Przy montażu sprawdzimy, czy jest poprawnie zamontowany.",
       "specs": [
         {
-          "label": "Warunek",
-          "value": "Stabilne cisnienie < 3 bar"
+          "label": "Weryfikacja",
+          "value": "Przy montażu na budowie"
         }
       ],
       "option_id": "reduktor-nie"

@@ -1227,6 +1227,28 @@
       return matchingPumps;
     }
 
+    function resolveConfiguratorCalcInput(override = null) {
+      const appSnapshot =
+        typeof getAppState === "function" ? getAppState() : null;
+      const overrideData =
+        override && typeof override === "object" ? override : null;
+
+      return {
+        ...(state.meta || {}),
+        ...(overrideData || {}),
+        offer_dto:
+          overrideData?.offer_dto ||
+          state.backendOffer ||
+          appSnapshot?.canonicalOffer ||
+          appSnapshot?.config_data?.offer_dto ||
+          null,
+        pump_selection:
+          overrideData?.pump_selection ||
+          appSnapshot?.config_data?.pump_selection ||
+          null,
+      };
+    }
+
     // Przygotowuje profile pomp (Split + AIO) dla konfiguratora
     function preparePumpProfiles(calcInput) {
       if (isBackendCalcEnabled()) {
@@ -1690,7 +1712,7 @@
       { stepKey: "service", label: "Service Cloud", icon: "ri-cloud-fill" },
       {
         stepKey: "posadowienie",
-        label: "Posadowienie jednostki zewnętrznej",
+        label: "Fundament pod jednostkę zewnętrzną",
         icon: "ri-building-fill",
       },
       {
@@ -2329,6 +2351,18 @@
       return Number.isFinite(n) ? n : fallback;
     }
 
+    function hydraulicsNormalizeApi() {
+      return window.TopinstalHydraulicsOfferNormalize || null;
+    }
+
+    function pickPositiveBufferLiters(...values) {
+      const api = hydraulicsNormalizeApi();
+      if (api && typeof api.pickPositiveBufferLiters === "function") {
+        return api.pickPositiveBufferLiters(...values);
+      }
+      return null;
+    }
+
     function toBool(value, fallback = false) {
       if (value === null || typeof value === "undefined") return fallback;
       if (value === true || value === false) return value;
@@ -2709,210 +2743,16 @@
     }
 
     function normalizeHydraulicsRecommendationFromOffer(bufferResult) {
-      const rawSetup = String(bufferResult?.setupType || "")
-        .trim()
-        .toUpperCase();
-      const litersRaw = toFiniteNumber(bufferResult?.liters, 0);
-      const liters = litersRaw > 0 ? litersRaw : null;
-
-      let recommendation = "NONE";
-      let setupType = "NONE";
-
-      if (rawSetup.indexOf("SZEREG") !== -1 || rawSetup === "SERIES_BYPASS") {
-        recommendation = "BUFOR_SZEREGOWO";
-        setupType = "SERIES_BYPASS";
-      } else if (
-        rawSetup.indexOf("ROWNO") !== -1 ||
-        rawSetup.indexOf("RÄ‚â€śWNO") !== -1 ||
-        rawSetup === "PARALLEL_CLUTCH"
-      ) {
-        recommendation = "BUFOR_RÓWNOLEGLE";
-        setupType = "PARALLEL_CLUTCH";
-      } else if (liters && liters > 0) {
-        recommendation = "BUFOR_SZEREGOWO";
-        setupType = "SERIES_BYPASS";
+      const api = hydraulicsNormalizeApi();
+      if (!api || typeof api.normalizeHydraulicsRecommendationFromOffer !== "function") {
+        console.warn(
+          "[Configurator] TopinstalHydraulicsOfferNormalize missing — load hydraulics-offer-normalize.js first"
+        );
+        return buildHydraulicsPendingRecommendation({
+          reasonCode: "HYDRAULICS_NORMALIZE_UNAVAILABLE",
+        });
       }
-
-      if (!liters || liters <= 0) {
-        recommendation = "NONE";
-        setupType = "NONE";
-      }
-
-      const reasonCodes = Array.isArray(bufferResult?.reasonCodes)
-        ? bufferResult.reasonCodes
-        : [];
-      const dominantReason = reasonCodes.length > 0 ? String(reasonCodes[0]) : null;
-
-      return {
-        recommendation: recommendation,
-        buffer_liters: liters,
-        setupType: setupType,
-        reason_codes: reasonCodes,
-        severity: recommendation === "NONE" ? "INFO" : "MANDATORY",
-        type:
-          recommendation === "NONE"
-            ? "none"
-            : recommendation === "BUFOR_SZEREGOWO"
-              ? "storage"
-              : "both",
-        dominantReason: dominantReason,
-        explanation: {
-          short: dominantReason || "Backend recommendation",
-          long: dominantReason || "Backend recommendation",
-        },
-      };
-    }
-
-    function normalizeHydraulicsRecommendationFromOffer(bufferResult) {
-      const recommendationPayload =
-        bufferResult?.recommendation && typeof bufferResult.recommendation === "object"
-          ? bufferResult.recommendation
-          : {};
-      const sizingPayload =
-        bufferResult?.sizing && typeof bufferResult.sizing === "object"
-          ? bufferResult.sizing
-          : {};
-      const rawSetup = String(
-        recommendationPayload?.setupType || bufferResult?.setupType || ""
-      )
-        .trim()
-        .toUpperCase();
-      const rawRecommendation = String(
-        recommendationPayload?.recommendation || ""
-      )
-        .trim()
-        .toUpperCase();
-      const litersRaw = toFiniteNumber(
-        recommendationPayload?.buffer_liters,
-        toFiniteNumber(bufferResult?.liters, 0)
-      );
-      const liters = litersRaw > 0 ? litersRaw : null;
-
-      let recommendation = "NONE";
-      let setupType = "NONE";
-
-      if (
-        rawRecommendation.indexOf("SZEREG") !== -1 ||
-        rawSetup.indexOf("SZEREG") !== -1 ||
-        rawSetup === "SERIES_BYPASS"
-      ) {
-        recommendation = "BUFOR_SZEREGOWO";
-        setupType = "SERIES_BYPASS";
-      } else if (
-        rawRecommendation.indexOf("ROWNO") !== -1 ||
-        rawRecommendation.indexOf("RÓWNO") !== -1 ||
-        rawSetup.indexOf("ROWNO") !== -1 ||
-        rawSetup.indexOf("RĂ“WNO") !== -1 ||
-        rawSetup === "PARALLEL_CLUTCH"
-      ) {
-        recommendation = "BUFOR_RÓWNOLEGLE";
-        setupType = "PARALLEL_CLUTCH";
-      } else if (liters && liters > 0) {
-        recommendation = "BUFOR_SZEREGOWO";
-        setupType = "SERIES_BYPASS";
-      }
-
-      if (!liters || liters <= 0) {
-        recommendation = "NONE";
-        setupType = "NONE";
-      }
-
-      const reasonCodes = Array.isArray(recommendationPayload?.reason_codes)
-        ? recommendationPayload.reason_codes.map((code) => String(code))
-        : Array.isArray(bufferResult?.reasonCodes)
-          ? bufferResult.reasonCodes.map((code) => String(code))
-          : [];
-      const axes =
-        recommendationPayload?.axes && typeof recommendationPayload.axes === "object"
-          ? {
-            flow_protection:
-              recommendationPayload.axes.flow_protection || null,
-            hydraulic_separation:
-              recommendationPayload.axes.hydraulic_separation || null,
-            energy_storage:
-              recommendationPayload.axes.energy_storage || null,
-          }
-          : {
-            flow_protection: null,
-            hydraulic_separation: null,
-            energy_storage: null,
-          };
-      const dominant =
-        typeof recommendationPayload?.dominant === "string" &&
-          recommendationPayload.dominant.trim() !== ""
-          ? recommendationPayload.dominant.trim()
-          : null;
-      const sizingComponents =
-        sizingPayload &&
-          (sizingPayload.antiCycling || sizingPayload.bivalent || sizingPayload.hydraulic)
-          ? {
-            antiCycling: sizingPayload.antiCycling || null,
-            bivalent: sizingPayload.bivalent || null,
-            hydraulic: sizingPayload.hydraulic || null,
-            systemVolume: sizingPayload.systemVolume || null,
-          }
-          : undefined;
-      const requiredSystemVolume = toFiniteNumber(
-        sizingPayload?.systemVolume?.required_liters,
-        null
-      );
-      const estimatedSystemVolume = toFiniteNumber(
-        sizingPayload?.systemVolume?.estimated_liters,
-        null
-      );
-      const systemVolumeSufficient =
-        typeof sizingPayload?.systemVolume?.sufficient === "boolean"
-          ? sizingPayload.systemVolume.sufficient
-          : null;
-      const dominantReason =
-        reasonCodes.length > 0
-          ? String(reasonCodes[0])
-          : recommendation === "NONE"
-            ? "BUFFER_NOT_REQUIRED"
-            : "BUFFER_BACKEND_RECOMMENDED";
-      const severity =
-        recommendation === "NONE"
-          ? "INFO"
-          : axes.energy_storage === "OPTIONAL"
-            ? "RECOMMENDED"
-            : "MANDATORY";
-
-      return {
-        recommendation: recommendation,
-        buffer_liters: liters,
-        setupType: setupType,
-        reason_codes: reasonCodes,
-        severity: severity,
-        type:
-          recommendationPayload?.type ||
-          (recommendation === "NONE"
-            ? "none"
-            : recommendation === "BUFOR_SZEREGOWO"
-              ? "storage"
-              : "both"),
-        axes,
-        dominant: dominant,
-        dominantReason: dominantReason,
-        sizingComponents: sizingComponents,
-        computedLiters: toFiniteNumber(
-          sizingPayload?.calculatedCapacity_liters,
-          null
-        ),
-        roundedTo: liters,
-        requiredSystemVolume: requiredSystemVolume,
-        estimatedSystemVolume: estimatedSystemVolume,
-        systemVolumeSufficient: systemVolumeSufficient,
-        warnings: Array.isArray(bufferResult?.warnings)
-          ? bufferResult.warnings
-          : [],
-        assumptions: Array.isArray(bufferResult?.assumptions)
-          ? bufferResult.assumptions
-          : [],
-        explanation: {
-          short: dominantReason || "Backend recommendation",
-          long: dominantReason || "Backend recommendation",
-        },
-      };
+      return api.normalizeHydraulicsRecommendationFromOffer(bufferResult);
     }
 
     function normalizeCwuRecommendationFromOffer(cwuResult) {
@@ -3226,18 +3066,8 @@
         };
       }
 
-      const persistedRecommendation =
-        state?.recommendations?.hydraulics &&
-          typeof state.recommendations.hydraulics === "object"
-          ? state.recommendations.hydraulics
-          : null;
-      if (persistedRecommendation) {
-        return {
-          source: "backend_persisted",
-          recommendation: persistedRecommendation,
-          hydraulicsCompletion: completionState,
-        };
-      }
+      // Do not render stale persisted hydraulics after hydraulics_inputs change
+      // (signature mismatch) — that showed "Bufor nie wymagany" with outdated NONE.
 
       if (isBackendCalcEnabled()) {
         return {
@@ -3336,11 +3166,9 @@
       if (
         options.force !== true &&
         state.backendOffer &&
-        requestSignature === lastBackendRequestSignature
+        requestSignature === lastBackendRequestSignature &&
+        hydraulicsRequestSignature === lastBackendHydraulicsSignature
       ) {
-        if (!lastBackendHydraulicsSignature) {
-          lastBackendHydraulicsSignature = hydraulicsRequestSignature;
-        }
         return state.backendOffer;
       }
 
@@ -3734,13 +3562,9 @@
 
       // POSADOWIENIE JEDNOSTKI ZEWNĂ„ÂTRZNEJ
       mounting(selectedPump, state) {
-        const buildingType = state.meta?.building_type || "single_house";
-        const weight = Number(selectedPump?.weight || 70);
-        const allowedWall = true;
-        const warnWall = buildingType === "apartment" || weight > 65;
         return {
-          allowedWall,
-          warnWall,
+          allowedWall: false,
+          warnWall: false,
         };
       },
 
@@ -3948,17 +3772,10 @@
 
       // Filtr magnetyczny pozostaje rodziną backend-only / poza retail UI.
 
-      // Posadowienie - warning dla Äąâ€şciany
       UICallbacks.setSectionEnabled("posadowienie", true);
-      UICallbacks.warnOnOption(
-        "posadowienie-sciana",
-        evaluated.mountingRules.warnWall
-      );
-      UICallbacks.setOptionDisabled(
-        "posadowienie-sciana",
-        false,
-        "Montaż ścienny niedostępny dla tej masy lub typu budynku."
-      );
+      if (state.selections?.posadowienie?.optionId === "posadowienie-sciana") {
+        clearSelectionState("posadowienie");
+      }
 
       // Uzdatnianie - rekomenduj (TYLKO jeÄąâ€şli uÄąÄ˝ytkownik jeszcze nie wybraÄąâ€š)
       if (evaluated.waterRules.recommendSoftener) {
@@ -4366,7 +4183,7 @@
       );
       rows.push({
         key: "foundation",
-        label: "Posadowienie jednostki zewnętrznej",
+        label: "Fundament pod jednostkę zewnętrzną",
         value: fundOpt
           ? fundOpt.label
           : selections.posadowienie?.label || "Nie wybrano",
@@ -5854,7 +5671,7 @@
       const pumpProfiles =
         directProfiles.length > 0
           ? directProfiles
-          : preparePumpProfiles(state.meta || {});
+          : preparePumpProfiles(resolveConfiguratorCalcInput());
       if (!Array.isArray(pumpProfiles) || pumpProfiles.length === 0) {
         renderPumpPendingState(scope);
         return null;
@@ -7151,19 +6968,34 @@
       explainEl.classList.remove("is-hidden");
     }
 
+    function resolveBufferUiPresentation(hr) {
+      const api = hydraulicsNormalizeApi();
+      if (api && typeof api.resolveBufferUiPresentation === "function") {
+        return api.resolveBufferUiPresentation(hr);
+      }
+      return null;
+    }
+
     function renderHydraulicsCOSectionFromRecommendation(hr) {
       const bufferStep = root.querySelector('[data-step-key="bufor"]') || dom.qs('[data-step-key="bufor"]');
       if (!bufferStep) return;
       const optionsGrid = bufferStep.querySelector(".options-grid");
       if (!optionsGrid) return;
+
+      const presentation = resolveBufferUiPresentation(hr);
+      if (!presentation) {
+        renderHydraulicsPendingState();
+        return;
+      }
+
       bufferStep.setAttribute("data-buffer-state", "ready");
 
-      // Ă˘Ĺ›â€¦ Renderuj TYLKO jednĂ„â€¦ kartę zgodnie z rekomendacjĂ„â€¦ logiki bufora
-      const recommendedCapacity = hr.buffer_liters || 0;
+      const uiRecommendation = presentation.recommendation;
+      const recommendedCapacity = presentation.liters || 0;
       let cards = "";
 
       // Decyzja na podstawie rekomendacji (NOWE: 3 typy)
-      if (hr.recommendation === "NONE" || recommendedCapacity === 0) {
+      if (uiRecommendation === "NONE") {
         // Brak bufora - renderuj kartę "Bez bufora" z informacjami o korzyÄąâ€şciach
         cards = `
         <button type="button" class="product-card ui-option" data-option-id="buffer-0">
@@ -7190,10 +7022,10 @@
         </button>
       `;
       } else if (
-        hr.recommendation === "BUFOR_SZEREGOWO" &&
+        uiRecommendation === "BUFOR_SZEREGOWO" &&
         recommendedCapacity > 0
       ) {
-        const setupType = hr.setupType || "SERIES_BYPASS";
+        const setupType = presentation.setupType || "SERIES_BYPASS";
         const capacitiesToShow = getBufferCapacitiesToShow(recommendedCapacity);
         cards = capacitiesToShow
           .map((cap) =>
@@ -7208,10 +7040,10 @@
           )
           .join("");
       } else if (
-        hr.recommendation === "BUFOR_RÓWNOLEGLE" &&
+        uiRecommendation === "BUFOR_RÓWNOLEGLE" &&
         recommendedCapacity > 0
       ) {
-        const setupType = hr.setupType || "PARALLEL_CLUTCH";
+        const setupType = presentation.setupType || "PARALLEL_CLUTCH";
         const capacitiesToShow = getBufferCapacitiesToShow(recommendedCapacity);
         cards = capacitiesToShow
           .map((cap) =>
@@ -7225,13 +7057,16 @@
             )
           )
           .join("");
+      } else if (
+        uiRecommendation === "BUFOR_SZEREGOWO" ||
+        uiRecommendation === "BUFOR_RÓWNOLEGLE"
+      ) {
+        renderHydraulicsPendingState();
+        return;
+      } else if (recommendedCapacity > 0) {
+        cards = renderBufferCard(recommendedCapacity, true, false);
       } else {
-        // Fallback - jeÄąâ€şli nie ma jasnej rekomendacji, użyj rekomendowanej pojemnoÄąâ€şci
-        if (recommendedCapacity > 0) {
-          cards = renderBufferCard(recommendedCapacity, true, false);
-        } else {
-          // JeÄąâ€şli brak pojemnoÄąâ€şci, pokaÄąÄ˝ "Bez bufora"
-          cards = `
+        cards = `
           <button type="button" class="product-card ui-option" data-option-id="buffer-0">
             <div class="product-content">
               <span class="product-subtitle">Opcja specjalna</span>
@@ -7241,7 +7076,6 @@
             </div>
           </button>
         `;
-        }
       }
 
       optionsGrid.innerHTML = cards;
@@ -7258,7 +7092,10 @@
         }
       }
       syncSelectionForStep("bufor");
-      if (hr.recommendation === "BUFOR_SZEREGOWO" || hr.recommendation === "BUFOR_RÓWNOLEGLE") {
+      if (
+        uiRecommendation === "BUFOR_SZEREGOWO" ||
+        uiRecommendation === "BUFOR_RÓWNOLEGLE"
+      ) {
         optionsGrid.classList.add("grid-3-col");
       } else {
         optionsGrid.classList.remove("grid-3-col");
@@ -7278,9 +7115,9 @@
         if (hr.sizing) {
         }
 
-        if (hr.recommendation === "NONE") {
-        } else if (hr.recommendation === "BUFOR_SZEREGOWO") {
-        } else if (hr.recommendation === "BUFOR_RÓWNOLEGLE") {
+        if (uiRecommendation === "NONE") {
+        } else if (uiRecommendation === "BUFOR_SZEREGOWO") {
+        } else if (uiRecommendation === "BUFOR_RÓWNOLEGLE") {
         }
       }
 
@@ -7310,9 +7147,9 @@
 
         let descriptionText = "";
 
-        if (hr.recommendation === "BUFOR_SZEREGOWO") {
+        if (uiRecommendation === "BUFOR_SZEREGOWO") {
           descriptionText = `Ze względu na ryzyko automatycznego zamknięcia obiegu przez sterowniki pokojowe wymagany jest zbiornik buforowy. Rekomendacja: bufor wpięty szeregowo — podłączenie na powrocie z instalacji z by-passem i zaworem różnicy ciśnienia.`;
-        } else if (hr.recommendation === "BUFOR_RÓWNOLEGLE") {
+        } else if (uiRecommendation === "BUFOR_RÓWNOLEGLE") {
           descriptionText = `System rekomenduje zbiornik buforowy ${recommendedCapacity} L — separacja obiegów/źródeł + magazyn energii.`;
         } else {
           descriptionText =
@@ -7432,11 +7269,11 @@
     function renderFoundationCard(type, isRecommended = false) {
       const fallback = {
         grunt: {
-          subtitle: "Fundament po stronie inwestora",
-          title: "Fundament przygotowany samodzielnie",
+          subtitle: "Tak",
+          title: "Tak — mam gotową podstawę betonową / przygotuję podstawę",
           description:
-            "Montaż jednostki zewnętrznej na przygotowanym fundamencie klienta. Oferta nie dolicza osobnej pozycji za podstawę.",
-          specs: [{ label: "Przygotowanie", value: "Po stronie inwestora" }],
+            "Montaż na Twoim fundamencie. Nie doliczamy stojaka — oszczędzasz na tym etapie montażu.",
+          specs: [{ label: "Przygotowanie", value: "Po Twojej stronie" }],
           optionId: "posadowienie-grunt",
         },
         sciana: {
@@ -7448,10 +7285,10 @@
           optionId: "posadowienie-sciana",
         },
         eko: {
-          subtitle: "Montaż naziemny",
-          title: "Montaż na stojaku",
+          subtitle: "Nie",
+          title: "Nie — przygotujcie podstawę / stojak",
           description:
-            "Montaż jednostki zewnętrznej na stojaku z gumową podstawą antywibracyjną.",
+            "Montaż na stojaku z naszej strony (podstawa antywibracyjna).",
           specs: [{ label: "Wymiary stopy", value: "80×80 cm" }],
           optionId: "posadowienie-eko",
         },
@@ -7499,9 +7336,8 @@
     // Renderuje sekcję posadowienia
     function renderFoundationSection() {
       const gruntCard = renderFoundationCard("grunt", false);
-      const scianaCard = renderFoundationCard("sciana", false);
       const ekoCard = renderFoundationCard("eko", false);
-      return gruntCard + scianaCard + ekoCard;
+      return gruntCard + ekoCard;
     }
 
     // Renderuje kartę reduktora ciśnienia
@@ -7521,9 +7357,9 @@
       <button type="button" class="product-card ui-option ${selectedClass}" data-option-id="reduktor-tak">
         <div class="product-content">
           ${recommendedBadge}
-          <span class="product-subtitle">${withPres.subtitle || "Zalecane przy ciśnieniu wody sieciowej powyżej 4 bar"}</span>
+          <span class="product-subtitle">${withPres.subtitle || "Zalecany przy montażu zasobnika CWU"}</span>
           <h4 class="product-title">${withPres.title || "Z reduktorem ciśnienia"}</h4>
-          <p class="product-description">${withPres.description || "Reduktor ciśnienia nastawny z manometrem i filtrem mechanicznym."}</p>
+          <p class="product-description">${withPres.description || "Reduktor zabezpiecza instalację i zasobnik CWU przed zbyt wysokim ciśnieniem wody. W nowych domach bywa już na instalacji — warto to sprawdzić, zapytać hydraulika na budowie, a przy wiekowym reduktorze wymienić na nowy."}</p>
           <div class="specs-list">
             ${specs
           .map(
@@ -7548,7 +7384,7 @@
       const withoutSpecs =
         Array.isArray(withoutPres.specs) && withoutPres.specs.length > 0
           ? withoutPres.specs
-          : [{ label: "Warunek", value: "Stabilne cisnienie < 3 bar" }];
+          : [{ label: "Weryfikacja", value: "Przy montażu na budowie" }];
       const withoutReducerCard = `
       <button type="button" class="product-card ui-option ${recommendedOptionId === "reduktor-nie" ? "selected" : ""
         }" data-option-id="reduktor-nie">
@@ -7557,9 +7393,9 @@
           ? '<span class="badge-recommended">Rekomendowane</span>'
           : ""
         }
-          <span class="product-subtitle">${withoutPres.subtitle || "Dla niskiego i stabilnego ciśnienia wody"}</span>
+          <span class="product-subtitle">${withoutPres.subtitle || "Reduktor jest już w instalacji"}</span>
           <h4 class="product-title">${withoutPres.title || "Bez reduktora ciśnienia"}</h4>
-          <p class="product-description">${withoutPres.description || "Instalacja bez dodatkowego reduktora. To wariant dla stabilnego ciśnienia zasilania i prostych warunków pracy."}</p>
+          <p class="product-description">${withoutPres.description || "Nie doliczamy reduktora do oferty. Przy montażu sprawdzimy, czy jest poprawnie zamontowany."}</p>
           <div class="specs-list">
             ${withoutSpecs
           .map(
@@ -7840,7 +7676,8 @@
         calcData,
         appSnapshot
       );
-      const pumpProfiles = preparePumpProfiles(state.meta);
+      const pumpCalcInput = resolveConfiguratorCalcInput(calcData);
+      const pumpProfiles = preparePumpProfiles(pumpCalcInput);
       if (pumpProfiles.length === 0) {
         if (konfigDebug()) {
           console.warn("[Configurator] No pump profiles (checking >25kW case)");
@@ -7870,8 +7707,10 @@
           }
           return;
         }
-        console.warn("[Configurator] No pump profiles; aborting populate");
-        return;
+        if (!isBackendCalcEnabled()) {
+          console.warn("[Configurator] No pump profiles; aborting populate");
+          return;
+        }
       }
 
       // Scope do root elementu (jeÄąâ€şli dostępny)
@@ -8284,11 +8123,6 @@
         }
 
         // Aktualizuj treÄąâ€şci dla KROKU 6 - POSADOWIENIE
-        const pumpWeight =
-          state.selectedPump?.weight ||
-          state.selectedPump?.panasonicData?.weight ||
-          70;
-        const isHeavy = pumpWeight > 65;
         const sectionDescription = foundationStep.querySelector(
           ".section-description"
         );
@@ -8303,17 +8137,8 @@
 
         // Zawsze
         if (sectionDescription) {
-          const mainText =
-            "Sposób montażu jednostki zewnętrznej wpływa na stabilność pracy, hałas i trwałość instalacji.";
-          let noteText =
-            "Do wyboru są trzy warianty: fundament przygotowany przez inwestora, stojak naziemny oraz montaż ścienny. Każdy z nich ma inny wpływ na cenę i warunki montażowe.";
-
-          if (isHeavy) {
-            noteText +=
-              " Uwaga: masa pompy przekracza 65 kg — montaż na konsoli ściennej wymaga dodatkowej analizy konstrukcyjnej.";
-          }
-
-          sectionDescription.innerHTML = `${mainText}<br>${noteText}`;
+          sectionDescription.textContent =
+            "Czy masz gotowy fundament betonowy pod jednostkę zewnętrzną?";
         }
       }
 
@@ -8335,42 +8160,9 @@
           syncSelectionForStep("reduktor");
         }
 
-        // Aktualizuj treÄąâ€şci dla KROKU 7 - REDUKTOR CIÄąĹˇNIENIA
-        const sectionDescription = reducerStep.querySelector(
-          ".section-description"
-        );
-
-        // UsuÄąâ€ž istniejĂ„â€¦ce recommendation-note jeÄąâ€şli istnieje
         const existingNote = reducerStep.querySelector(".recommendation-note");
         if (existingNote) {
           existingNote.remove();
-        }
-
-        let descText = "";
-        let noteText = "";
-
-        if (waterPressure === null) {
-          descText =
-            "Reduktor chroni instalację przed zbyt wysokim ciśnieniem wody.";
-          noteText =
-            "Rekomendujemy reduktor dla większości instalacji — zapewnia poprawność montażu i komfort użytkowania.";
-        } else if (waterPressure > 5) {
-          descText =
-            "Reduktor chroni instalację przed zbyt wysokim ciśnieniem wody.";
-          noteText =
-            "Reduktor ciśnienia jest wymagany. Zbyt wysokie ciśnienie może prowadzić do uszkodzeń armatury i zbiornika CWU.";
-        } else if (waterPressure >= 3) {
-          descText = "Reduktor chroni instalację przed skokami ciśnienia.";
-          noteText =
-            "Rekomendujemy reduktor ciśnienia dla stabilnej pracy instalacji i komfortu użytkowania.";
-        } else {
-          descText = "Reduktor chroni instalację przed nadmiernym ciśnieniem.";
-          noteText =
-            "Reduktor nie jest wymagany, ale można go dodać opcjonalnie jako dodatkowe zabezpieczenie.";
-        }
-
-        if (sectionDescription) {
-          sectionDescription.innerHTML = `${descText}<br>${noteText}`;
         }
       }
 

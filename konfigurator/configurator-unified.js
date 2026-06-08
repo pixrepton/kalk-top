@@ -1712,7 +1712,7 @@
       { stepKey: "service", label: "Service Cloud", icon: "ri-cloud-fill" },
       {
         stepKey: "posadowienie",
-        label: "Posadowienie jednostki zewnętrznej",
+        label: "Fundament pod jednostkę zewnętrzną",
         icon: "ri-building-fill",
       },
       {
@@ -4183,7 +4183,7 @@
       );
       rows.push({
         key: "foundation",
-        label: "Posadowienie jednostki zewnętrznej",
+        label: "Fundament pod jednostkę zewnętrzną",
         value: fundOpt
           ? fundOpt.label
           : selections.posadowienie?.label || "Nie wybrano",
@@ -7269,11 +7269,11 @@
     function renderFoundationCard(type, isRecommended = false) {
       const fallback = {
         grunt: {
-          subtitle: "Fundament po stronie inwestora",
-          title: "Fundament przygotowany samodzielnie",
+          subtitle: "Tak",
+          title: "Tak — mam gotową podstawę betonową / przygotuję podstawę",
           description:
-            "Montaż jednostki zewnętrznej na przygotowanym fundamencie klienta. Oferta nie dolicza osobnej pozycji za podstawę.",
-          specs: [{ label: "Przygotowanie", value: "Po stronie inwestora" }],
+            "Montaż na Twoim fundamencie. Nie doliczamy stojaka — oszczędzasz na tym etapie montażu.",
+          specs: [{ label: "Przygotowanie", value: "Po Twojej stronie" }],
           optionId: "posadowienie-grunt",
         },
         sciana: {
@@ -7285,10 +7285,10 @@
           optionId: "posadowienie-sciana",
         },
         eko: {
-          subtitle: "Montaż naziemny",
-          title: "Montaż na stojaku",
+          subtitle: "Nie",
+          title: "Nie — przygotujcie podstawę / stojak",
           description:
-            "Montaż jednostki zewnętrznej na stojaku z gumową podstawą antywibracyjną.",
+            "Montaż na stojaku z naszej strony (podstawa antywibracyjna).",
           specs: [{ label: "Wymiary stopy", value: "80×80 cm" }],
           optionId: "posadowienie-eko",
         },
@@ -7357,9 +7357,9 @@
       <button type="button" class="product-card ui-option ${selectedClass}" data-option-id="reduktor-tak">
         <div class="product-content">
           ${recommendedBadge}
-          <span class="product-subtitle">${withPres.subtitle || "Zalecane przy ciśnieniu wody sieciowej powyżej 4 bar"}</span>
+          <span class="product-subtitle">${withPres.subtitle || "Zalecany przy montażu zasobnika CWU"}</span>
           <h4 class="product-title">${withPres.title || "Z reduktorem ciśnienia"}</h4>
-          <p class="product-description">${withPres.description || "Reduktor ciśnienia nastawny z manometrem i filtrem mechanicznym."}</p>
+          <p class="product-description">${withPres.description || "Reduktor zabezpiecza instalację i zasobnik CWU przed zbyt wysokim ciśnieniem wody. W nowych domach bywa już na instalacji — warto to sprawdzić, zapytać hydraulika na budowie, a przy wiekowym reduktorze wymienić na nowy."}</p>
           <div class="specs-list">
             ${specs
           .map(
@@ -7384,7 +7384,7 @@
       const withoutSpecs =
         Array.isArray(withoutPres.specs) && withoutPres.specs.length > 0
           ? withoutPres.specs
-          : [{ label: "Warunek", value: "Stabilne cisnienie < 3 bar" }];
+          : [{ label: "Weryfikacja", value: "Przy montażu na budowie" }];
       const withoutReducerCard = `
       <button type="button" class="product-card ui-option ${recommendedOptionId === "reduktor-nie" ? "selected" : ""
         }" data-option-id="reduktor-nie">
@@ -7393,9 +7393,9 @@
           ? '<span class="badge-recommended">Rekomendowane</span>'
           : ""
         }
-          <span class="product-subtitle">${withoutPres.subtitle || "Dla niskiego i stabilnego ciśnienia wody"}</span>
+          <span class="product-subtitle">${withoutPres.subtitle || "Reduktor jest już w instalacji"}</span>
           <h4 class="product-title">${withoutPres.title || "Bez reduktora ciśnienia"}</h4>
-          <p class="product-description">${withoutPres.description || "Instalacja bez dodatkowego reduktora. To wariant dla stabilnego ciśnienia zasilania i prostych warunków pracy."}</p>
+          <p class="product-description">${withoutPres.description || "Nie doliczamy reduktora do oferty. Przy montażu sprawdzimy, czy jest poprawnie zamontowany."}</p>
           <div class="specs-list">
             ${withoutSpecs
           .map(
@@ -8137,12 +8137,8 @@
 
         // Zawsze
         if (sectionDescription) {
-          const mainText =
-            "Sposób montażu jednostki zewnętrznej wpływa na stabilność pracy, hałas i trwałość instalacji.";
-          const noteText =
-            "Do wyboru są dwa warianty: fundament przygotowany przez inwestora albo montaż na stojaku naziemnym z podstawą antywibracyjną. Każdy wariant ma inny wpływ na cenę i warunki montażowe.";
-
-          sectionDescription.innerHTML = `${mainText}<br>${noteText}`;
+          sectionDescription.textContent =
+            "Czy masz gotowy fundament betonowy pod jednostkę zewnętrzną?";
         }
       }
 
@@ -8164,42 +8160,9 @@
           syncSelectionForStep("reduktor");
         }
 
-        // Aktualizuj treÄąâ€şci dla KROKU 7 - REDUKTOR CIÄąĹˇNIENIA
-        const sectionDescription = reducerStep.querySelector(
-          ".section-description"
-        );
-
-        // UsuÄąâ€ž istniejĂ„â€¦ce recommendation-note jeÄąâ€şli istnieje
         const existingNote = reducerStep.querySelector(".recommendation-note");
         if (existingNote) {
           existingNote.remove();
-        }
-
-        let descText = "";
-        let noteText = "";
-
-        if (waterPressure === null) {
-          descText =
-            "Reduktor chroni instalację przed zbyt wysokim ciśnieniem wody.";
-          noteText =
-            "Rekomendujemy reduktor dla większości instalacji — zapewnia poprawność montażu i komfort użytkowania.";
-        } else if (waterPressure > 5) {
-          descText =
-            "Reduktor chroni instalację przed zbyt wysokim ciśnieniem wody.";
-          noteText =
-            "Reduktor ciśnienia jest wymagany. Zbyt wysokie ciśnienie może prowadzić do uszkodzeń armatury i zbiornika CWU.";
-        } else if (waterPressure >= 3) {
-          descText = "Reduktor chroni instalację przed skokami ciśnienia.";
-          noteText =
-            "Rekomendujemy reduktor ciśnienia dla stabilnej pracy instalacji i komfortu użytkowania.";
-        } else {
-          descText = "Reduktor chroni instalację przed nadmiernym ciśnieniem.";
-          noteText =
-            "Reduktor nie jest wymagany, ale można go dodać opcjonalnie jako dodatkowe zabezpieczenie.";
-        }
-
-        if (sectionDescription) {
-          sectionDescription.innerHTML = `${descText}<br>${noteText}`;
         }
       }
 
