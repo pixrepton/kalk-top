@@ -1,10 +1,11 @@
 # OZC Engine Graph
 
-> Status: operational audit graph
+> Status: operational audit graph (partially historical — see code sync below)
 > Owner: `core/domain/ozc/OzcEngine.php`
-> Last verified against code/runtime: 2026-05-20 (GitNexus MCP)
+> Last verified against code/runtime: 2026-06-04
 > Source-of-truth level: L2
-> Related runtime: `core/domain/ozc/OzcEngine.php`, `kalkulator/engine/ozc/ozc-engine.js`, `core/application/CalculateOfferUseCase.php`
+> Related runtime: `core/domain/ozc/OzcEngine.php`, `core/application/CalculateOfferUseCase.php`
+> **Code sync 2026-06:** `computeAdditiveCorrectionsKw` and `ozc-engine.js` **removed**; `resolveHddHeatTransfer` applies `eta_rec` on annual ventilation. Open risks: `ozc-professional-method-audit.md` § Code sync status.
 
 ## Knowledge Graph
 
@@ -16,7 +17,7 @@ flowchart TD
   DesignLoad --> Transmission[transmission losses]
   DesignLoad --> Ventilation[ventilation losses]
   DesignLoad --> Bridges[thermal bridge multiplier]
-  DesignLoad --> Additive[additive kW corrections]
+  DesignLoad --> PhysicsOnly[physics-only design load]
   Transmission --> Geometry[geometry / areas / volume]
   Transmission --> UValues[U-values from layers or fallbacks]
   Transmission --> BoundaryDT[boundary deltaT]
@@ -40,7 +41,7 @@ flowchart LR
   OfferOzc --> Selection[SelectionEngine]
   OfferOzc --> Buffer[BufferEngine]
   OfferOzc --> Pricing[PricingEngine]
-  JSRef[kalkulator/engine/ozc/ozc-engine.js] -. parity/reference .-> OzcFull
+  Harness[ozc-full-audit.regression.php] -. regression .-> OzcFull
 ```
 
 ## Calculation Graph
@@ -59,11 +60,9 @@ flowchart TD
   DT --> PhiT[phiT = sum HT_i * effective deltaT_i]
   HV --> PhiV[phiV = HV * dT * (1 - eta_rec)]
   PhiT --> PhiPsi[phiPsi = phiT * 0.10]
-  Start --> Add[computeAdditiveCorrectionsKw]
   PhiT --> Total[designHeatLoss_W]
   PhiV --> Total
   PhiPsi --> Total
-  Add --> Total
   Total --> KW[designHeatLoss_kW]
   HT --> HDDH[H_total_for_HDD]
   HV --> HDDH
@@ -72,7 +71,7 @@ flowchart TD
 
 ## High-Risk Nodes
 
-- `computeAdditiveCorrectionsKw` (GitNexus: `Method:...OzcEngine.php:TopInstal_OzcEngine.computeAdditiveCorrectionsKw#1`, L680; caller: `calculateOZC`; JS parity: `kalkulator/engine/ozc/ozc-engine.js`): likely double-counts windows, doors, recovery ventilation, and basement effects already present in physical terms.
-- `computeAnnualEnergy_kWh`: adds full ventilation coefficient to HDD model and does not apply `eta_rec`, so recovery annual energy/cost can be overstated.
+- ~~`computeAdditiveCorrectionsKw`~~ **Removed (2026-06)** — design load is physics-only (`phiT + phiV + phiPsi`).
+- `computeAnnualEnergy_kWh` / HDD heuristic: simplified annual model (marked non-canonical in harness); `resolveHddHeatTransfer` applies `eta_rec` on ventilation — remaining risk is methodology, not missing recovery factor.
 - `computeWallStructureThicknessCm`: ambiguous `wall_size` semantics; if UI means structural wall thickness, subtracting insulation is wrong.
 - `U_floor` + `shapeCorrection`: rough ground-loss proxy, not PN-EN ISO 13370 equivalent.

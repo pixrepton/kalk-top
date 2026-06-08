@@ -59,5 +59,5 @@ flowchart TD
 
 - The engine intentionally uses exact range matching only; nearest fallback is dormant policy.
 - It depends directly on OZC realism: if `designHeatLoss_kW` drifts, pump selection drifts immediately.
-- GitNexus callers: `selection-aio-cwu.regression.php`, `engine-parity.php` (parity harness currently fails on missing `clonePumpTableFallback` in configurator JS — see detective report).
+- Regression callers: `selection-aio-cwu.regression.php`, `configurator-pump-offer.regression.php` (`engine-parity.php` removed 2026-06 — see `ozc-professional-method-audit.md` § Code sync status).
 - AIO/CWU coupling: `resolve_aio_requirement` → `filter_matches_for_cwu_requirement` → `select`; large tank (≥400 L) blocks AIO; 250–350 L AIO only when catalog maps `aio_model_large_cwu`.

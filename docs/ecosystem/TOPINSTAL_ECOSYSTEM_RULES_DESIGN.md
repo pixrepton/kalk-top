@@ -50,8 +50,7 @@
     ├── contracts/
     │   ├── field-mapping.md                       # Mapping artifact
     │   └── dto-and-boundaries.md                  # DTO and contract boundary guide
-    ├── plans/
-    │   └── migration-plan.md                      # Current migration roadmap
+    ├── plans/                                     # migration-plan.md offloaded (2026-06) — see docs/README.md
     └── ecosystem/
         ├── TOPINSTAL_ECOSYSTEM_STATE.md            # Living document (jeden wspólny lub snapshot)
         ├── TOPINSTAL_ECOSYSTEM_RULES_DESIGN.md     # Ten dokument — blueprint
@@ -225,8 +224,7 @@ kalk-top/
     ├── contracts/
     │   ├── field-mapping.md
     │   └── dto-and-boundaries.md
-    ├── plans/
-    │   └── migration-plan.md
+    ├── plans/                                     # offloaded — see docs/README.md
     └── ecosystem/
         ├── TOPINSTAL_ECOSYSTEM_RULES_DESIGN.md
         ├── TOPINSTAL_ECOSYSTEM_STATE.md

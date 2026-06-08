@@ -170,5 +170,4 @@ For reliable native OZC runtime:
    - `php core/application/harness/ozc-full-audit.regression.php`
    - `php core/application/harness/calculate-offer.fixtures.php`
    - `php core/application/harness/rest-calculate-offer.e2e.php`
-5. Verify historical JS parity only when needed:
-   - `php core/application/harness/engine-parity.php`
+5. OZC open-risk register (design load vs annual cost): `docs/architecture/ozc-professional-method-audit.md` § Code sync status (2026-06-04).

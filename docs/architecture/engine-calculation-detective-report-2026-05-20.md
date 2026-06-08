@@ -1,8 +1,9 @@
 # Engine Calculation Detective Report
 
-> Status: audit / defect register
+> Status: audit / defect register (historical snapshot)
 > Owner: TOP-INSTAL engineering
 > Date: 2026-05-20
+> Code sync: 2026-06-04 — see `ozc-professional-method-audit.md` § Code sync status for open vs fixed OZC items; `engine-parity.php` **removed** from repo (not merely failing)
 > Method: GitNexus MCP (`context`, `cypher`, `impact`) + source read + PHP regression harnesses
 > Related: `docs/architecture/ozc-professional-method-audit.md`, `docs/architecture/engine-graphs/`
 

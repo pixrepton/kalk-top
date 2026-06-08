@@ -18,7 +18,7 @@ Keep the backend-first flow canonical: `CalcRequestDTO -> OfferDTO` through `POS
 6. `.agents/SKILL_ROUTER.md` — pick max 1–3 skills before broad doc scans
 7. `.cursor/rules/00-kalk-top-core-router.mdc`
 8. nearest nested `AGENTS.md` for the subsystem you are editing
-9. optional per-layer deep dive: `docs/overview/README_TOP-INSTAL_HVAC_Calculator_*.md` (Core, WP-Adapter, Kalkulator, Konfigurator, Frontend API) - see `docs/overview/README_TOP-INSTAL_HVAC_Calculator.md` -> "Module READMEs"
+9. optional per-layer deep dive: `docs/HANDBOOK.md` § Layer map (long form offloaded archive)
 
 On-demand rules (loaded when matching paths): `00-topinstal-ecosystem-constitution`, `10-repo-role`, `20-execution-protocol`, `30-kalk-top-agent-harness`, `karpathy-guidelines`.
 
