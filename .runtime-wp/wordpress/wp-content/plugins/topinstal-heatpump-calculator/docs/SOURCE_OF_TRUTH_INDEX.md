@@ -2,7 +2,7 @@
 
 > Status: canonical
 > Owner: TOP-INSTAL documentation governance
-> Last verified against code/runtime: 2026-04-14 (added Panasonic catalog layer to authority map)
+> Last verified against code/runtime: 2026-06-04 (OZC backlog resolutions, PDF mapping audit, runtime port 8091)
 > Source-of-truth level: L1
 > Supersedes: none
 > Related docs: `docs/DOC_GOVERNANCE.md`, `docs/READ_PRIORITY_MATRIX.md`, `docs/contracts/API_CALCULATE_OFFER.md`, `docs/ecosystem/TOPINSTAL_ECOSYSTEM_STATE.md`
@@ -27,10 +27,12 @@ If two documents disagree, use the authority chain listed here.
 | Pricing truth                     | `core/infrastructure/master-data/equipment-catalog.json`, `core/domain/pricing/PricingEngine.php`, `OfferDTO.pricing` | `docs/architecture/repo-rules.md`, `docs/konfigurator/README_DANE_CENY_ZDJECIA_KONFIGURATORA_KALK_TOP.md`      | visible runtime pricing is backend-owned                  |
 | Workflow state truth              | owning runtime/service code in each repo                                                                              | `docs/ecosystem/TOPINSTAL_ECOSYSTEM_STATE.md`                                                                  | cross-repo state is indexed there, not fully owned there  |
 | Auth truth                        | controller/runtime code                                                                                               | `docs/contracts/API_CALCULATE_OFFER.md`, `docs/runbooks/REST_AUTH_AND_AGENT_KEY_VERIFICATION.md`               | controller wins if conflict exists                        |
-| Generator integration             | kalk-top adapter code + generator endpoint implementation                                                             | `docs/ecosystem/TOPINSTAL_ECOSYSTEM_STATE.md`, `docs/runbooks/offer-generator-integration-audit.md`            | generator remains downstream renderer                     |
+| Generator integration             | kalk-top adapter code + generator endpoint implementation                                                             | `docs/ecosystem/TOPINSTAL_ECOSYSTEM_STATE.md`, `docs/runbooks/offer-generator-integration-audit.md`, `docs/architecture/offer-dto-pdf-mapping-audit.md` | generator remains downstream renderer; **Problem 7 implementation open** |
+| OZC method audit + backlog status | `core/domain/ozc/OzcEngine.php`, harness `ozc-full-audit.regression.php`                                              | `docs/architecture/ozc-professional-method-audit.md`, `docs/architecture/BACKLOG_RESOLUTIONS_2026-06-04.md`    | Code sync table is current priority over 2026-05-20 narrative |
+| Offer PDF field mapping           | `top-instal-generator/.../OfferDocumentInputMapper.php`, kalk-top `downloadPDF.js`                                    | `docs/architecture/offer-dto-pdf-mapping-audit.md`                                                               | Analysis canonical; implementation in generator repo        |
 | Ecosystem ownership               | owning repos + integration reality                                                                                    | `docs/ecosystem/TOPINSTAL_ECOSYSTEM_STATE.md`                                                                  | authoritative cross-repo ownership map                    |
 | Agent operating rules             | `AGENTS.md`, nested `AGENTS.md`, `.cursor/rules/*`                                                                    | `docs/AGENT_EXECUTION_STANDARD.md`, `docs/READ_PRIORITY_MATRIX.md`                                             | runtime/dev execution rules live here, not in vision docs |
-| Future AI channel ideas           | none; future-state only                                                                                               | `docs/TOPINSTAL_AI_OS_BLUEPRINT.md`, `docs/agent/AI_INPUT_CHANNELS_FUTURE_OPTIONS.md`                          | not runtime truth                                         |
+| Future AI channel ideas           | none; future-state only                                                                                               | offloaded archive / `knowledge/rfc/`                                                                           | not runtime truth                                         |
 
 ## 3. Known authority mismatches
 
@@ -61,7 +63,7 @@ These materials may be useful, but they are not canonical engineering truth by t
 | `docs/agent/AGENT_HVAC_SKILLS_RESEARCH.md`       | research only                                                                                                 |
 | `docs/agent/AI_INPUT_CHANNELS_FUTURE_OPTIONS.md` | future backlog of channels, not runtime truth                                                                 |
 | `docs/agent/README.md`                           | operational index only; check per-file status markers                                                         |
-| `docs/overview/*`                                | orientation layer, not authority layer                                                                        |
+| offloaded `docs/overview/*`                      | orientation layer, not authority layer                                                                        |
 | `docs/ecosystem/schemas/*`                       | static schema copies and schema index; useful reference, not stronger than runtime or canonical contract docs |
 | `memory-bank/*`                                  | operational working memory, not canonical architecture or contracts                                           |
 | `.runtime-wp/*`                                  | runtime mirror/evidence only, not source repo for documentation ownership                                     |
@@ -82,7 +84,8 @@ When in doubt:
 
 | Topic                                                   | Runtime / artifact authority                                                | Canonical doc authority                                                                              | Notes                                                                                                           |
 | ------------------------------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| Panasonic product / price catalog                       | `data/normalized/catalog_items.jsonl`, `data/normalized/pricing_index.json` | `tests/fixtures/panasonic_catalog_golden_records.json`, `schemas/panasonic_catalog_item.schema.json` | re-generate from PDF via `scripts/panasonic_catalog_extract_v2.py`; golden test is L1 authority for correctness |
+| Panasonic extraction / normalized catalog               | `data/normalized/catalog_items.jsonl`, `data/normalized/pricing_index.json` | `tests/fixtures/panasonic_catalog_golden_records.json`, `schemas/panasonic_catalog_item.schema.json` | re-generate from PDF via `scripts/panasonic_catalog_extract_v2.py`; golden test is L1 authority for extraction correctness |
+| Panasonic **runtime** pricing + pump cards              | `core/infrastructure/master-data/equipment-catalog.json`, `konfigurator/panasonic.json` | `docs/konfigurator/README_DANE_CENY_ZDJECIA_KONFIGURATORA_KALK_TOP.md`, `docs/architecture/repo-rules.md` | `catalog_items.jsonl` is **not** loaded at runtime — manual or scripted sync into `equipment-catalog.json` when prices change |
 | Panasonic extraction pipeline                           | `scripts/panasonic_catalog_extract_v2.py`                                   | `docs/panasonic_catalog_update_workflow.md`                                                          | v1 script is reference only                                                                                     |
 | Panasonic knowledge (families, generations, categories) | `data/normalized/`                                                          | `knowledge/panasonic/`                                                                               | derived from normalized; do not edit knowledge files directly                                                   |
 | Panasonic context packets                               | `context/llm/panasonic_context_packets.jsonl`                               | `knowledge/panasonic/`, `docs/panasonic_catalog_update_workflow.md`                                  | regenerate after PDF update                                                                                     |
@@ -95,4 +98,4 @@ If the task is about:
 - repo ownership or layer boundaries -> start in `docs/architecture/*`
 - cross-repo integrations -> start in `docs/ecosystem/*`
 - how the agent should work -> start in `AGENTS.md` and `docs/AGENT_EXECUTION_STANDARD.md`
-- future AI OS direction -> start in `docs/TOPINSTAL_AI_OS_BLUEPRINT.md`
+- future AI OS direction -> offloaded archive or `knowledge/rfc/`

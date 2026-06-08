@@ -54,7 +54,7 @@ npm run test:e2e:install
 npm run test:e2e
 ```
 
-Set `PLAYWRIGHT_BASE_URL` / `PLAYWRIGHT_CALCULATOR_PATH` if not `http://127.0.0.1:8090/?page_id=5`.
+Set `PLAYWRIGHT_BASE_URL` / `PLAYWRIGHT_CALCULATOR_PATH` if not `http://127.0.0.1:8091/?page_id=5`. Override port via `KALK_TOP_RUNTIME_PORT`.
 
 ## Production deploy checklist
 

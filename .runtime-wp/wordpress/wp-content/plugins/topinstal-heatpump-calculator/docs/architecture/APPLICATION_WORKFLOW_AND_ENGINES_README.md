@@ -18,7 +18,7 @@ Opisuje:
 - jak dzialaja silniki `OZC`, `Selection`, `Buffer` i `Pricing`,
 - decyzje produktowe i ewolucje workflow zapisane w trakcie refaktoryzacji (w tym sekcje historyczne nizej).
 
-To nie jest pelna historia repozytorium od poczatku projektu. Starsze sekcje moga uzywac sformulowania „w tej rozmowie” — traktuj je jako zapis kontekstu decyzji; **zrodlem prawdy dla zachowania pozostaje kod i harnessy** (`npm run verify`, `npm run test:engine-parity`, `core/application/harness/*`).
+To nie jest pelna historia repozytorium od poczatku projektu. Starsze sekcje moga uzywac sformulowania „w tej rozmowie” — traktuj je jako zapis kontekstu decyzji; **zrodlem prawdy dla zachowania pozostaje kod i harnessy** (`npm run verify`, `npm run test:contract`, `npm run proof`, `core/application/harness/*`). Sekcja 6 (parity JS↔PHP) jest historyczna — `engine-parity.php` usuniety (2026-06).
 
 ---
 
@@ -506,6 +506,8 @@ Bo parity pokazala realne rozjazdy:
 
 ## 6. Parity JS vs PHP
 
+> **Status 2026-06:** `core/application/harness/engine-parity.php` i `js-canonical-engine-parity-runner.js` **nie istnieja** w repo. Kanoniczny OZC to PHP (`TopInstal_OzcEngine_Full`); `kalkulator/engine/ozc/ozc-engine.js` usuniety. Weryfikacja silnikow: `npm run test:contract`, `ozc-full-audit.regression.php`, `npm run proof`. Otwarte ryzyka OZC: `ozc-professional-method-audit.md` § Code sync status.
+
 ## 6.1. Dlaczego parity byla potrzebna
 
 Po przepisaniach backendowych okazalo sie, ze:
@@ -834,21 +836,13 @@ To wazne, bo brak zmiany tez jest decyzja architektoniczna.
 
 ## 9. Weryfikacja po zmianach
 
-Uruchomione i zielone po wykonanych zmianach:
+Aktualna powierzchnia weryfikacji (2026-06):
 
-- `node --check konfigurator/configurator-unified.js`
-- `node --check core/application/harness/js-canonical-engine-parity-runner.js`
-- `php -l core/application/CalculateOfferUseCase.php`
-- `php -l core/domain/buffer/BufferEngine.php`
-- `php -l core/domain/selection/SelectionEngine.php`
-- `php -l core/domain/pricing/PricingEngine.php`
-- `php -l core/application/harness/engine-parity.php`
-- `npm run test:contract`
-- `php core/application/harness/calculate-offer.fixtures.php`
+- `npm run verify` — JS syntax, regressions, PHP lint, `test:contract`, `test:fixtures`
+- `npm run proof` — `verify` + Playwright `@critical` + soft tier (runtime domyslnie `:8091`)
+- `npm run test:rest` — REST e2e (wymaga `TOPINSTAL_REST_BASE_URL`)
 
-Dodatkowo:
-
-- parity harness raportuje `Engine parity OK (5 scenarios)`.
+Historycznie (sekcja parity): `engine-parity.php` raportowal `Engine parity OK (5 scenarios)` — harness usuniety.
 
 ---
 
@@ -858,16 +852,16 @@ Po tej serii zmian aktualny stan jest taki:
 
 - frontend nie ma juz byc alternatywnym zrodlem finalnej oferty,
 - backend jest autorytatywnym producentem `OfferDTO`,
-- ale logika selection/buffer/pricing i wzorzec OZC zostaly zrownane do kanonicznych `.js`,
-- OZC ma wyraznie lepszy audit, explainability i guardy,
-- selection/buffer/pricing maja parity harness, a nie tylko "wydaje sie zgodne",
+- selection/buffer/pricing sa w PHP z harnessami regresji (`test:contract`),
+- OZC kanoniczny w PHP (`TopInstal_OzcEngine_Full`) z audytem i harnessami; otwarte P0/P1: `ozc-professional-method-audit.md` § Code sync status,
+- historyczny PHP↔JS parity harness usuniety — nie zakladaj zgodnosci z usunietym `ozc-engine.js`,
 - kompatybilnosc publicznego API zostala utrzymana.
 
 Najkrocej:
 
 ```text
 stary problem: frontendowy wzorzec i backendowy rewrite rozjezdzaly sie
-stan po tym czacie: backend nadal jest source of truth dla API, ale liczy wedlug kanonicznych wzorcow JS i ma twarde testy parity
+stan 2026-06: backend jest source of truth dla API i OZC; testy: `test:contract` + `proof` (nie `test:engine-parity`)
 ```
 
 ---
@@ -880,15 +874,13 @@ Najwazniejsze pliki do dalszej pracy:
 - `wp-adapter/rest/RequestValidator.php`
 - `core/application/CalculateOfferUseCase.php`
 - `core/domain/ozc/OzcEngine.php`
-- `core/domain/ozc/ozc-engine-runner.js`
-- `kalkulator/engine/ozc/ozc-engine.js`
 - `core/domain/selection/SelectionEngine.php`
 - `core/domain/buffer/BufferEngine.php`
 - `core/domain/pricing/PricingEngine.php`
 - `konfigurator/configurator-unified.js`
 - `konfigurator/buffer-engine.js`
-- `core/application/harness/engine-parity.php`
-- `core/application/harness/js-canonical-engine-parity-runner.js`
+- `core/application/harness/ozc-full-audit.regression.php`
+- `core/application/harness/calculate-offer.fixtures.php`
 
 ---
 

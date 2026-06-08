@@ -135,7 +135,7 @@ Current calculator runtime note:
 
 - from-offer-dto mapping in the generator path is still partially lossy; some fields may be inferred or defaulted downstream
 - UI lead shapes and mail-ingress parsed-email shapes are still not fully unified at the semantic level
-- backend-vs-canonical-JS behavior now depends on keeping parity harnesses green as engines continue to evolve
+- kalk-top OZC still has open design-load and annual-cost presentation gaps (see `docs/architecture/ozc-professional-method-audit.md` § Code sync status); PHP↔JS engine-parity harness was removed — regressions are `npm run test:contract` / `npm run proof`
 - two checkpoint stores still exist for workflow observability: mail-ingress SQLite and kalk-top workflow storage
 
 ---

@@ -895,9 +895,11 @@
     source_type: {
       selector: '#source_type',
       section: 5,
+      // Hidden default must not disable the shared .form-field wrapper (sibling questions).
+      displayTargetSelector: null,
       visibleWhen: () => !SOURCE_TYPE_SUPPRESSED,
       requiredWhen: () => !SOURCE_TYPE_SUPPRESSED,
-      enabledWhen: () => !SOURCE_TYPE_SUPPRESSED,
+      enabledWhen: () => true,
     },
     indoor_temperature: {
       selector: '#indoor_temperature',

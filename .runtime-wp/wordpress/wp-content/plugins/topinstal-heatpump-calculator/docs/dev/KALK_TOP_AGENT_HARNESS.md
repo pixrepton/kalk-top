@@ -37,10 +37,12 @@ Tell agents what to read first, what to load on demand, and how to verify withou
 
 ## MCP
 
+UI smoke przez workspace **playwright** (`top-code workspace/.cursor/mcp.json`, hosts `topinstal.com.pl`) — nie w `kalk-top/.cursor/mcp.json`.
+
 | Server                    | Use                                                                         |
 | ------------------------- | --------------------------------------------------------------------------- |
 | `kalk-top-repo-assistant` | Contract surface, runtime preflight, route/auth, architecture review inputs |
-| `playwright`              | UI smoke on allowed hosts                                                   |
+| `playwright` (workspace)  | UI smoke on allowed hosts — workspace MCP, shared with gmail-agent          |
 | Context7 (plugin)         | External library docs only                                                  |
 
 Animation MCPs are **not** in `.cursor/mcp.json`. Use `npm run mcp:framer-motion` or `mcp:animation` when explicitly needed.
@@ -56,9 +58,11 @@ Treat MCP output as hints. Verify with file reads and npm harnesses.
 | `npm run test:rest`             | REST e2e (requires `TOPINSTAL_REST_BASE_URL`)                             |
 | `npm run verify:js`             | Calculator/konfigurator/frontend JS syntax                                |
 | `npm run verify:js:regressions` | After UI/payload mapping changes                                          |
-| `npm run test:engine-parity`    | Engine/pricing parity (explicit)                                          |
+| `npm run proof`                 | `verify` + Playwright `@critical` + soft tier (runtime on **8091**)         |
 | `npm run verify`                | Broad gate — only when user asks or release-style check                   |
-| `npm run test:e2e`              | Playwright smoke (`PLAYWRIGHT_BASE_URL`, default `http://127.0.0.1:8090`) |
+| `npm run test:e2e`              | Playwright (`PLAYWRIGHT_BASE_URL`, default `http://127.0.0.1:8091`)       |
+
+> `test:engine-parity` removed — use `test:contract` / `ozc-full-audit.regression.php` for OZC; see `ozc-professional-method-audit.md` § Code sync status.
 
 Slash commands in `.cursor/commands/` wrap the same tiers.
 

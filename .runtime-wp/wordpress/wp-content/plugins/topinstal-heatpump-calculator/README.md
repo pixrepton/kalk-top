@@ -2,12 +2,14 @@
 
 **TOP-INSTAL** — warstwa decyzyjna: kalkulacja HVAC, dobór, bufor, wycena, oferta (`CalcRequestDTO` → `POST /wp-json/topinstal/v1/calculate-offer` → `OfferDTO`).
 
-| Doc                                                                                                      | Purpose                                      |
-| -------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| [docs/overview/README_TOP-INSTAL_HVAC_Calculator.md](docs/overview/README_TOP-INSTAL_HVAC_Calculator.md) | Pełny opis repo, workflow, mapa dokumentacji |
-| [docs/README.md](docs/README.md)                                                                         | Indeks plików w `docs/`                      |
-| [docs/HANDBOOK.md](docs/HANDBOOK.md)                                                                     | Skrót dla operatora / developera             |
-| [AGENTS.md](AGENTS.md)                                                                                   | Zasady pracy agentów AI w tym repozytorium   |
+**Dokumentacja produktu:** [`PROJECT_README.md`](PROJECT_README.md) · **Cały ekosystem:** [`../knowledge/OS_README.md`](../knowledge/OS_README.md)
+
+| Doc                                  | Purpose                                    |
+| ------------------------------------ | ------------------------------------------ |
+| [docs/HANDBOOK.md](docs/HANDBOOK.md) | Operator path + layer map                  |
+| [docs/README.md](docs/README.md)     | Indeks plików w `docs/`                    |
+| [docs/HANDBOOK.md](docs/HANDBOOK.md) | Skrót dla operatora / developera           |
+| [AGENTS.md](AGENTS.md)               | Zasady pracy agentów AI w tym repozytorium |
 
 **WordPress:** bootstrap wtyczki to [`heatpump-calculator.php`](heatpump-calculator.php). **Podgląd UI bez pełnego WP:** [`preview.php`](preview.php).
 

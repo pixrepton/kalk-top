@@ -22,6 +22,9 @@ if (!class_exists('TopInstal_OzcEngine')) {
                 'heatedAreaMultiplier' => 0.88,
                 'extraTotalAreaBruttoFactor' => 0.30,
             ),
+            'annualEnergy' => array(
+                'utilizationFactor' => 0.72,
+            ),
         );
 
         private const WINDOWS = array(
@@ -321,10 +324,7 @@ if (!class_exists('TopInstal_OzcEngine')) {
                 return array('applyOnLastHeatedFloor' => false, 'addExtraTotalArea' => false);
             }
 
-            return array(
-                'applyOnLastHeatedFloor' => true,
-                'addExtraTotalArea' => false,
-            );
+            return array('applyOnLastHeatedFloor' => false, 'addExtraTotalArea' => false);
         }
 
         /**
@@ -2039,7 +2039,16 @@ if (!class_exists('TopInstal_OzcEngine')) {
                 throw new \RuntimeException('H_total_for_HDD missing or invalid');
             }
 
+            $utilization = isset(self::DEFAULTS['annualEnergy']['utilizationFactor'])
+                ? (float) self::DEFAULTS['annualEnergy']['utilizationFactor']
+                : 0.72;
+            $utilization = $this->clamp($utilization, 0.5, 1.0);
             $E_kWh = ((float) $H_total_for_HDD * (float) $hdd_base * 24) / 1000.0;
+            $E_kWh *= $utilization;
+            if (isset($ozcResult['assumptions']) && is_array($ozcResult['assumptions'])) {
+                $ozcResult['assumptions'][] = 'Annual energy: HDD estimate scaled by utilizationFactor=' .
+                    number_format($utilization, 2, '.', '') . ' (internal gains / non-full-load allowance; non-certificate)';
+            }
             return round($E_kWh);
         }
 

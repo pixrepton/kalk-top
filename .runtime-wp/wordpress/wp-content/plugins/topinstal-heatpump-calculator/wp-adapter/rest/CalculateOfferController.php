@@ -49,6 +49,10 @@ if (!class_exists('TopInstal_CalculateOffer_Controller')) {
          * @return WP_REST_Response
          */
         public static function calculate_offer($request) {
+            if (class_exists('TopInstal_RestJsonGuard')) {
+                TopInstal_RestJsonGuard::clean_accidental_output();
+            }
+
             $started_at = microtime(true);
             $body = $request->get_json_params();
             $trace_id = topinstal_ensure_trace_id(

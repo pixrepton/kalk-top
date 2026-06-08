@@ -215,3 +215,10 @@ test("doors are hidden and not required in step 3", () => {
   assert.equal(fieldRules.number_doors.visibleWhen({}), false);
   assert.equal(fieldRules.number_doors.requiredWhen({}), false);
 });
+
+test("suppressed source_type does not gate indoor temperature enablement", () => {
+  assert.equal(rules.sourceTypeSuppressed, true);
+  assert.equal(fieldRules.source_type.enabledWhen({}), true);
+  assert.equal(fieldRules.source_type.displayTargetSelector, null);
+  assert.equal(fieldRules.indoor_temperature.enabledWhen({}), true);
+});

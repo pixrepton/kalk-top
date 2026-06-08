@@ -67,11 +67,14 @@
 - Broad check: `npm run verify`
 - Contract boundary: `npm run test:contract`, `npm run test:fixtures`
 - REST boundary: `npm run test:rest` (requires `TOPINSTAL_REST_BASE_URL`; optional in `npm run verify` via `verify:rest-optional`)
-- Engine parity: `npm run test:engine-parity` (touching domain engines or canonical JS parity paths)
+- Engine regressions: `npm run test:contract`, `npm run test:fixtures` (includes `ozc-full-audit.regression.php` when touching OZC)
+- UI/runtime proof: `npm run proof` (default runtime port **8091** — see `docs/runbooks/manual-runtime-setup.md`)
+- **Removed:** `npm run test:engine-parity` — harness files no longer in repo
 - Mail-ingress workflow scripts in **this** repo (`npm run test:mail-ingress-workflow`, `npm run test:mail-ingress-live`) are **stub pointers**; real integration/live smoke runs in the `topinstal-mail-ingress` package
 
 ## Related docs
 
 - Discovery: `docs/discovery/repo-discovery.md`
 - Contracts: `docs/contracts/field-mapping.md`, `docs/contracts/dto-and-boundaries.md`
-- Plan: `docs/plans/migration-plan.md`
+- OZC audit (open P0/P1): `docs/architecture/ozc-professional-method-audit.md`
+- Migration plan / implementation backlog: offloaded from active repo (see `docs/README.md` § Discovery and plans)

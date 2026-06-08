@@ -891,7 +891,15 @@
             intent === "order_contact" ? "contact" : intent === "pdf_download" ? "pdf" : "email";
           analytics.emit(`intent_selected_${analyticsIntent}`, { intent, step_key: "summary" });
         }
-        openLeadForm(intent);
+        if (intent === "order_contact") {
+          openLeadForm(intent);
+          return;
+        }
+        hideLeadForm();
+        const leadGate = global.__topinstalPdfLeadGate;
+        if (leadGate && typeof leadGate.openLeadForIntent === "function") {
+          leadGate.openLeadForIntent(dom, { root, dom, state }, intent === "email_pdf" ? "email_pdf" : "pdf_download");
+        }
         return;
       }
       if (action === "download-offer-pdf" || action === "download-pdf") {

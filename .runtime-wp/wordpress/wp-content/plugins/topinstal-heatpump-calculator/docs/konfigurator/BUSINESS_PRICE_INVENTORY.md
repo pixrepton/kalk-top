@@ -1,6 +1,6 @@
 # Tabela pozycji biznesowych i cen
 
-Wygenerowano: 2026-03-30T18:04:25.363Z
+Wygenerowano: 2026-05-27T18:42:25.901Z
 
 Źródła prawdy: `core/infrastructure/master-data/equipment-catalog.json` (wersja danych 2026-03-01), `konfigurator/configurator-presentation.json`.
 
@@ -15,7 +15,7 @@ Ten dokument rozróżnia:
 
 ## Podsumowanie
 
-- Pompy: 14
+- Pompy: 17
 - Zbiorniki CWU: 13
 - Bufory / warianty hydrauliczne: 28
 - Widoczne opcje klienta: 11
@@ -40,6 +40,9 @@ Ten dokument rozróżnia:
 | Pompa ciepła | dobór systemu + wybór klienta | KIT-ADC09K9E8 | KIT-ADC09K9E8 | 22800.00 | 24624.00 | seria K, all-in-one, 9 kW, 3-fazowa, klucz ceny aio_premium400_net |
 | Pompa ciepła | dobór systemu + wybór klienta | KIT-ADC12K9E8 | KIT-ADC12K9E8 | 24100.00 | 26028.00 | seria K, all-in-one, 12 kW, 3-fazowa, klucz ceny aio_premium400_net |
 | Pompa ciepła | dobór systemu + wybór klienta | KIT-ADC16K9E8 | KIT-ADC16K9E8 | 25750.00 | 27810.00 | seria K, all-in-one, 16 kW, 3-fazowa, klucz ceny aio_premium400_net |
+| Pompa ciepła | dobór systemu + wybór klienta | KIT-ADC09K9E83 | KIT-ADC09K9E83 | 22800.00 | 24624.00 | seria K, all-in-one, 9 kW, 3-fazowa, klucz ceny aio_premium400_net |
+| Pompa ciepła | dobór systemu + wybór klienta | KIT-ADC12K9E83 | KIT-ADC12K9E83 | 24100.00 | 26028.00 | seria K, all-in-one, 12 kW, 3-fazowa, klucz ceny aio_premium400_net |
+| Pompa ciepła | dobór systemu + wybór klienta | KIT-ADC16K9E83 | KIT-ADC16K9E83 | 25750.00 | 27810.00 | seria K, all-in-one, 16 kW, 3-fazowa, klucz ceny aio_premium400_net |
 
 ## Zbiorniki CWU
 

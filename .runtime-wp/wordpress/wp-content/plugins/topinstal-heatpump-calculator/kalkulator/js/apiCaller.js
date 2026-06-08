@@ -42,6 +42,82 @@
     } catch (_) { }
   }
 
+  function persistConfiguratorBridgeConfig(offer, result) {
+    if (!offer || typeof offer !== "object") {
+      return;
+    }
+    try {
+      const storage =
+        typeof sessionStorage !== "undefined" ? sessionStorage : null;
+      const root =
+        document.querySelector("#configurator-app, #configurator-view") ||
+        document.querySelector("[data-hp-instance]") ||
+        document.body;
+      const instanceId =
+        root?.getAttribute?.("data-hp-instance") ||
+        (typeof window.getAppState === "function"
+          ? window.getAppState()?.instanceId
+          : null) ||
+        "default";
+      const configDataKey = `config_data::${String(instanceId)}`;
+      let existing = {};
+      if (storage) {
+        for (const key of [configDataKey, "config_data"]) {
+          try {
+            const raw = storage.getItem(key);
+            if (!raw) continue;
+            const parsed = JSON.parse(raw);
+            if (parsed && typeof parsed === "object") {
+              existing = parsed;
+              break;
+            }
+          } catch (_) {
+            // ignore malformed persisted payloads
+          }
+        }
+      }
+      const configData = Object.assign({}, existing, result || {}, {
+        from_calculator: true,
+        offer_dto: offer,
+      });
+      if (storage) {
+        storage.setItem(configDataKey, JSON.stringify(configData));
+      }
+      if (typeof window.updateAppState === "function") {
+        window.updateAppState({ config_data: configData, canonicalOffer: offer });
+      }
+    } catch (error) {
+      LOG.warn("flow", "persistConfiguratorBridgeConfig failed", error);
+    }
+  }
+
+  function ensureWorkflowCompletionShown(result) {
+    const view = window;
+    if (typeof view.setTimeout !== "function") {
+      return;
+    }
+    view.setTimeout(() => {
+      try {
+        const activeRoot =
+          window.__HP_ACTIVE_ROOT__ ||
+          document.querySelector(".heatpump-calculator");
+        const completionContainer = activeRoot?.querySelector?.(
+          ".workflow-completion"
+        );
+        const visible =
+          !!completionContainer &&
+          completionContainer.style.display !== "none" &&
+          completionContainer.getClientRects?.().length > 0;
+        if (!visible && typeof window.showWorkflowCompletion === "function") {
+          LOG.warn("flow", "Workflow completion fallback triggered");
+          window.showWorkflowCompletion(result);
+        }
+      } catch (fallbackError) {
+        LOG.warn("flow", "Workflow completion fallback failed", fallbackError);
+      }
+    }, 120);
+  }
+
   function trackBackendFallbackTelemetry(offer, traceId) {
     if (!offer || typeof offer !== "object") {
       return;
@@ -529,15 +605,35 @@
         offer: backendOutput.offer || null,
       });
 
-      if (typeof window.showWorkflowCompletion === "function") {
-        window.showWorkflowCompletion(finalResult);
+      persistConfiguratorBridgeConfig(backendOutput.offer, finalResult);
+
+      // Fresh calculation: allow workflow completion to run again after config_data save.
+      if (typeof window.updateAppState === "function") {
+        window.updateAppState({
+          completionAnimationShown: false,
+          uiFlags: {
+            completionAnimationShown: false,
+          },
+        });
       }
 
-      setTimeout(() => {
+      // Workflow completion (Gratulacje) is owned by displayResults; fallback if UI did not open.
+      try {
         if (typeof window.displayResults === "function") {
           window.displayResults(finalResult);
+        } else {
+          LOG.warn("flow", "displayResults is not available");
+          if (typeof window.showWorkflowCompletion === "function") {
+            window.showWorkflowCompletion(finalResult);
+          }
         }
-      }, 500);
+      } catch (displayError) {
+        LOG.error("flow", "displayResults failed", displayError);
+        if (typeof window.showWorkflowCompletion === "function") {
+          window.showWorkflowCompletion(finalResult);
+        }
+      }
+      ensureWorkflowCompletionShown(finalResult);
 
       if (isDualRunEnabled()) {
         runDualRunValidation(payload || {}, backendOutput);
@@ -573,19 +669,25 @@
     } catch (error) {
       LOG.error("flow", "API call failed", error);
 
+      const rawMessage = String(error?.message || "");
+      const isFetchHeaderBug =
+        rawMessage.includes("Cannot convert value in record branch") ||
+        rawMessage.includes("greater than 255");
       const backendMessage =
         error && error.data && error.data.message
           ? error.data.message
-          : error.message &&
-            (error.message.includes("Failed to fetch") ||
-              error.message.includes("NetworkError"))
-            ? "Serwer chwilowo nie odpowiada. Kliknij ?Spr?buj ponownie?."
-            : error.message || "Nie uda?o si? pobra? wyniku. Spr?buj ponownie za chwil?.";
+          : isFetchHeaderBug
+            ? "Błąd konfiguracji żądania (nieprawidłowy nagłówek). Odśwież stronę (Ctrl+F5) i spróbuj ponownie."
+            : rawMessage &&
+              (rawMessage.includes("Failed to fetch") ||
+                rawMessage.includes("NetworkError"))
+              ? "Serwer chwilowo nie odpowiada. Spróbuj ponownie."
+              : rawMessage || "Nie udało się pobrać wyniku. Spróbuj ponownie za chwilę.";
 
       if (typeof ErrorHandler !== "undefined" && ErrorHandler.showToast) {
-        ErrorHandler.showToast(`? ${backendMessage}`, "error");
+        ErrorHandler.showToast(backendMessage, "error");
       } else {
-        alert(`? ${backendMessage}`);
+        alert(backendMessage);
       }
 
       trackCalcEvent("calc_error", {
