@@ -6,7 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.join(__dirname, "..");
 
 async function fillMinimalForm(page) {
-  await page.goto("http://127.0.0.1:8090/?page_id=5", {
+  await page.goto("http://127.0.0.1:8091/?page_id=5", {
     waitUntil: "networkidle",
     timeout: 120_000,
   });
