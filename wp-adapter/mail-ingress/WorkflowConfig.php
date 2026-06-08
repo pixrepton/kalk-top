@@ -5,8 +5,8 @@ if (!defined('ABSPATH')) {
 }
 
 $topinstal_workflow_config_candidates = array(
-    dirname(__DIR__, 2) . '/gmail-agent/wp-adapter/mail-ingress/WorkflowConfig.php',
-    dirname(__DIR__, 3) . '/gmail-agent/wp-adapter/mail-ingress/WorkflowConfig.php',
+    dirname(__DIR__, 3) . '/wp-bridges/mail-ingress/WorkflowConfig.php',
+    dirname(__DIR__, 2) . '/wp-bridges/mail-ingress/WorkflowConfig.php',
 );
 $topinstal_workflow_config_loaded_from = '';
 

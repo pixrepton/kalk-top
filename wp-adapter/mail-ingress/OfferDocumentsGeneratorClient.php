@@ -5,8 +5,8 @@ if (!defined('ABSPATH')) {
 }
 
 $topinstal_offer_documents_client_candidates = array(
-    dirname(__DIR__, 2) . '/gmail-agent/wp-adapter/mail-ingress/OfferDocumentsGeneratorClient.php',
-    dirname(__DIR__, 3) . '/gmail-agent/wp-adapter/mail-ingress/OfferDocumentsGeneratorClient.php',
+    dirname(__DIR__, 3) . '/wp-bridges/mail-ingress/OfferDocumentsGeneratorClient.php',
+    dirname(__DIR__, 2) . '/wp-bridges/mail-ingress/OfferDocumentsGeneratorClient.php',
 );
 $topinstal_offer_documents_client_loaded_from = '';
 

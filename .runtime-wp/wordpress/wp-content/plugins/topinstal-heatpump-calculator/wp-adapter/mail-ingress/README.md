@@ -1,7 +1,5 @@
-# Moved To `gmail-agent/`
+# Mail-ingress wrappers (kalk-top)
 
-Canonical bridge ownership now lives under:
+Canonical bridge: **`../../wp-bridges/mail-ingress/`** (top-code workspace).
 
-- `gmail-agent/wp-adapter/mail-ingress/`
-
-The PHP files left here are compatibility wrappers for older include paths inside `kalk-top`.
+PHP files here load wp-bridges when present; inline fallback class if not found.

@@ -7,12 +7,7 @@ if (PHP_SAPI !== 'cli') {
 
 $repoRoot = dirname(__DIR__, 2);
 $candidates = array(
-    dirname($repoRoot) . DIRECTORY_SEPARATOR . 'gmail-agent'
-        . DIRECTORY_SEPARATOR . 'wp-adapter'
-        . DIRECTORY_SEPARATOR . 'harness'
-        . DIRECTORY_SEPARATOR . 'offer-documents-generator-client.regression.php',
-    $repoRoot . DIRECTORY_SEPARATOR . 'gmail-agent'
-        . DIRECTORY_SEPARATOR . 'wp-adapter'
+    dirname($repoRoot) . DIRECTORY_SEPARATOR . 'wp-bridges'
         . DIRECTORY_SEPARATOR . 'harness'
         . DIRECTORY_SEPARATOR . 'offer-documents-generator-client.regression.php',
 );
