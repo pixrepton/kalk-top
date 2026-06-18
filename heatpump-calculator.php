@@ -52,6 +52,7 @@ $topinstal_bootstrap_files = array(
     __DIR__ . '/wp-adapter/dev/SmokeAdminPage.php',
     __DIR__ . '/core/application/CalculateOfferUseCase.php',
     __DIR__ . '/wp-adapter/rest/CalculateOfferController.php',
+    __DIR__ . '/wp-adapter/integrations/OsEventClient.php',
     __DIR__ . '/wp-adapter/rest/AgentHealthController.php',
     __DIR__ . '/wp-adapter/agents/HealthcheckService.php',
     __DIR__ . '/wp-adapter/bootstrap/routes.php',

@@ -81,6 +81,7 @@ if (!class_exists('TopInstal_CalculateOffer_Controller')) {
                 );
                 self::apply_trace_header($response, $trace_id);
                 self::apply_rate_limit_headers($response, $rate);
+                self::emit_calculation_failed($trace_id, $body, 'VALIDATION_ERROR', 400);
                 return $response;
             }
 
@@ -110,6 +111,7 @@ if (!class_exists('TopInstal_CalculateOffer_Controller')) {
                 );
                 self::apply_trace_header($response, $trace_id);
                 self::apply_rate_limit_headers($response, $rate);
+                self::emit_calculation_failed($trace_id, $body, 'CALCULATION_FAILED', 500);
                 return $response;
             }
 
@@ -120,6 +122,8 @@ if (!class_exists('TopInstal_CalculateOffer_Controller')) {
             ));
 
             self::persist_form_state_snapshot($body, is_array($offer) ? $offer : array());
+
+            self::emit_calculation_success($trace_id, $body, is_array($offer) ? $offer : array(), $duration_ms);
 
             $response = new WP_REST_Response($offer, 200);
             self::apply_trace_header($response, $trace_id);
@@ -705,6 +709,94 @@ if (!class_exists('TopInstal_CalculateOffer_Controller')) {
 
             $peak_kw = TopInstal_CalcSessionStateRepository::extract_peak_kw_from_offer($offer);
             TopInstal_CalcSessionStateRepository::upsert($session_id, $trace_id, $form_state, $peak_kw);
+        }
+
+        /**
+         * @param string $trace_id
+         * @param array<string,mixed>|null $body
+         * @param array<string,mixed> $offer
+         * @param int $duration_ms
+         * @return void
+         */
+        private static function emit_calculation_success($trace_id, $body, $offer, $duration_ms) {
+            if (!class_exists('TopInstal_OsEvent_Client')) {
+                return;
+            }
+
+            $session_id = self::extract_session_id($body);
+            $gross = null;
+            if (isset($offer['pricing']['totals']['gross']) && is_numeric($offer['pricing']['totals']['gross'])) {
+                $gross = (int) round((float) $offer['pricing']['totals']['gross']);
+            }
+            $summary = $gross !== null && $gross > 0
+                ? 'Oferta policzona — ' . number_format($gross, 0, ',', ' ') . ' PLN brutto'
+                : 'Oferta policzona w kalk-top';
+
+            TopInstal_OsEvent_Client::emit(
+                'kalk.offer.calculated',
+                $summary,
+                'ok',
+                '',
+                array(
+                    'trace_id' => $trace_id,
+                    'duration_ms' => $duration_ms,
+                    'gross_pln' => $gross,
+                ),
+                array(
+                    'trace_id' => $trace_id,
+                    'session_id' => $session_id,
+                )
+            );
+        }
+
+        /**
+         * @param string $trace_id
+         * @param array<string,mixed>|null $body
+         * @param string $error_code
+         * @param int $http_status
+         * @return void
+         */
+        private static function emit_calculation_failed($trace_id, $body, $error_code, $http_status) {
+            if (!class_exists('TopInstal_OsEvent_Client')) {
+                return;
+            }
+
+            TopInstal_OsEvent_Client::emit(
+                'kalk.offer.failed',
+                'Kalkulacja oferty nie powiodła się',
+                'error',
+                '',
+                array(
+                    'trace_id' => $trace_id,
+                    'error_code' => (string) $error_code,
+                    'http_status' => (int) $http_status,
+                ),
+                array(
+                    'trace_id' => $trace_id,
+                    'session_id' => self::extract_session_id($body),
+                )
+            );
+        }
+
+        /**
+         * @param array<string,mixed>|null $body
+         * @return string
+         */
+        private static function extract_session_id($body) {
+            if (!is_array($body)) {
+                return '';
+            }
+            if (isset($body['lead']['sessionId'])) {
+                return trim((string) $body['lead']['sessionId']);
+            }
+            if (isset($body['sessionId'])) {
+                return trim((string) $body['sessionId']);
+            }
+            if (isset($body['session_id'])) {
+                return trim((string) $body['session_id']);
+            }
+
+            return '';
         }
     }
 }
