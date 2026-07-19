@@ -732,11 +732,20 @@ if (!class_exists('TopInstal_CalculateOffer_Controller')) {
                 ? 'Oferta policzona — ' . number_format($gross, 0, ',', ' ') . ' PLN brutto'
                 : 'Oferta policzona w kalk-top';
 
+            // Propagate engagement_id from caller (e.g. Cieplo, fast-kalk) when provided in request body.
+            $engagement_id = '';
+            if (is_array($body)) {
+                $engagement_id = isset($body['engagement_id']) ? sanitize_text_field((string) $body['engagement_id']) : '';
+                if ($engagement_id === '' && isset($body['engagementId'])) {
+                    $engagement_id = sanitize_text_field((string) $body['engagementId']);
+                }
+            }
+
             TopInstal_OsEvent_Client::emit(
                 'kalk.offer.calculated',
                 $summary,
                 'ok',
-                '',
+                $engagement_id,
                 array(
                     'trace_id' => $trace_id,
                     'duration_ms' => $duration_ms,
@@ -761,11 +770,19 @@ if (!class_exists('TopInstal_CalculateOffer_Controller')) {
                 return;
             }
 
+            $engagement_id = '';
+            if (is_array($body)) {
+                $engagement_id = isset($body['engagement_id']) ? sanitize_text_field((string) $body['engagement_id']) : '';
+                if ($engagement_id === '' && isset($body['engagementId'])) {
+                    $engagement_id = sanitize_text_field((string) $body['engagementId']);
+                }
+            }
+
             TopInstal_OsEvent_Client::emit(
                 'kalk.offer.failed',
                 'Kalkulacja oferty nie powiodła się',
                 'error',
-                '',
+                $engagement_id,
                 array(
                     'trace_id' => $trace_id,
                     'error_code' => (string) $error_code,

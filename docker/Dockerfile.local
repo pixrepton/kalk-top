@@ -1,0 +1,26 @@
+FROM wordpress:6.7-php8.2-apache AS wordpress_core
+
+FROM php:8.2-cli
+
+# Extensions needed by WordPress + SQLite integration plugin
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates libzip-dev libsqlite3-dev zip unzip curl \
+    && docker-php-ext-install mysqli pdo_mysql pdo_sqlite pdo zip \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=wordpress_core /usr/src/wordpress/ /opt/topinstal-wordpress/
+
+ARG SQLITE_DATABASE_INTEGRATION_VERSION=2.2.23
+RUN mkdir -p /opt/topinstal-sqlite-plugin \
+    && curl -fsSL "https://downloads.wordpress.org/plugin/sqlite-database-integration.${SQLITE_DATABASE_INTEGRATION_VERSION}.zip" -o /tmp/sqlite-database-integration.zip \
+    && unzip -q /tmp/sqlite-database-integration.zip -d /opt/topinstal-sqlite-plugin \
+    && test -f /opt/topinstal-sqlite-plugin/sqlite-database-integration/load.php \
+    && test -f /opt/topinstal-sqlite-plugin/sqlite-database-integration/db.copy \
+    && rm -f /tmp/sqlite-database-integration.zip
+
+COPY docker/entrypoint-local.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+EXPOSE 8091
+
+ENTRYPOINT ["/entrypoint.sh"]

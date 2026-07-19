@@ -10,7 +10,10 @@ declare(strict_types=1);
  */
 
 $repo_root = dirname(__DIR__);
-$wp_root = $repo_root . DIRECTORY_SEPARATOR . '.runtime-wp' . DIRECTORY_SEPARATOR . 'wordpress';
+$wp_root_override = getenv('KALK_TOP_WP_ROOT');
+$wp_root = is_string($wp_root_override) && trim($wp_root_override) !== ''
+    ? rtrim(trim($wp_root_override), "/\\")
+    : $repo_root . DIRECTORY_SEPARATOR . '.runtime-wp' . DIRECTORY_SEPARATOR . 'wordpress';
 
 if (!is_file($wp_root . DIRECTORY_SEPARATOR . 'wp-load.php')) {
     fwrite(STDERR, "Runtime WordPress root not found: {$wp_root}\n");

@@ -508,5 +508,4 @@ Dla szybkiego testu (silniki używają fallbacków):
 
 - `docs/contracts/payload-field-classification.md` — klasyfikacja pól (ZAWSZE / LUB / OPCJONALNIE)
 - `docs/fixtures/dom-jednorodzinny-payloady-przykladowe.json` — przykładowe payloady
-- `docs/fixtures/dom-jednorodzinny-wszystkie-payloady.json` — 1149 wariantów (generator: `npm run generate:dom-payloads`)
-- `docs/ecosystem/AGENT_BUSINESS_TOOLS.md` — narzędzia agenta biznesowego
+- `docs/fixtures/dom-jednorodzinny-wszystkie-payloady.json` — wygenerowany lokalnie przez `npm run generate:dom-payloads` (plik nie jest commitowany do repo)

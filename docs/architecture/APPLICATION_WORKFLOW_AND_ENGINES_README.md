@@ -140,10 +140,11 @@ Sekwencja w use-case:
    - albo z payloadu zewnetrznego,
    - albo przez lokalny engine OZC,
 4. wyliczenie selection,
-5. wyliczenie buffer,
-6. wyliczenie pricing,
-7. zlozenie `OfferDTO`,
-8. agregacja warnings, assumptions, fallback meta i engine meta.
+5. wyliczenie cwu (`core/domain/cwu/CwuEngine.php`),
+6. wyliczenie buffer,
+7. wyliczenie pricing,
+8. zlozenie `OfferDTO`,
+9. agregacja warnings, assumptions, fallback meta i engine meta.
 
 Aktualnie use-case przekazuje tez additive `context` do silnikow, zeby backend mial te same przeslanki runtime co kanoniczne `.js`.
 
@@ -178,6 +179,7 @@ Najwazniejsze sekcje:
 - `engineering.ozc`
 - `engineering.selection`
 - `engineering.buffer`
+- `engineering.cwu`
 - `pricing`
 - `warnings`
 - `assumptions`
