@@ -108,7 +108,7 @@ Entry:
 
 - `docs/DOC_GOVERNANCE.md`
 - `docs/SOURCE_OF_TRUTH_INDEX.md`
-- `docs/DOC_INVENTORY_AND_CLASSIFICATION.md`
+- `docs/README.md` § Offloaded (historical inventory in `gmail-agent-offloaded-archive/kalk-top-docs-2026-05-30/`)
 
 Definition of done:
 

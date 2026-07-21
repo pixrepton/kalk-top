@@ -202,7 +202,7 @@ Start:
 3. [READ_PRIORITY_MATRIX.md](READ_PRIORITY_MATRIX.md)
 4. [architecture/repo-rules.md](architecture/repo-rules.md)
 5. [architecture/APPLICATION_WORKFLOW_AND_ENGINES_README.md](architecture/APPLICATION_WORKFLOW_AND_ENGINES_README.md)
-6. [architecture/BACKLOG_RESOLUTIONS_2026-06-04.md](architecture/BACKLOG_RESOLUTIONS_2026-06-04.md) — OZC/PDF backlog, fixes, open Problem 7
+6. [architecture/BACKLOG_RESOLUTIONS_2026-06-04.md](architecture/BACKLOG_RESOLUTIONS_2026-06-04.md) — OZC/PDF backlog, fixes; Problem 7 CLOSED 2026-06-08
 7. [architecture/offer-dto-pdf-mapping-audit.md](architecture/offer-dto-pdf-mapping-audit.md) — OfferDTO → commercial offer PDF (implementation open)
 8. Layer map (§ below) — long overviews: offloaded archive
 
@@ -265,5 +265,5 @@ Full workflow: [panasonic_catalog_update_workflow.md](panasonic_catalog_update_w
 ## Notes on historical documents
 
 - Legacy root filenames are listed in **`COMPAT_POINTERS.md`** at the repo root.
-- Historical runtime reports and migration execution notes were moved out of active `docs/` paths into `docs/archive/`.
+- Historical runtime reports and migration execution notes were offloaded to `gmail-agent-offloaded-archive/kalk-top-docs-2026-05-30/docs/archive/` (not in active repo).
 - Active docs should describe current runtime behavior, not transitional behavior that has already been retired.

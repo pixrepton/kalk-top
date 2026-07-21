@@ -16,13 +16,13 @@ Use this doc when onboarding agents or reconciling audit narratives with runtime
 
 These semantics override older audit wording that treated `heated_area` as a user input.
 
-| UI field | Meaning |
-|----------|---------|
-| `floor_area` | **Powierzchnia zabudowy (m²)** — brutto footprint **including** external walls |
-| `building_length` × `building_width` | Alternative to `floor_area` when `regular_method=dimensions` |
-| `wall_size` | Wall thickness (cm); required for traditional/canadian — drives brutto→netto |
-| `building_heated_floors[]` | Which floors are heated; **Poddasze** = value `building_floors + 1` (only when roof=`steep`) |
-| `building_roof` | `flat`, `steep` (z poddaszem), `oblique` (bez poddasza) |
+| UI field                             | Meaning                                                                                      |
+| ------------------------------------ | -------------------------------------------------------------------------------------------- |
+| `floor_area`                         | **Powierzchnia zabudowy (m²)** — brutto footprint **including** external walls               |
+| `building_length` × `building_width` | Alternative to `floor_area` when `regular_method=dimensions`                                 |
+| `wall_size`                          | Wall thickness (cm); required for traditional/canadian — drives brutto→netto                 |
+| `building_heated_floors[]`           | Which floors are heated; **Poddasze** = value `building_floors + 1` (only when roof=`steep`) |
+| `building_roof`                      | `flat`, `steep` (z poddaszem), `oblique` (bez poddasza)                                      |
 
 **Pipeline:**
 
@@ -35,16 +35,16 @@ Form UI: `kalkulator/calculator.php`, `kalkulator/js/floorRenderer.js`, `kalkula
 
 ## 3. Summary table (problems 1–8)
 
-| # | Topic | Verdict | Code/doc action |
-|---|--------|---------|-----------------|
-| 1 | Skrajne ścieżki OZC (brak wymiarów, fallback netto=brutto) | **Partial risk only** | Documented §4; no code change — form gates block most paths |
-| 2 | `steep` bez Poddasze → fałszywa korekta poddasza | **Bug — fixed** | `resolveAtticHeatingContext()` + regression |
-| 3 | Zawyżona roczna energia / koszty (HDD) | **P1 mitigated** | `utilizationFactor=0.72`; SCOP 4 unchanged |
-| 4 | Luki w zakresach pomp | **Removed from backlog** | Owner: luki ~0.1 kW — akceptowalne |
-| 5 | Sync `catalog_items.jsonl` vs `equipment-catalog.json` | **Removed from backlog** | Owner: osobne warstwy celowo |
-| 6 | `ozcResult` REST bypass | **Removed from backlog** | Owner: zamierzony kontrakt integracji |
-| 7 | OfferDTO → PDF generator mapping | **Audited — implementation open** | `offer-dto-pdf-mapping-audit.md` § OPEN WORK |
-| 8 | Git commit po 1–7 | **Done** | `152cca1` on `kalk-top` master |
+| #   | Topic                                                      | Verdict                           | Code/doc action                                             |
+| --- | ---------------------------------------------------------- | --------------------------------- | ----------------------------------------------------------- |
+| 1   | Skrajne ścieżki OZC (brak wymiarów, fallback netto=brutto) | **Partial risk only**             | Documented §4; no code change — form gates block most paths |
+| 2   | `steep` bez Poddasze → fałszywa korekta poddasza           | **Bug — fixed**                   | `resolveAtticHeatingContext()` + regression                 |
+| 3   | Zawyżona roczna energia / koszty (HDD)                     | **P1 mitigated**                  | `utilizationFactor=0.72`; SCOP 4 unchanged                  |
+| 4   | Luki w zakresach pomp                                      | **Removed from backlog**          | Owner: luki ~0.1 kW — akceptowalne                          |
+| 5   | Sync `catalog_items.jsonl` vs `equipment-catalog.json`     | **Removed from backlog**          | Owner: osobne warstwy celowo                                |
+| 6   | `ozcResult` REST bypass                                    | **Removed from backlog**          | Owner: zamierzony kontrakt integracji                       |
+| 7   | OfferDTO → PDF generator mapping                           | **CLOSED 2026-06-08** (by design) | `offer-dto-pdf-mapping-audit.md` § Operator decision        |
+| 8   | Git commit po 1–7                                          | **Done**                          | `152cca1` on `kalk-top` master                              |
 
 ## 4. Problem 1 — form vs engine edge paths
 
@@ -55,13 +55,13 @@ Form UI: `kalkulator/calculator.php`, `kalkulator/js/floorRenderer.js`, `kalkula
 
 ### 4.2 What the form actually allows
 
-| Path | Reachable from calculator UI? | Notes |
-|------|------------------------------|-------|
-| `regular_method=dimensions` | Yes | `building_length` + `building_width` required |
-| `regular_method=area` | Yes | `floor_area` required; **no dimensions** — engine uses square heuristic with `wall_size` |
-| Missing `wall_size` | **No** | `wallGateSatisfied()` + `required` on `#wall_size` (`rules.js`) |
-| `convertToCieploAppFormat` brutto=netto fallback | **No** in normal UI | `computeDesignHeatLoss()` always sets `geometry.floorArea` |
-| Bypass without geometry | Only integrations | `ozcResult` in REST (intentional per owner) |
+| Path                                             | Reachable from calculator UI? | Notes                                                                                    |
+| ------------------------------------------------ | ----------------------------- | ---------------------------------------------------------------------------------------- |
+| `regular_method=dimensions`                      | Yes                           | `building_length` + `building_width` required                                            |
+| `regular_method=area`                            | Yes                           | `floor_area` required; **no dimensions** — engine uses square heuristic with `wall_size` |
+| Missing `wall_size`                              | **No**                        | `wallGateSatisfied()` + `required` on `#wall_size` (`rules.js`)                          |
+| `convertToCieploAppFormat` brutto=netto fallback | **No** in normal UI           | `computeDesignHeatLoss()` always sets `geometry.floorArea`                               |
+| Bypass without geometry                          | Only integrations             | `ozcResult` in REST (intentional per owner)                                              |
 
 ### 4.3 Conclusion
 
@@ -92,17 +92,17 @@ Form UI: `kalkulator/calculator.php`, `kalkulator/js/floorRenderer.js`, `kalkula
 
 ## 7. Problems 4–6 — removed from backlog (owner decisions)
 
-| Item | Owner rationale |
-|------|-----------------|
-| Pump range gaps | Catalog analysis: ~0.1 kW gaps on surface/mixed; radiators contiguous |
-| Panasonic `catalog_items.jsonl` ↔ `equipment-catalog.json` | Extraction layer vs runtime catalog — intentionally separate |
-| `ozcResult` REST bypass | Trusted integration path — keep |
+| Item                                                       | Owner rationale                                                       |
+| ---------------------------------------------------------- | --------------------------------------------------------------------- |
+| Pump range gaps                                            | Catalog analysis: ~0.1 kW gaps on surface/mixed; radiators contiguous |
+| Panasonic `catalog_items.jsonl` ↔ `equipment-catalog.json` | Extraction layer vs runtime catalog — intentionally separate          |
+| `ozcResult` REST bypass                                    | Trusted integration path — keep                                       |
 
 Do not re-open these without explicit owner request.
 
-## 8. Problem 7 — OfferDTO → PDF (audited, **TODO implementation**)
+## 8. Problem 7 — OfferDTO → PDF (audited, **CLOSED 2026-06-08**)
 
-**Status:** Analysis complete; **code changes in `top-instal-generator` not started.**
+**Status:** Operator decision — **implementation not planned** (by design). See `offer-dto-pdf-mapping-audit.md` §Operator decision.
 
 ### 8.1 Canonical audit doc
 
@@ -123,13 +123,13 @@ Do not re-open these without explicit owner request.
 
 ### 8.4 Implementation backlog (priority)
 
-| P | Action | Primary files |
-|---|--------|---------------|
-| P0 | Map `engineering.ozc.designHeatLoss_kW`, `heatedArea_m2` to template placeholders | `top-instal-generator` template + `PlaceholderBuilderService.php` |
-| P0 | Map `pricing.items[]` summary into offer PDF | `OfferDocumentInputMapper.php`, template |
-| P1 | Remove dead hardcoded defaults from `from-offer-dto` heat-pump path | `OfferDocumentInputMapper.php` L281–284 |
-| P1 | Pass indoor/outdoor from `pumpSelection` / snapshot | kalk-top `downloadPDF.js` context + mapper |
-| P2 | Document which PDF path owns which customer-facing numbers | both repos' docs |
+| P   | Action                                                                            | Primary files                                                     |
+| --- | --------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| P0  | Map `engineering.ozc.designHeatLoss_kW`, `heatedArea_m2` to template placeholders | `top-instal-generator` template + `PlaceholderBuilderService.php` |
+| P0  | Map `pricing.items[]` summary into offer PDF                                      | `OfferDocumentInputMapper.php`, template                          |
+| P1  | Remove dead hardcoded defaults from `from-offer-dto` heat-pump path               | `OfferDocumentInputMapper.php` L281–284                           |
+| P1  | Pass indoor/outdoor from `pumpSelection` / snapshot                               | kalk-top `downloadPDF.js` context + mapper                        |
+| P2  | Document which PDF path owns which customer-facing numbers                        | both repos' docs                                                  |
 
 ### 8.5 Data flow (reference)
 
@@ -146,35 +146,35 @@ top-instal-generator: POST /wp-json/topinstal/v1/offer-documents/generate
 
 ### 8.6 kalk-top touchpoints
 
-| File | Role |
-|------|------|
-| `kalkulator/js/downloadPDF.js` | `buildOfferDocumentContext`, `cloneMachineRoomSnapshot` |
-| `kalkulator/js/emailSender.js` | Same snapshot for email attachment |
-| `heatpump-calculator.php` | `ajax_generate_offer_document` |
-| `core/application/CalculateOfferUseCase.php` | OfferDTO producer |
-| `docs/ecosystem/schemas/offer-dto.v1.json` | Schema |
+| File                                         | Role                                                    |
+| -------------------------------------------- | ------------------------------------------------------- |
+| `kalkulator/js/downloadPDF.js`               | `buildOfferDocumentContext`, `cloneMachineRoomSnapshot` |
+| `kalkulator/js/emailSender.js`               | Same snapshot for email attachment                      |
+| `heatpump-calculator.php`                    | `ajax_generate_offer_document`                          |
+| `core/application/CalculateOfferUseCase.php` | OfferDTO producer                                       |
+| `docs/ecosystem/schemas/offer-dto.v1.json`   | Schema                                                  |
 
 ## 9. Runtime harness fixes (same session, commit `152cca1`)
 
-| Fix | Change |
-|-----|--------|
-| Port **8091** | `scripts/configure-runtime-wp.php`, `scripts/start-runtime-wp.ps1`, Playwright defaults |
-| REST BOM | `wp-adapter/rest/RestJsonGuard.php`, `CalculateOfferController.php`, `scripts/scan-php-bom.mjs` |
-| E2E pricing | `tests/e2e/configurator-pricing-steps.spec.ts`, `calculator-flow.ts` helpers |
-| Form navigation | `advanceToNextTab()` → `goToTab()` + JS click fallback |
+| Fix             | Change                                                                                          |
+| --------------- | ----------------------------------------------------------------------------------------------- |
+| Port **8091**   | `scripts/configure-runtime-wp.php`, `scripts/start-runtime-wp.ps1`, Playwright defaults         |
+| REST BOM        | `wp-adapter/rest/RestJsonGuard.php`, `CalculateOfferController.php`, `scripts/scan-php-bom.mjs` |
+| E2E pricing     | `tests/e2e/configurator-pricing-steps.spec.ts`, `calculator-flow.ts` helpers                    |
+| Form navigation | `advanceToNextTab()` → `goToTab()` + JS click fallback                                          |
 
 **Proof:** `KALK_TOP_RUNTIME_PORT=8091 npm run runtime:start` then `npm run proof` (exit 0).
 
 ## 10. Open OZC items (after this session)
 
-| ID | Status | Notes |
-|----|--------|-------|
-| P0-1 additive kW | **Fixed** | Physics-only design load |
-| P0-2 floor_area/netto | **Open** | Model alignment; form uses brutto correctly |
-| P0-3 steep attic | **Fixed** | Explicit Poddasze only |
-| P0-4 annual HDD | **Partial** | eta_rec + utilization 0.72 |
-| P0-5 static SCOP | **Open** | Owner accepts SCOP 4 |
-| P0-6 CO cost split | **Out of scope** | Owner: ignore when no CWU |
+| ID                    | Status           | Notes                                       |
+| --------------------- | ---------------- | ------------------------------------------- |
+| P0-1 additive kW      | **Fixed**        | Physics-only design load                    |
+| P0-2 floor_area/netto | **Open**         | Model alignment; form uses brutto correctly |
+| P0-3 steep attic      | **Fixed**        | Explicit Poddasze only                      |
+| P0-4 annual HDD       | **Partial**      | eta_rec + utilization 0.72                  |
+| P0-5 static SCOP      | **Open**         | Owner accepts SCOP 4                        |
+| P0-6 CO cost split    | **Out of scope** | Owner: ignore when no CWU                   |
 
 ## 11. Verification
 
