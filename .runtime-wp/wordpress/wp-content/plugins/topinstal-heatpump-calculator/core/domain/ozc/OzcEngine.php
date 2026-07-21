@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 if (!class_exists('TopInstal_OzcEngine')) {
     class TopInstal_OzcEngine {
