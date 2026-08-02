@@ -52,6 +52,10 @@ reports/
 .runtime-wp/wordpress/wp-content/database/
 *.sqlite
 
-# Cross-repo symlink/junction into fast-kalk's own plugin source; never mirror
-# another repo's Source of Truth into kalk-top's history.
+# Cross-repo symlink/junction into another repo's own plugin source; never
+# mirror another repo's Source of Truth into kalk-top's history. Recreated by
+# scripts/configure-runtime-wp.php (generator) or must exist locally already
+# (lead-widget, SMTP mu-plugin) for the local WP stack to run.
 .runtime-wp/wordpress/wp-content/plugins/topinstal-lead-widget/
+.runtime-wp/wordpress/wp-content/plugins/top-instal-generator/
+.runtime-wp/wordpress/wp-content/mu-plugins/topinstal-wp-smtp.php
