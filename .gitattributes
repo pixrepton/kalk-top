@@ -1,0 +1,8 @@
+# Local WordPress test-stack mirror (see .runtime-wp/wordpress/wp-content):
+# these files are synced verbatim from LF-only canonical repos (the sibling
+# top-instal-generator repo, and this repo's own plugin source). Without this,
+# core.autocrlf=true expects them checked out as CRLF, which they never are
+# (they're written by the sync script, not `git checkout`), so `git status`
+# perpetually reports them dirty even though content is byte-identical.
+/.runtime-wp/wordpress/wp-content/plugins/top-instal-generator/** text eol=lf
+/.runtime-wp/wordpress/wp-content/mu-plugins/** text eol=lf
