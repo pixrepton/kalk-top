@@ -114,10 +114,10 @@ if (!class_exists('TopInstal_OfferDocument_InputMapper')) {
                     )),
                     null
                 ),
-                'floorArea' => self::to_int(self::get($payload, array('floor_area')), 100),
-                'heatingType' => self::str(self::get($payload, array('heating_type')), 'water'),
-                'buildingType' => self::str(self::get($payload, array('building_type')), 'house'),
-                'customPriceFloorGross' => self::to_int(self::get($payload, array('custom_price_floor')), 15000),
+                'floorArea' => self::to_int(self::get($payload, array('floor_area')), null),
+                'heatingType' => self::str(self::get($payload, array('heating_type')), null),
+                'buildingType' => self::str(self::get($payload, array('building_type')), null),
+                'customPriceFloorGross' => self::to_int(self::get($payload, array('custom_price_floor')), null),
             );
         }
 

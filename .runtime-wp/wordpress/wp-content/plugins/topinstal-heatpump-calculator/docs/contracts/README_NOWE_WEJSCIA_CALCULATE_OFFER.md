@@ -2,7 +2,7 @@
 
 > Status: canonical
 > Owner: TOP-INSTAL contract and integration guidance
-> Last verified against code/runtime: 2026-04-02 (validator, mapper, fixture, contract doc audit)
+> Last verified against code/runtime: 2026-07-16 (doc-freshness audit: schema JSON files now match runtime `schemaVersion: "1.0"`, corrected stale inconsistency note)
 > Source-of-truth level: L1
 > Supersedes: none
 > Related docs: `docs/contracts/API_CALCULATE_OFFER.md`, `docs/contracts/agent-calculate-offer-instruction.md`, `docs/SOURCE_OF_TRUTH_INDEX.md`
@@ -32,7 +32,7 @@ Złota zasada jest jedna:
 9. `ozcResult` jest ścieżką specjalną dla zaufanego zewnętrznego wyniku OZC, nie zamiennikiem całego DTO.
 10. `traceId` i `context` warto traktować jako obowiązkowe operacyjnie, nawet jeśli technicznie są opcjonalne.
 11. Zmiany DTO, auth, trace lub odpowiedzi mogą wpływać na inne repozytoria TOP-INSTAL.
-12. Przy wywołaniu REST trzymaj się runtime truth, nawet jeśli starsze schema JSON pokazują coś innego.
+12. Przy wywołaniu REST trzymaj się runtime truth jako ostatecznego źródła prawdy (schema JSON zostały już zsynchronizowane co do `schemaVersion`, ale mogą nie odzwierciedlać każdego pola runtime).
 
 ### Słowniczek
 
@@ -96,25 +96,23 @@ To jest runtime truth potwierdzony przez:
 - fixture'y harnessu,
 - `core/application/CalculateOfferUseCase.php`.
 
-### Ważna niespójność dokumentacyjna
+### Status zgodności schema JSON
 
 Pliki schema JSON:
 
 - `docs/ecosystem/schemas/calc-request-dto.v1.json`
 - `docs/ecosystem/schemas/offer-dto.v1.json`
 
-mają nadal:
+zostały zaktualizowane i mają obecnie:
 
-- `const: "1"`
+- `const: "1.0"`
 
-To jest niespójne z działającym runtime, który wymaga i zwraca:
-
-- `"1.0"`
+co jest zgodne z działającym runtime, który wymaga i zwraca `"1.0"`.
 
 Wniosek praktyczny:
 
 - dla HTTP REST i integracji trzymaj się zawsze `"1.0"`;
-- traktuj schema JSON jako dokumentację pomocniczą, nie jako źródło prawdy dla tego pola.
+- schema JSON pozostaje pomocniczą dokumentacją kształtu payloadu (nie zawiera wszystkich pól, np. `additionalProperties: true`), ale wartość `schemaVersion` jest już spójna z runtime.
 
 ## 4. Autoryzacja
 
@@ -916,7 +914,7 @@ Unikaj poniższych wzorców:
 2. Wysyłanie do API luźnej notatki tekstowej zamiast poprawnego `CalcRequestDTO`.
 3. Ukrywanie przed użytkownikiem faktu, że wynik jest orientacyjny.
 4. Milczące zgadywanie dużej liczby pól bez zapisu założeń.
-5. Traktowanie starej schema JSON z `"1"` jako ważniejszej niż runtime validator z `"1.0"`.
+5. Zakładanie, że schema JSON pokrywa każde pole runtime — traktuj `wp-adapter/rest/RequestValidator.php` i `CalculateOfferUseCase.php` jako ostateczne źródło prawdy dla walidacji i kształtu odpowiedzi.
 6. Projektowanie nowej integracji wyłącznie pod aliasy historyczne zamiast pod wartości kanoniczne.
 7. Doklejanie własnych cen lub lokalnej logiki pricingowej po stronie frontu.
 8. Wkładanie do `preferences.options` dowolnych niestabilnych kluczy i zakładanie, że backend je zachowa.

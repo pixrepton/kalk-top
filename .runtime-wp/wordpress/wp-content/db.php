@@ -14,7 +14,7 @@
 define( 'SQLITE_DB_DROPIN_VERSION', '1.8.0' );
 
 // Tweak to allow copy-pasting the file without having to run string-replacements.
-$sqlite_plugin_implementation_folder_path = 'C:/Users/compg/Desktop/kalk-top/.runtime-wp/wordpress/wp-content/plugins/sqlite-database-integration';
+$sqlite_plugin_implementation_folder_path = 'C:/Users/compg/Desktop/top-code workspace/kalk-top/.runtime-wp/wordpress/wp-content/plugins/sqlite-database-integration';
 if ( ! file_exists( $sqlite_plugin_implementation_folder_path ) ) { // Check that the folder exists.
 	$sqlite_plugin_implementation_folder_path = realpath( __DIR__ . '/plugins/sqlite-database-integration' );
 }

@@ -167,6 +167,7 @@ if (!class_exists('TopInstal_GenerateOfferDocument_UseCase')) {
             $final_format = 'docx';
             $final_filename = $paths['docxFilename'];
             $final_url = $paths['docxUrl'];
+            $final_path = $paths['docxPath'];
             $converter_mode = 'none';
 
             if ($output_format === 'pdf') {
@@ -176,6 +177,7 @@ if (!class_exists('TopInstal_GenerateOfferDocument_UseCase')) {
                     $final_format = 'pdf';
                     $final_filename = $pdf_paths['pdfFilename'];
                     $final_url = $pdf_paths['pdfUrl'];
+                    $final_path = $pdf_paths['pdfPath'];
                     $converter_mode = 'gotenberg';
                 } else {
                     $converter_mode = 'fallback-docx';
@@ -190,12 +192,37 @@ if (!class_exists('TopInstal_GenerateOfferDocument_UseCase')) {
                 }
             }
 
+            $artifact_verified = self::verify_generated_artifact($final_path);
+            if (!$artifact_verified) {
+                throw new TopInstal_OfferDocument_Exception(
+                    TopInstal_DocumentReasonCodes::STORAGE_ERROR,
+                    'Generated document artifact is missing or empty.',
+                    500,
+                    array(
+                        'requestedFormat' => $output_format,
+                        'actualFormat' => $final_format,
+                        'converter' => $converter_mode,
+                    )
+                );
+            }
+
             $this->storage->cleanup_old_files($paths['outputDir']);
 
-            return array(
+            $document_id = function_exists('topinstal_generate_document_id')
+                ? topinstal_generate_document_id()
+                : topinstal_create_trace_id();
+            $readiness = self::build_readiness_contract(
+                $output_format,
+                $final_format,
+                $converter_mode,
+                $artifact_verified
+            );
+
+            $result = array(
                 'schemaVersion' => '1.0',
                 'traceId' => $trace_id,
-                'status' => 'success',
+                'documentId' => $document_id,
+                'status' => $readiness['status'] === 'DEGRADED' ? 'degraded' : 'success',
                 'document' => array(
                     'format' => $final_format,
                     'filename' => $final_filename,
@@ -203,7 +230,10 @@ if (!class_exists('TopInstal_GenerateOfferDocument_UseCase')) {
                     'mimeType' => $final_format === 'pdf'
                         ? 'application/pdf'
                         : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    'exists' => $artifact_verified,
+                    'verified' => $artifact_verified,
                 ),
+                'readiness' => $readiness,
                 'meta' => array(
                     'generatedAt' => gmdate('c'),
                     'templateKey' => $template_key,
@@ -213,7 +243,113 @@ if (!class_exists('TopInstal_GenerateOfferDocument_UseCase')) {
                 ),
                 'warnings' => $warnings,
             );
+
+            self::emit_document_success($request_dto, $trace_id, $result, $converter_mode);
+
+            return $result;
+        }
+
+        /**
+         * @param array<string,mixed> $request_dto
+         * @param string $trace_id
+         * @param array<string,mixed> $result
+         * @param string $converter_mode
+         * @return void
+         */
+        private function emit_document_success($request_dto, $trace_id, $result, $converter_mode) {
+            if (!class_exists('TopInstal_Generator_OsEvent_Client')) {
+                return;
+            }
+
+            $format = isset($result['document']['format']) ? (string) $result['document']['format'] : '';
+            $is_fallback = $converter_mode === 'fallback-docx';
+            $event_type = $is_fallback ? 'generator.document.fallback_docx' : 'generator.document.ready';
+            $summary = $is_fallback
+                ? 'Generator: PDF niedostępny — zwrócono DOCX'
+                : 'Generator: dokument oferty gotowy (' . ($format !== '' ? strtoupper($format) : 'DOC') . ')';
+
+            TopInstal_Generator_OsEvent_Client::emit(
+                $event_type,
+                $summary,
+                $is_fallback ? 'warning' : 'ok',
+                self::resolve_engagement_id($request_dto),
+                array(
+                    'trace_id' => $trace_id,
+                    'document_id' => isset($result['documentId']) ? (string) $result['documentId'] : '',
+                    'format' => $format,
+                    'converter' => $converter_mode,
+                ),
+                array(
+                    'trace_id' => $trace_id,
+                )
+            );
+        }
+
+        /**
+         * @param array<string,mixed> $request_dto
+         * @return string
+         */
+        private static function resolve_engagement_id($request_dto) {
+            if (!is_array($request_dto)) {
+                return '';
+            }
+            if (isset($request_dto['engagementId'])) {
+                return trim((string) $request_dto['engagementId']);
+            }
+            if (isset($request_dto['engagement_id'])) {
+                return trim((string) $request_dto['engagement_id']);
+            }
+            $offer = isset($request_dto['offerDto']) && is_array($request_dto['offerDto'])
+                ? $request_dto['offerDto']
+                : array();
+            if (isset($offer['engagementId'])) {
+                return trim((string) $offer['engagementId']);
+            }
+            if (isset($offer['engagement_id'])) {
+                return trim((string) $offer['engagement_id']);
+            }
+
+            return '';
+        }
+
+        /**
+         * @param string $artifact_path
+         * @return bool
+         */
+        private static function verify_generated_artifact($artifact_path) {
+            if (!is_string($artifact_path) || trim($artifact_path) === '') {
+                return false;
+            }
+            if (!is_file($artifact_path)) {
+                return false;
+            }
+            $size = @filesize($artifact_path);
+            return is_int($size) && $size > 0;
+        }
+
+        /**
+         * @param string $requested_format
+         * @param string $actual_format
+         * @param string $converter_mode
+         * @param bool $artifact_verified
+         * @return array<string,mixed>
+         */
+        private static function build_readiness_contract($requested_format, $actual_format, $converter_mode, $artifact_verified) {
+            $is_degraded = $requested_format === 'pdf' && $actual_format !== 'pdf';
+            $degraded_code = $is_degraded
+                ? TopInstal_DocumentReasonCodes::FALLBACK_DOCX_RETURNED
+                : '';
+
+            return array(
+                'status' => $is_degraded ? 'DEGRADED' : 'READY',
+                'requestedFormat' => $requested_format,
+                'actualFormat' => $actual_format,
+                'artifactExists' => $artifact_verified,
+                'artifactVerified' => $artifact_verified,
+                'retryable' => $is_degraded && $converter_mode === 'fallback-docx',
+                'degradedCode' => $degraded_code,
+                'failureCode' => '',
+            );
         }
     }
 }
-

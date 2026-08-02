@@ -2,6 +2,8 @@
 
 **Generator ofert HVAC** – wtyczka WordPress do tworzenia ofert na pompy ciepła Panasonic w formacie DOCX i PDF, z interfejsem w stylu Windows 95.
 
+**Dokumentacja produktu:** [`PROJECT_README.md`](PROJECT_README.md) · **Cały ekosystem:** [`../knowledge/OS_README.md`](../knowledge/OS_README.md)
+
 ---
 
 ## Spis treści
@@ -28,6 +30,7 @@
 ## Opis i funkcje
 
 Generator umożliwia:
+
 - **Wybór zestawu** – pompy Split (1F/3F), ALL-IN-ONE 185L/260L, T-CAP, z filtrowaniem po mocy i zbiorniku CWU.
 - **Konfigurację** – zbiornik CWU (checkbox + pojemność + producent), bufor (checkbox + pojemność/zakres), cena brutto (obliczana automatycznie lub ręczna).
 - **Generowanie oferty** – w formacie **DOCX** (Word) lub **PDF** (przez zewnętrzny konwerter). Placeholdery w szablonie są automatycznie zastępowane.
@@ -40,17 +43,17 @@ Interfejs jest responsywny (mobile/tablet/desktop) i stylizowany na Windows 95.
 
 ### Wymagania
 
-| Wymaganie | Wersja / szczegóły |
-|-----------|--------------------|
-| WordPress | 5.0+ |
-| PHP | 7.4+ |
-| Rozszerzenia PHP | zip, xml, gd, curl |
-| Composer | tylko do zbudowania `vendor/` (folder można wgrać gotowy) |
+| Wymaganie        | Wersja / szczegóły                                        |
+| ---------------- | --------------------------------------------------------- |
+| WordPress        | 5.0+                                                      |
+| PHP              | 7.4+                                                      |
+| Rozszerzenia PHP | zip, xml, gd, curl                                        |
+| Composer         | tylko do zbudowania `vendor/` (folder można wgrać gotowy) |
 
 ### Instalacja krok po kroku
 
-1. Skopiuj cały folder **`top-instal-generatorr`** do `wp-content/plugins/`.
-2. Upewnij się, że w katalogu pluginu jest folder **`vendor/`** (zależności Composer).  
+1. Skopiuj cały folder **`top-instal-generator`** do `wp-content/plugins/`.
+2. Upewnij się, że w katalogu pluginu jest folder **`vendor/`** (zależności Composer).
    Jeśli go nie ma: w katalogu pluginu uruchom `composer install`.
 3. W panelu WordPress: **Wtyczki → Zainstalowane wtyczki** → znajdź **„Top-Instal Generator”** → **Aktywuj**.
 4. (Opcjonalnie) Umieść szablony DOCX w katalogu pluginu (patrz sekcja [Szablony dokumentów](#szablony-dokumentów) w części dla dewelopera).
@@ -71,7 +74,7 @@ W treści strony lub wpisu dodaj shortcode:
 
 1. **Typ instalacji** – Pompa ciepła (domyślnie).
 2. **Moc pompy** – 3 / 5 / 7 / 9 / 12 / 16 kW.
-3. **Zbiornik CWU** – włącz/wyłącz; pojemność (150–400 L lub ALL-IN-ONE 185L/260L); producent (gdy CWU włączone).  
+3. **Zbiornik CWU** – włącz/wyłącz; pojemność (150–400 L lub ALL-IN-ONE 185L/260L); producent (gdy CWU włączone).
    Przy braku ceny dla danej konfiguracji pojawi się komunikat błędu i generowanie będzie zablokowane.
 4. **Bufor** – włącz/wyłącz; pojemność lub zakres (np. 100–150 L).
 5. **Zestaw** – lista zestawów ładowana dynamicznie (zależnie od mocy i CWU).
@@ -83,7 +86,7 @@ W treści strony lub wpisu dodaj shortcode:
 
 ## Konfiguracja PDF
 
-- **Domyślnie** wtyczka ma wpisane URL i token konwertera – po wyborze „PDF” i kliknięciu „Generuj” oferta jest konwertowana na PDF bez dodatkowej konfiguracji.
+- **Domyślnie** `TOP_INSTAL_PDF_CONVERTER_URL_DEFAULT` i `_TOKEN_DEFAULT` są puste — PDF przez zewnętrzny konwerter wymaga ustawień WP lub lokalnego LibreOffice fallback (`PdfConverterClientWp`).
 - Aby **zmienić** adres konwertera lub token: **Ustawienia → Top-Instal Generator** – uzupełnij **URL konwertera PDF** i **Token (X-Converter-Token)** i zapisz.
 - Jeśli konwerter jest niedostępny lub ustawienia są puste, użytkownik otrzyma plik **DOCX** zamiast PDF (fallback).
 
@@ -91,13 +94,13 @@ W treści strony lub wpisu dodaj shortcode:
 
 ## Rozwiązywanie problemów
 
-| Problem | Co zrobić |
-|--------|-----------|
-| **„Composer dependencies missing”** | Do katalogu pluginu dołóż folder `vendor/` lub uruchom w nim `composer install`. |
-| **Zamiast PDF pobiera się DOCX** | Sprawdź **Ustawienia → Top-Instal Generator** (URL i token). Włącz „Włącz logowanie diagnostyczne” i po ponownej próbie sprawdź plik `curl_debug.txt` w katalogu pluginu. |
-| **Brak zestawów na liście** | Sprawdź, czy w katalogu pluginu jest plik `kits.json` i czy ma poprawną składnię (np. `php validate-json.php`). |
-| **„Brak ceny dla takiej konfiguracji zbiornika”** | Wybrana para pojemność + producent nie ma ceny w `prices.json` / `prices-fallback.json`. Wybierz inną pojemność lub producenta, albo dopisz ceny (dla deweloperów). |
-| **Błąd przy generowaniu** | Sprawdź logi PHP/WordPress oraz (dla PDF) `curl_debug.txt`. Upewnij się, że katalog `wp-content/uploads/` jest zapisywalny i że plugin może utworzyć `wp-content/uploads/top-instal-offers/`. |
+| Problem                                           | Co zrobić                                                                                                                                                                                     |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **„Composer dependencies missing”**               | Do katalogu pluginu dołóż folder `vendor/` lub uruchom w nim `composer install`.                                                                                                              |
+| **Zamiast PDF pobiera się DOCX**                  | Sprawdź **Ustawienia → Top-Instal Generator** (URL i token). Włącz „Włącz logowanie diagnostyczne” i po ponownej próbie sprawdź plik `curl_debug.txt` w katalogu pluginu.                     |
+| **Brak zestawów na liście**                       | Sprawdź, czy w katalogu pluginu jest plik `kits.json` i czy ma poprawną składnię (np. `php validate-json.php`).                                                                               |
+| **„Brak ceny dla takiej konfiguracji zbiornika”** | Wybrana para pojemność + producent nie ma ceny w `prices.json` / `prices-fallback.json`. Wybierz inną pojemność lub producenta, albo dopisz ceny (dla deweloperów).                           |
+| **Błąd przy generowaniu**                         | Sprawdź logi PHP/WordPress oraz (dla PDF) `curl_debug.txt`. Upewnij się, że katalog `wp-content/uploads/` jest zapisywalny i że plugin może utworzyć `wp-content/uploads/top-instal-offers/`. |
 
 ---
 
@@ -106,28 +109,22 @@ W treści strony lub wpisu dodaj shortcode:
 ## Struktura projektu
 
 ```
-top-instal-generatorr/
-├── top-instal-generator.php   # Główny plik wtyczki (shortcode, AJAX, ustawienia, konwersja PDF)
-├── generator.js               # Logika formularza, AJAX, kalkulacja ceny, walidacja CWU
-├── generator.css              # Style (Win95, responsywność, błędy inline)
-├── kits.json                  # Baza zestawów pomp (ceny netto), sekcje 1f/3f, AIO, T-CAP
-├── prices-fallback.json       # Ceny CWU/bufor/instalacja/hydraulika/fundament/VAT (fallback)
-├── szablon-*.docx             # Szablony ofert (nazewnictwo – patrz niżej)
-├── vendor/                    # Composer (PHPWord, ZipArchive itd.)
-├── converter-vps/             # Konfiguracja VPS konwertera DOCX→PDF (Gotenberg, Nginx)
-│   ├── README.md              # SSH, deploy, testy curl
-│   ├── docker-compose.yml
-│   ├── nginx/
-│   └── topinstal-vps.pub      # Klucz SSH do VPS Hetzner
-├── validate-json.php          # Walidacja kits.json i prices-fallback.json (CLI)
-├── test-converter-and-generator.php  # Test konwertera i konfiguracji PDF (CLI)
-├── create_minimal_docx.php    # Tworzenie minimalnego DOCX do testów
-├── check_prc.php              # Narzędzie do sprawdzania placeholderów w szablonie DOCX
-├── .gitignore
-├── README.md                  # Ten plik
-├── VERIFICATION_AND_TEST_PLAN.md
-├── DEPLOYMENT_READY.md
-└── AUTONOMIC_VERIFICATION_REPORT.md
+top-instal-generator/
+├── top-instal-generator.php   # Bootstrap: ładuje core/ + wp-adapter/
+├── core/                      # Domena: GenerateOfferDocumentUseCase, mappery, harness
+├── wp-adapter/                # REST, AJAX, serwisy PDF/DOCX, PlaceholderBuilder
+├── generator.js               # UI Win95 (AJAX simple_generate — legacy UI path)
+├── generator.css
+├── kits.json
+├── prices-fallback.json       # Ceny CWU/bufor (nie ../main/konfigurator/prices.json)
+├── szablon-*.docx
+├── vendor/
+├── converter-vps/             # Opcjonalny VPS konwertera DOCX→PDF
+├── validate-json.php
+├── docs/                      # API_GENERATE_OFFER_DOCUMENT.md, RUNTIME_E2E_RESULTS.json
+├── AGENTS.md
+├── PROJECT_README.md
+└── README.md
 ```
 
 Pliki generowane w czasie działania (nie w repo): `wp-content/uploads/top-instal-offers/*.docx|*.pdf`, `curl_debug.txt`, `test_minimal.docx`, `test_converter_output.pdf`.
@@ -138,17 +135,15 @@ Pliki generowane w czasie działania (nie w repo): `wp-content/uploads/top-insta
 
 ### Przepływ przy generowaniu oferty
 
-1. **Front (generator.js)**  
+1. **Front (generator.js)**
    Zbiera dane z formularza (w tym `output_format` z radia PDF/DOCX), waliduje konfigurację zbiornika (`checkTankConfigPrice`). Wysyła `POST` na `admin-ajax.php` z `action=simple_generate`, `nonce` i `data=JSON.stringify({...})`.
 
-2. **Backend (top-instal-generator.php)**  
-   - `handle_simple_generate()`: weryfikacja nonce, parsowanie `data`, sanitizacja, walidacja (zestaw, cena, format).  
-   - Wczytanie zestawu z `kits.json`, wybór szablonu DOCX (Split 1F/3F, AIO 185/260, z/bez CWU, z/bez bufora).  
-   - Skopiowanie szablonu do `uploads/top-instal-offers/`, otwarcie jako ZIP, podmiana placeholderów w `word/document.xml` (z XML-escape).  
-   - Jeśli `output_format === 'pdf'`: wywołanie zewnętrznego konwertera (URL + token z opcji WP lub stałe domyślne), POST z plikiem DOCX, zapis odpowiedzi jako PDF; przy błędzie – zwrot DOCX.  
-   - Odpowiedź JSON: `filename`, `download_url`.
+2. **Backend**
+   - **UI (legacy):** `wp-adapter/ajax/GenerateOfferDocumentAjaxController.php` — `action=simple_generate` z `generator.js`.
+   - **Integracje (canonical):** `POST /wp-json/topinstal/v1/offer-documents/generate` z `mode: from-offer-dto` (`wp-adapter/rest/GenerateOfferDocumentController.php`).
+   - Logika: `core/application/GenerateOfferDocumentUseCase.php` → `TemplateSelectorService` → PDF przez `PdfConverterClientWp` (remote lub LibreOffice lokalnie).
 
-3. **Front**  
+3. **Front**
    Wyświetla link do pobrania (`download_url`).
 
 ### Zabezpieczenia
@@ -171,20 +166,20 @@ Pliki generowane w czasie działania (nie w repo): `wp-content/uploads/top-insta
 
 ### Stałe PHP
 
-| Stała | Znaczenie |
-|-------|-----------|
-| `TOP_INSTAL_PLUGIN_PATH` | Katalog pluginu (plugin_dir_path). |
-| `TOP_INSTAL_PLUGIN_URL` | URL katalogu pluginu. |
-| `TOP_INSTAL_PLUGIN_VERSION` | Wersja (np. 1.0.0). |
-| `TOP_INSTAL_PDF_CONVERTER_URL_DEFAULT` | Domyślny URL konwertera. |
-| `TOP_INSTAL_PDF_CONVERTER_TOKEN_DEFAULT` | Domyślny token konwertera. |
+| Stała                                    | Znaczenie                          |
+| ---------------------------------------- | ---------------------------------- |
+| `TOP_INSTAL_PLUGIN_PATH`                 | Katalog pluginu (plugin_dir_path). |
+| `TOP_INSTAL_PLUGIN_URL`                  | URL katalogu pluginu.              |
+| `TOP_INSTAL_PLUGIN_VERSION`              | Wersja (np. 1.0.0).                |
+| `TOP_INSTAL_PDF_CONVERTER_URL_DEFAULT`   | Domyślny URL konwertera.           |
+| `TOP_INSTAL_PDF_CONVERTER_TOKEN_DEFAULT` | Domyślny token konwertera.         |
 
 ### Akcje AJAX (front → backend)
 
-| Action | Opis | Parametry (POST) |
-|--------|------|-------------------|
-| `get_kits` | Pobranie listy zestawów (filtrowanej). | `nonce`, `power_type`, `tank_capacity`, `power_kw` |
-| `simple_generate` | Wygenerowanie oferty DOCX/PDF. | `nonce`, `data` (JSON: installation_type, kit_model, tank_*, buffer_*, custom_price, output_format, …) |
+| Action            | Opis                                   | Parametry (POST)                                                                                          |
+| ----------------- | -------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `get_kits`        | Pobranie listy zestawów (filtrowanej). | `nonce`, `power_type`, `tank_capacity`, `power_kw`                                                        |
+| `simple_generate` | Wygenerowanie oferty DOCX/PDF.         | `nonce`, `data` (JSON: installation*type, kit_model, tank*\_, buffer\_\_, custom_price, output_format, …) |
 
 Oba: `wp_ajax_*` i `wp_ajax_nopriv_*` (dostęp bez logowania).
 
@@ -192,7 +187,7 @@ Oba: `wp_ajax_*` i `wp_ajax_nopriv_*` (dostęp bez logowania).
 
 - `ajaxurl` – URL do `admin-ajax.php`
 - `nonce` – do wysyłki w każdym żądaniu
-- `prices` – obiekt cen (cwu.emalia/inox, buffer, installation_net, hydraulic_components_*, foundation, vat_rate) do kalkulacji i walidacji CWU
+- `prices` – obiekt cen (cwu.emalia/inox, buffer, installation*net, hydraulic_components*\*, foundation, vat_rate) do kalkulacji i walidacji CWU
 
 ### Hooki WordPress
 
@@ -228,16 +223,16 @@ Nazwy plików zgodne z logiką w PHP:
 
 ### Placeholdery w szablonach DOCX
 
-| Placeholder | Zawartość |
-|-------------|-----------|
-| `{{MOC}}` | Moc (kW). |
-| `{{KIT}}` | Identyfikator zestawu. |
-| `{{INDOOR}}` | Jednostka wewnętrzna. |
-| `{{OUTDOOR}}` | Jednostka zewnętrzna. |
-| `{{CWU}}` | Opis zbiornika CWU. |
-| `{{TANK}}` | Producent zbiornika. |
-| `{{BFR}}` | Pojemność bufora (np. „100 litrów” lub „brak - nie rekomendowany”). |
-| `{{PRC}}` | Cena brutto (z spacjami jako separatorami tysięcy). |
+| Placeholder   | Zawartość                                                           |
+| ------------- | ------------------------------------------------------------------- |
+| `{{MOC}}`     | Moc (kW).                                                           |
+| `{{KIT}}`     | Identyfikator zestawu.                                              |
+| `{{INDOOR}}`  | Jednostka wewnętrzna.                                               |
+| `{{OUTDOOR}}` | Jednostka zewnętrzna.                                               |
+| `{{CWU}}`     | Opis zbiornika CWU.                                                 |
+| `{{TANK}}`    | Producent zbiornika.                                                |
+| `{{BFR}}`     | Pojemność bufora (np. „100 litrów” lub „brak - nie rekomendowany”). |
+| `{{PRC}}`     | Cena brutto (z spacjami jako separatorami tysięcy).                 |
 
 Wartości są escapowane do XML przed wstawieniem do `word/document.xml`.
 
@@ -245,21 +240,21 @@ Wartości są escapowane do XML przed wstawieniem do `word/document.xml`.
 
 ## Testy i walidacja
 
-- **Składnia PHP:**  
+- **Składnia PHP:**
   `php -l top-instal-generator.php`
 
-- **JSON:**  
-  `php validate-json.php`  
+- **JSON:**
+  `php validate-json.php`
   Sprawdza `kits.json`, `prices-fallback.json` i (jeśli istnieje) `../main/konfigurator/prices.json`.
 
-- **Konwerter PDF i konfiguracja:**  
-  `php test-converter-and-generator.php`  
+- **Konwerter PDF i konfiguracja:**
+  `php test-converter-and-generator.php`
   Weryfikuje: stałe PDF w pluginie, health konwertera, konwersję DOCX→PDF (z tokenem), oraz wynik `validate-json.php`. Wymaga dostępu do sieci.
 
-- **Placeholdery w DOCX:**  
+- **Placeholdery w DOCX:**
   Skrypt `check_prc.php` – wymaga pliku szablonu w katalogu (np. `szablon-1f-split.docx`).
 
-Szczegółowy plan testów: `VERIFICATION_AND_TEST_PLAN.md`.
+Szczegółowy plan testów (przeniesiony do offloaded archive — patrz `docs/PROOF_INDEX.md`): `VERIFICATION_AND_TEST_PLAN.md`.
 
 ---
 
@@ -288,7 +283,7 @@ Szczegółowy plan testów: `VERIFICATION_AND_TEST_PLAN.md`.
 4. Opcjonalnie: konfiguracja URL/token konwertera w ustawieniach WP.
 5. Krótki test: shortcode na stronie, wybór zestawu, generowanie DOCX i PDF.
 
-Szczegóły gotowości: `DEPLOYMENT_READY.md`.
+Szczegóły gotowości (przeniesione do offloaded archive — patrz `docs/PROOF_INDEX.md`): `DEPLOYMENT_READY.md`.
 
 ---
 
@@ -306,7 +301,6 @@ Szczegóły gotowości: `DEPLOYMENT_READY.md`.
 - Ceny: ładowanie z `main/konfigurator/prices.json` lub `prices-fallback.json`; automatyczna kalkulacja ceny; walidacja brakujących cen zbiorników (błąd inline).
 - UI: styl Win95, responsywność, dostępność.
 
-**Wersja:** 1.0.0  
-**Licencja:** GPL v2 or later  
+**Wersja:** 1.0.0
+**Licencja:** GPL v2 or later
 **Kontakt:** support@topinstal.com.pl
-

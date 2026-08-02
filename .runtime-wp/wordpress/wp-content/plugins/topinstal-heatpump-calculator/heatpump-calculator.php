@@ -860,13 +860,44 @@ class HeatPump_Calculator {
             return;
         }
 
-        $column = $wpdb->get_var("SHOW COLUMNS FROM {$leads_table} LIKE 'building_profile_json'");
-        if (is_string($column) && $column === 'building_profile_json') {
+        if ($this->table_has_column($leads_table, 'building_profile_json')) {
             return;
         }
 
         // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name from trusted prefix helper.
         $wpdb->query("ALTER TABLE {$leads_table} ADD COLUMN building_profile_json LONGTEXT NULL AFTER payload_json");
+    }
+
+    /**
+     * @param string $table_name
+     * @param string $column_name
+     * @return bool
+     */
+    private function table_has_column($table_name, $column_name) {
+        global $wpdb;
+        if (!isset($wpdb) || !is_object($wpdb) || !is_string($column_name) || $column_name === '') {
+            return false;
+        }
+
+        $column = $wpdb->get_var($wpdb->prepare("SHOW COLUMNS FROM {$table_name} LIKE %s", $column_name));
+        if (is_string($column) && $column === $column_name) {
+            return true;
+        }
+
+        // SQLite-backed local runtime does not provide reliable SHOW COLUMNS semantics.
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- trusted table name from prefix helper.
+        $pragma_rows = $wpdb->get_results("PRAGMA table_info({$table_name})", ARRAY_A);
+        if (!is_array($pragma_rows)) {
+            return false;
+        }
+
+        foreach ($pragma_rows as $row) {
+            if (is_array($row) && isset($row['name']) && $row['name'] === $column_name) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

@@ -48,3 +48,13 @@ if (!function_exists('topinstal_ensure_trace_id')) {
     }
 }
 
+if (!function_exists('topinstal_generate_document_id')) {
+    /**
+     * Generate UUID for document identification (OfferDocumentResponseDTO.documentId).
+     *
+     * @return string
+     */
+    function topinstal_generate_document_id() {
+        return topinstal_create_trace_id();
+    }
+}

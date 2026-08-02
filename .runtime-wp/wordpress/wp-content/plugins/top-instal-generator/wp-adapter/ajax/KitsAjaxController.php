@@ -18,6 +18,9 @@ if (!class_exists('TopInstal_Ajax_Kits_Controller')) {
          * @return void
          */
         public static function handle_get_kits() {
+            if (function_exists('error_log')) {
+                error_log('Deprecated: get_kits AJAX. Use REST /wp-json/topinstal/v1/offer-documents/generate or kits repository.');
+            }
             check_ajax_referer('top_instal_nonce', 'nonce');
 
             $power_type = sanitize_text_field(isset($_POST['power_type']) ? (string) wp_unslash($_POST['power_type']) : '1fazowe');
@@ -35,4 +38,3 @@ if (!class_exists('TopInstal_Ajax_Kits_Controller')) {
         }
     }
 }
-

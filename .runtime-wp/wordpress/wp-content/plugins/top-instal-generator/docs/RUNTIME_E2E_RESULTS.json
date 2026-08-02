@@ -1,0 +1,397 @@
+{
+  "environment": {
+    "wp_root": "C:\\Users\\compg\\Desktop\\kalk-top\\.runtime-wp\\wordpress",
+    "base_url": "http://127.0.0.1:8090",
+    "rest_url": "http://127.0.0.1:8090/wp-json/topinstal/v1/offer-documents/generate",
+    "ajax_url": "http://127.0.0.1:8090/wp-admin/admin-ajax.php"
+  },
+  "tests": {
+    "legacy_get_kits": {
+      "request": {
+        "action": "get_kits",
+        "nonce": "8065a5a0c1",
+        "power_type": "all",
+        "tank_capacity": "200",
+        "power_kw": "7"
+      },
+      "status": 200,
+      "response": {
+        "success": true,
+        "data": {
+          "KIT-WC07K3E5": {
+            "name": "KIT-WC07K3E5",
+            "power": "7kW",
+            "voltage": "230V",
+            "indoor_unit": "WH-SDC0309K3E5",
+            "outdoor_unit": "WH-UDZ07KE5",
+            "price": 13500
+          }
+        }
+      },
+      "pass": true,
+      "selectedKit": "KIT-WC07K3E5"
+    },
+    "legacy_get_kits_empty": {
+      "request": {
+        "action": "get_kits",
+        "nonce": "8065a5a0c1",
+        "power_type": "all",
+        "tank_capacity": "200",
+        "power_kw": "999"
+      },
+      "status": 200,
+      "response": {
+        "success": false,
+        "data": "Nie znaleziono zestawow dla podanych filtrow."
+      },
+      "delegationMarker": true
+    },
+    "legacy_simple_generate_docx": {
+      "request": {
+        "installation_type": "heat_pump",
+        "power_kw": "7",
+        "has_cwu": "1",
+        "tank_capacity": "200",
+        "tank_manufacturer": "Trinnity",
+        "has_buffer": "0",
+        "buffer_capacity": "none",
+        "kit_model": "KIT-WC07K3E5",
+        "custom_price": "41000",
+        "output_format": "docx"
+      },
+      "status": 200,
+      "response": {
+        "success": true,
+        "data": {
+          "filename": "Oferta-PC-Panasonic_2026-03-06_14-22-35_69fadd12-c2c.docx",
+          "download_url": "http://127.0.0.1:8090/wp-content/uploads/top-instal-offers/Oferta-PC-Panasonic_2026-03-06_14-22-35_69fadd12-c2c.docx",
+          "traceId": "69fadd12-c2c0-4962-8035-2dc9a1d6f2ba",
+          "document": {
+            "format": "docx",
+            "filename": "Oferta-PC-Panasonic_2026-03-06_14-22-35_69fadd12-c2c.docx",
+            "downloadUrl": "http://127.0.0.1:8090/wp-content/uploads/top-instal-offers/Oferta-PC-Panasonic_2026-03-06_14-22-35_69fadd12-c2c.docx",
+            "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          },
+          "meta": {
+            "generatedAt": "2026-03-06T14:22:35+00:00",
+            "templateKey": "szablon-1f-split-cwu",
+            "mode": "direct-config",
+            "documentType": "offer_document",
+            "converter": "none"
+          },
+          "warnings": []
+        }
+      },
+      "downloadStatus": 200,
+      "downloadBytes": 2569111,
+      "docxMagic": "PK",
+      "pass": true
+    },
+    "legacy_simple_generate_invalid_json": {
+      "status": 400,
+      "response": {
+        "success": false,
+        "data": {
+          "traceId": "971d8d72-32e0-479c-8787-628e3dc16f4b",
+          "errorCode": "VALIDATION_ERROR",
+          "message": "Invalid JSON input."
+        }
+      },
+      "delegationMarker": true
+    },
+    "rest_no_auth": {
+      "status": 401,
+      "response": {
+        "traceId": "trace-rest-no-auth",
+        "errorCode": "AUTH_REQUIRED",
+        "message": "Provide valid nonce or X-Top-Instal-Agent-Key."
+      },
+      "pass": true
+    },
+    "rest_bad_key": {
+      "status": 403,
+      "response": {
+        "traceId": "trace-rest-no-auth",
+        "errorCode": "AGENT_KEY_INVALID",
+        "message": "Agent key is invalid."
+      },
+      "pass": true
+    },
+    "rest_validation": {
+      "status": 400,
+      "response": {
+        "traceId": "trace-validation",
+        "errorCode": "VALIDATION_ERROR",
+        "message": "Invalid OfferDocumentRequestDTO payload.",
+        "details": {
+          "errors": [
+            {
+              "field": "schemaVersion",
+              "code": "REQUIRED",
+              "message": "schemaVersion is required and must be a non-empty string."
+            }
+          ]
+        }
+      },
+      "pass": true
+    },
+    "rest_nonce_success": {
+      "status": 200,
+      "headers": {
+        "host": "127.0.0.1:8090",
+        "date": "Fri, 06 Mar 2026 14:22:36 GMT",
+        "connection": "close",
+        "x-powered-by": "PHP/8.2.12",
+        "content-type": "application/json; charset=UTF-8",
+        "x-robots-tag": "noindex",
+        "link": "<http://127.0.0.1:8090/index.php?rest_route=/>; rel=\"https://api.w.org/\"",
+        "x-content-type-options": "nosniff",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link",
+        "access-control-allow-headers": "Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type",
+        "x-topinstal-trace-id": "trace-rest-nonce",
+        "x-ratelimit-limit": "30",
+        "x-ratelimit-remaining": "28",
+        "x-ratelimit-window": "60",
+        "x-ratelimit-reset-in": "60",
+        "allow": "POST"
+      },
+      "response": {
+        "schemaVersion": "1.0",
+        "traceId": "trace-rest-nonce",
+        "status": "success",
+        "document": {
+          "format": "docx",
+          "filename": "Oferta-PC-Panasonic_2026-03-06_14-22-36_trace-rest-n.docx",
+          "downloadUrl": "http://127.0.0.1:8090/wp-content/uploads/top-instal-offers/Oferta-PC-Panasonic_2026-03-06_14-22-36_trace-rest-n.docx",
+          "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        },
+        "meta": {
+          "generatedAt": "2026-03-06T14:22:36+00:00",
+          "templateKey": "szablon-1f-split-cwu",
+          "mode": "direct-config",
+          "documentType": "offer_document",
+          "converter": "none"
+        },
+        "warnings": []
+      },
+      "downloadStatus": 200,
+      "pass": true
+    },
+    "rest_agent_key_success": {
+      "status": 200,
+      "headers": {
+        "host": "127.0.0.1:8090",
+        "date": "Fri, 06 Mar 2026 14:22:37 GMT",
+        "connection": "close",
+        "x-powered-by": "PHP/8.2.12",
+        "content-type": "application/json; charset=UTF-8",
+        "x-robots-tag": "noindex",
+        "link": "<http://127.0.0.1:8090/index.php?rest_route=/>; rel=\"https://api.w.org/\"",
+        "x-content-type-options": "nosniff",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link",
+        "access-control-allow-headers": "Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type",
+        "x-topinstal-trace-id": "trace-rest-agent",
+        "x-ratelimit-limit": "30",
+        "x-ratelimit-remaining": "27",
+        "x-ratelimit-window": "60",
+        "x-ratelimit-reset-in": "59",
+        "allow": "POST"
+      },
+      "response": {
+        "schemaVersion": "1.0",
+        "traceId": "trace-rest-agent",
+        "status": "success",
+        "document": {
+          "format": "docx",
+          "filename": "Oferta-PC-Panasonic_2026-03-06_14-22-37_trace-rest-a.docx",
+          "downloadUrl": "http://127.0.0.1:8090/wp-content/uploads/top-instal-offers/Oferta-PC-Panasonic_2026-03-06_14-22-37_trace-rest-a.docx",
+          "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        },
+        "meta": {
+          "generatedAt": "2026-03-06T14:22:37+00:00",
+          "templateKey": "szablon-1f-split-cwu",
+          "mode": "direct-config",
+          "documentType": "offer_document",
+          "converter": "none"
+        },
+        "warnings": []
+      },
+      "pass": true
+    },
+    "agent_key_option_rotation": {
+      "rotateNonce": "8065a5a0c1",
+      "oldKeyStatus": 403,
+      "oldKeyResponse": {
+        "traceId": "trace-rotate-old",
+        "errorCode": "AGENT_KEY_INVALID",
+        "message": "Agent key is invalid."
+      },
+      "newKeyStatus": 200,
+      "newKeyResponse": {
+        "schemaVersion": "1.0",
+        "traceId": "trace-rotate-new",
+        "status": "success",
+        "document": {
+          "format": "docx",
+          "filename": "Oferta-PC-Panasonic_2026-03-06_14-22-38_trace-rotate.docx",
+          "downloadUrl": "http://127.0.0.1:8090/wp-content/uploads/top-instal-offers/Oferta-PC-Panasonic_2026-03-06_14-22-38_trace-rotate.docx",
+          "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        },
+        "meta": {
+          "generatedAt": "2026-03-06T14:22:38+00:00",
+          "templateKey": "szablon-1f-split-cwu",
+          "mode": "direct-config",
+          "documentType": "offer_document",
+          "converter": "none"
+        },
+        "warnings": []
+      },
+      "pass": true
+    },
+    "rest_pdf_conversion": {
+      "status": 200,
+      "response": {
+        "schemaVersion": "1.0",
+        "traceId": "trace-rest-pdf",
+        "status": "success",
+        "document": {
+          "format": "pdf",
+          "filename": "Oferta-PC-Panasonic_2026-03-06_14-22-39_trace-rest-p.pdf",
+          "downloadUrl": "http://127.0.0.1:8090/wp-content/uploads/top-instal-offers/Oferta-PC-Panasonic_2026-03-06_14-22-39_trace-rest-p.pdf",
+          "mimeType": "application/pdf"
+        },
+        "meta": {
+          "generatedAt": "2026-03-06T14:22:40+00:00",
+          "templateKey": "szablon-1f-split-cwu",
+          "mode": "direct-config",
+          "documentType": "offer_document",
+          "converter": "gotenberg"
+        },
+        "warnings": []
+      },
+      "downloadStatus": 200,
+      "pdfMagic": "%PDF-",
+      "pdfBytes": 776,
+      "pass": true
+    },
+    "legacy_simple_generate_pdf": {
+      "status": 200,
+      "response": {
+        "success": true,
+        "data": {
+          "filename": "Oferta-PC-Panasonic_2026-03-06_14-22-40_d5fc4d7c-3fd.pdf",
+          "download_url": "http://127.0.0.1:8090/wp-content/uploads/top-instal-offers/Oferta-PC-Panasonic_2026-03-06_14-22-40_d5fc4d7c-3fd.pdf",
+          "traceId": "d5fc4d7c-3fd8-4ecb-89f2-f8fad8732819",
+          "document": {
+            "format": "pdf",
+            "filename": "Oferta-PC-Panasonic_2026-03-06_14-22-40_d5fc4d7c-3fd.pdf",
+            "downloadUrl": "http://127.0.0.1:8090/wp-content/uploads/top-instal-offers/Oferta-PC-Panasonic_2026-03-06_14-22-40_d5fc4d7c-3fd.pdf",
+            "mimeType": "application/pdf"
+          },
+          "meta": {
+            "generatedAt": "2026-03-06T14:22:41+00:00",
+            "templateKey": "szablon-1f-split-cwu",
+            "mode": "direct-config",
+            "documentType": "offer_document",
+            "converter": "gotenberg"
+          },
+          "warnings": []
+        }
+      },
+      "downloadStatus": 200,
+      "pdfMagic": "%PDF-",
+      "pdfBytes": 776,
+      "pass": true
+    },
+    "legacy_vs_rest_compatibility": {
+      "legacyFieldsPresent": true,
+      "restFieldsPresent": true,
+      "legacyHasUseCaseMeta": true,
+      "pass": true
+    },
+    "agent_key_env_fallback": {
+      "nonce": "8065a5a0c1",
+      "envGoodStatus": 200,
+      "envGoodResponse": {
+        "schemaVersion": "1.0",
+        "traceId": "trace-env-key",
+        "status": "success",
+        "document": {
+          "format": "docx",
+          "filename": "Oferta-PC-Panasonic_2026-03-06_14-22-43_trace-env-ke.docx",
+          "downloadUrl": "http://127.0.0.1:8090/wp-content/uploads/top-instal-offers/Oferta-PC-Panasonic_2026-03-06_14-22-43_trace-env-ke.docx",
+          "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        },
+        "meta": {
+          "generatedAt": "2026-03-06T14:22:43+00:00",
+          "templateKey": "szablon-1f-split-cwu",
+          "mode": "direct-config",
+          "documentType": "offer_document",
+          "converter": "none"
+        },
+        "warnings": []
+      },
+      "envBadStatus": 403,
+      "envBadResponse": {
+        "traceId": "trace-env-key-bad",
+        "errorCode": "AGENT_KEY_INVALID",
+        "message": "Agent key is invalid."
+      },
+      "pass": true
+    },
+    "agent_key_read_path": {
+      "output": "OPTION=\nREAD=env-agent-key-777\n",
+      "pass": true
+    }
+  },
+  "hook_map": {
+    "wp_ajax_get_kits": [
+      {
+        "priority": 10,
+        "callback": "handle_get_kits"
+      }
+    ],
+    "wp_ajax_simple_generate": [
+      {
+        "priority": 10,
+        "callback": "handle_simple_generate"
+      }
+    ],
+    "rest_api_init": [
+      {
+        "priority": 10,
+        "callback": "rest_api_default_filters"
+      },
+      {
+        "priority": 10,
+        "callback": "register_initial_settings"
+      },
+      {
+        "priority": 10,
+        "callback": "wp_oembed_register_route"
+      },
+      {
+        "priority": 10,
+        "callback": "register_block_core_site_logo_setting"
+      },
+      {
+        "priority": 10,
+        "callback": "register_block_core_site_icon_setting"
+      },
+      {
+        "priority": 10,
+        "callback": "topinstal_generator_register_routes"
+      },
+      {
+        "priority": 99,
+        "callback": "create_initial_rest_routes"
+      }
+    ],
+    "class_exists": {
+      "TopInstal_Ajax_Kits_Controller": true,
+      "TopInstal_Ajax_GenerateOfferDocument_Controller": true,
+      "TopInstal_GenerateOfferDocument_UseCase": true
+    }
+  },
+  "converterDebugLog": "Array\n(\n    [converter_url] => http://127.0.0.1:8091/forms/libreoffice/convert\n    [http_code] => 200\n    [error] => \n    [response_len] => 776\n    [source_file] => C:\\Users\\compg\\Desktop\\kalk-top\\.runtime-wp\\wordpress/wp-content/uploads/top-instal-offers/Oferta-PC-Panasonic_2026-03-06_14-22-40_d5fc4d7c-3fd.docx\n)\n"
+}

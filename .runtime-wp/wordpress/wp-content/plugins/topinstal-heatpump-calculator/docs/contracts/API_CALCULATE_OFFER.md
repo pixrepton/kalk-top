@@ -2,7 +2,7 @@
 
 > Status: canonical
 > Owner: TOP-INSTAL contract owner
-> Last verified against code/runtime: 2026-04-02 (controller/validator/contract audit)
+> Last verified against code/runtime: 2026-07-16 (doc-freshness audit: added missing `engineering.cwu`, `building_length`/`building_width` geometry alternative, `X-Topinstal-Agent-Key` header alias)
 > Source-of-truth level: L1
 > Supersedes: none
 > Related docs: `dto-and-boundaries.md`, `README_NOWE_WEJSCIA_CALCULATE_OFFER.md`, `../SOURCE_OF_TRUTH_INDEX.md`
@@ -27,7 +27,7 @@ Dopuszczalne sa dwa modele auth:
 - lub parametr `nonce`
 
 2. Agent key:
-- `X-Top-Instal-Agent-Key`
+- `X-Top-Instal-Agent-Key` (lub `X-Topinstal-Agent-Key`)
 - wartosc z opcji `topinstal_calc_agent_api_key`
 - lub env/constant `TOPINSTAL_CALC_AGENT_API_KEY`
 
@@ -73,6 +73,7 @@ Naglowki odpowiedzi:
   - `heated_area` lub
   - `floor_area` lub
   - `total_area`
+  - albo (alternatywnie) komplet dodatnich wymiarow: `building_length` i `building_width`
 - `preferences.heating`: object wymagany
 - `preferences.dhw`: object wymagany
 - jesli `preferences.dhw.enabled = true`, wtedy `preferences.dhw.persons > 0`
@@ -111,6 +112,7 @@ Sukces (`200`) zwraca:
   - `ozc`
   - `selection`
   - `buffer`
+  - `cwu`
 - `pricing`:
   - `currency`
   - `items[]`

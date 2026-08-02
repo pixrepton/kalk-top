@@ -22,6 +22,9 @@ if (!class_exists('TopInstal_Ajax_GenerateOfferDocument_Controller')) {
          * @return void
          */
         public static function handle_simple_generate() {
+            if (function_exists('error_log')) {
+                error_log('Deprecated: simple_generate AJAX. Use REST POST /wp-json/topinstal/v1/offer-documents/generate.');
+            }
             check_ajax_referer('top_instal_nonce', 'nonce');
 
             $input = self::extract_legacy_payload();
@@ -100,10 +103,12 @@ if (!class_exists('TopInstal_Ajax_GenerateOfferDocument_Controller')) {
 
             if ($legacy_shape) {
                 wp_send_json_success(array(
+                    'status' => isset($result['status']) ? $result['status'] : 'success',
                     'filename' => isset($result['document']['filename']) ? $result['document']['filename'] : '',
                     'download_url' => isset($result['document']['downloadUrl']) ? $result['document']['downloadUrl'] : '',
                     'traceId' => isset($result['traceId']) ? $result['traceId'] : $trace_id,
                     'document' => isset($result['document']) ? $result['document'] : array(),
+                    'readiness' => isset($result['readiness']) ? $result['readiness'] : array(),
                     'meta' => isset($result['meta']) ? $result['meta'] : array(),
                     'warnings' => isset($result['warnings']) ? $result['warnings'] : array(),
                 ));
@@ -188,4 +193,3 @@ if (!class_exists('TopInstal_Ajax_GenerateOfferDocument_Controller')) {
         }
     }
 }
-

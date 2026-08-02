@@ -62,6 +62,7 @@ if (!class_exists('TopInstal_GenerateOfferDocument_Controller')) {
                 );
                 self::apply_trace_header($response, $trace_id);
                 self::apply_rate_limit_headers($response, $rate);
+                self::emit_document_failed($trace_id, $body, TopInstal_DocumentReasonCodes::VALIDATION_ERROR, 400);
                 return $response;
             }
 
@@ -74,6 +75,7 @@ if (!class_exists('TopInstal_GenerateOfferDocument_Controller')) {
                 $use_case = new TopInstal_GenerateOfferDocument_UseCase();
                 $result = $use_case->execute($body);
             } catch (TopInstal_OfferDocument_Exception $e) {
+                self::emit_document_failed($trace_id, $body, $e->get_error_code(), $e->get_status());
                 $response = TopInstal_RestErrors::response(
                     $e->get_status(),
                     $trace_id,
@@ -89,6 +91,7 @@ if (!class_exists('TopInstal_GenerateOfferDocument_Controller')) {
                     'traceId' => $trace_id,
                     'message' => $e->getMessage(),
                 ));
+                self::emit_document_failed($trace_id, $body, 'DOCUMENT_GENERATION_FAILED', 500);
                 $details = array();
                 if (defined('WP_DEBUG') && WP_DEBUG) {
                     $details['exception'] = $e->getMessage();
@@ -332,6 +335,42 @@ if (!class_exists('TopInstal_GenerateOfferDocument_Controller')) {
             $response->header('X-RateLimit-Window', (string) self::get_rate_limit_window_seconds());
             $response->header('X-RateLimit-Reset-In', (string) max(0, $retry_after));
         }
+
+        /**
+         * @param string $trace_id
+         * @param array<string,mixed>|null $body
+         * @param string $error_code
+         * @param int $http_status
+         * @return void
+         */
+        private static function emit_document_failed($trace_id, $body, $error_code, $http_status) {
+            if (!class_exists('TopInstal_Generator_OsEvent_Client')) {
+                return;
+            }
+
+            $engagement_id = '';
+            if (is_array($body)) {
+                if (isset($body['engagementId'])) {
+                    $engagement_id = trim((string) $body['engagementId']);
+                } elseif (isset($body['engagement_id'])) {
+                    $engagement_id = trim((string) $body['engagement_id']);
+                }
+            }
+
+            TopInstal_Generator_OsEvent_Client::emit(
+                'generator.document.failed',
+                'Generator: utworzenie dokumentu nie powiodło się',
+                'error',
+                $engagement_id,
+                array(
+                    'trace_id' => $trace_id,
+                    'error_code' => (string) $error_code,
+                    'http_status' => (int) $http_status,
+                ),
+                array(
+                    'trace_id' => $trace_id,
+                )
+            );
+        }
     }
 }
-

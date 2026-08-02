@@ -1,5 +1,6 @@
 /**
  * OfferDocumentRequestDTO contract (v1.0).
+ * @see kalk-top/docs/ecosystem/schemas/offer-document-request-dto.v1.json
  *
  * @typedef {Object} OfferDocumentRequestDTO
  * @property {string} schemaVersion
@@ -11,4 +12,3 @@
  * @property {Object} [offerDto]
  * @property {Object} [context]
  */
-

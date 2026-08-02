@@ -51,3 +51,7 @@ reports/
 .runtime-wp/wordpress/wp-content/uploads/
 .runtime-wp/wordpress/wp-content/database/
 *.sqlite
+
+# Cross-repo symlink/junction into fast-kalk's own plugin source; never mirror
+# another repo's Source of Truth into kalk-top's history.
+.runtime-wp/wordpress/wp-content/plugins/topinstal-lead-widget/
