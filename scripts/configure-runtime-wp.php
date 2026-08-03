@@ -32,6 +32,31 @@ $base_url = rtrim(trim($base_url), '/');
 require_once $wp_root . DIRECTORY_SEPARATOR . 'wp-load.php';
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
+// The top-instal-generator plugin is only a symlink into this WP install (see
+// below); it must exist BEFORE activation is attempted, or a fresh container
+// boot activates heatpump-calculator/sqlite fine but silently leaves the
+// generator plugin inactive (GEN_ACTIVE=0) because its file isn't there yet.
+$generator_repo = dirname($repo_root) . DIRECTORY_SEPARATOR . 'top-instal-generator';
+$generator_link = $wp_root . DIRECTORY_SEPARATOR . 'wp-content' . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'top-instal-generator';
+if (is_dir($generator_repo)) {
+    $generator_repo_real = realpath($generator_repo);
+    $generator_link_real = (is_dir($generator_link) || is_link($generator_link)) ? realpath($generator_link) : false;
+    if ($generator_link_real !== false && $generator_repo_real !== false && $generator_link_real !== $generator_repo_real) {
+        if (PHP_OS_FAMILY === 'Windows') {
+            exec('cmd /c rmdir /S /Q "' . str_replace('/', '\\', $generator_link) . '"');
+        } else {
+            exec('rm -rf ' . escapeshellarg($generator_link));
+        }
+    }
+    if (!is_dir($generator_link) && !is_link($generator_link) && $generator_repo_real !== false) {
+        if (PHP_OS_FAMILY === 'Windows') {
+            exec('cmd /c mklink /J "' . str_replace('/', '\\', $generator_link) . '" "' . str_replace('/', '\\', $generator_repo_real) . '"');
+        } else {
+            symlink($generator_repo_real, $generator_link);
+        }
+    }
+}
+
 if (!is_plugin_active('topinstal-heatpump-calculator/heatpump-calculator.php')) {
     activate_plugin('topinstal-heatpump-calculator/heatpump-calculator.php');
 }

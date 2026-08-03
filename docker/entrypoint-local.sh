@@ -185,14 +185,38 @@ if [ -d "$FASTKALK_SRC" ]; then
     echo "  synced: topinstal-lead-widget (fast-kalk)"
 fi
 
-# Configure WordPress (sets siteurl, activates plugins)
+# Configure WordPress (sets siteurl, activates plugins).
+#
+# On a genuinely fresh WP_ROOT, wp_install() runs via bare CLI (no
+# $_SERVER['HTTP_HOST']) and WordPress guesses a garbage siteurl
+# (observed: "http:///opt/topinstal-runtime/wordpress" -- an empty host).
+# configure-runtime-wp.php's own update_option('siteurl', ...) call is meant
+# to fix that immediately after, but has been observed to silently not take
+# effect on the very first invocation after a fresh install (no fatal error,
+# no visible cause) -- a second, idempotent invocation always corrects it.
+# Verify the actual configured siteurl rather than trusting exit code alone,
+# retry once, and fail closed (not silently continue) if it still isn't a
+# real http(s):// URL with a host -- serving traffic on a broken siteurl
+# breaks REST canonical redirects for every caller outside this container.
 export KALK_TOP_RUNTIME_BASE_URL="${KALK_TOP_RUNTIME_BASE_URL:-http://localhost:8091}"
 echo "Configuring WordPress at $KALK_TOP_RUNTIME_BASE_URL..."
 cd "$REPO_ROOT/scripts"
-if php configure-runtime-wp.php; then
+configure_output=""
+configure_ok=0
+for attempt in 1 2; do
+    configure_output=$(php configure-runtime-wp.php 2>&1)
+    echo "$configure_output"
+    if echo "$configure_output" | grep -qE '^SITEURL=https?://[^/]+'; then
+        configure_ok=1
+        break
+    fi
+    echo "WARN: configure-runtime-wp.php did not report a valid SITEURL (attempt $attempt/2)"
+done
+if [ "$configure_ok" -eq 1 ]; then
     echo "WordPress configured OK"
 else
-    echo "WARN: configure-runtime-wp.php failed (may be first run without DB); continuing"
+    echo "FATAL: configure-runtime-wp.php never reported a valid SITEURL after 2 attempts" >&2
+    exit 1
 fi
 
 echo "=== Starting PHP built-in server at 0.0.0.0:8091 ==="

@@ -8,6 +8,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && docker-php-ext-install mysqli pdo_mysql pdo_sqlite pdo zip \
     && rm -rf /var/lib/apt/lists/*
 
+# Entrypoint syncs plugins + runs WordPress config before the PHP server
+# starts, so give it real startup room before the first probe counts.
+HEALTHCHECK --interval=15s --timeout=5s --start-period=30s --retries=3 \
+    CMD curl -fsS "http://127.0.0.1:8091/index.php?rest_route=/" || exit 1
+
 COPY --from=wordpress_core /usr/src/wordpress/ /opt/topinstal-wordpress/
 
 ARG SQLITE_DATABASE_INTEGRATION_VERSION=2.2.23
