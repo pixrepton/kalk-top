@@ -28,10 +28,47 @@ function Invoke-RuntimeConfigure {
     & php $configureScript
 }
 
-$listener = Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1
-if ($listener) {
+# Avoid Get-NetTCPConnection — it can hang indefinitely on some Windows hosts.
+function Test-LocalPortListening {
+    param([int]$Port)
+    $client = $null
+    try {
+        $client = New-Object System.Net.Sockets.TcpClient
+        $async = $client.BeginConnect('127.0.0.1', $Port, $null, $null)
+        if (-not $async.AsyncWaitHandle.WaitOne(1000, $false)) {
+            return $false
+        }
+        $client.EndConnect($async)
+        return $true
+    }
+    catch {
+        return $false
+    }
+    finally {
+        if ($null -ne $client) {
+            $client.Close()
+        }
+    }
+}
+
+function Get-LocalListenPid {
+    param([int]$Port)
+    $pattern = "127\.0\.0\.1:$Port\s+.*LISTENING\s+(\d+)"
+    $match = netstat -ano | Select-String -Pattern $pattern | Select-Object -First 1
+    if ($null -eq $match) {
+        return $null
+    }
+    if ($match.Line -match 'LISTENING\s+(\d+)\s*$') {
+        return [int]$Matches[1]
+    }
+    return $null
+}
+
+if (Test-LocalPortListening -Port $port) {
     Invoke-RuntimeConfigure | Out-Null
-    Write-Output "WP runtime already listening on $baseUrl (PID $($listener.OwningProcess)); siteurl synced"
+    $pidExisting = Get-LocalListenPid -Port $port
+    $pidLabel = if ($pidExisting) { "PID $pidExisting" } else { 'PID unknown' }
+    Write-Output "WP runtime already listening on $baseUrl ($pidLabel); siteurl synced"
     exit 0
 }
 
@@ -45,8 +82,7 @@ if (Test-Path $stderrLogPath) {
 $proc = Start-Process -FilePath 'php' -ArgumentList @('-S', "127.0.0.1:$port", '-t', '.', '_router.php') -WorkingDirectory $runtimeRoot -WindowStyle Hidden -RedirectStandardOutput $stdoutLogPath -RedirectStandardError $stderrLogPath -PassThru
 Start-Sleep -Seconds 2
 
-$listener = Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1
-if (-not $listener) {
+if (-not (Test-LocalPortListening -Port $port)) {
     throw "WP runtime did not start. Check $stdoutLogPath and $stderrLogPath"
 }
 
