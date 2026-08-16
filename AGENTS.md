@@ -32,6 +32,38 @@ Do not move HVAC logic or `OfferDTO` ownership into `gmail-agent`, Daszek, RAG o
 - Verify with repo harness/tests appropriate to the changed layer.
 - Do not use repo-local memory-bank or historical backlog docs as active truth.
 
+## Must not
+
+- Must not duplicate HVAC logic, sizing, pricing or `OfferDTO` semantics in `gmail-agent`,
+  Daszek, RAG or generator repos.
+- Must not treat those repos as owners of kalk-top contracts; `kalk-top` is the owner.
+- Must not rewrite historical evidence or frozen eval artifacts.
+
+## Gate A
+
+Before any commit run the deterministic checks appropriate to the changed layer
+(see `README.md` / `docs/` for the current canonical command); a change is not done
+on code alone. Runtime/parity proof is required for runtime-affecting changes.
+
+## Cross-repo
+
+- `gmail-agent` (Node B) consumes kalk-top calculations and `OfferDTO` over HTTP; kalk-top
+  owns their semantics. Daszek is projection-only.
+- Cross-repo changes preserve Source of Truth boundaries and are verified end-to-end
+  across the full service flow, not only in isolation.
+
+## Anti-goals
+
+- No second source of truth for HVAC logic / `OfferDTO`.
+- No product activation of dormant scaffolds without an explicit operator decision.
+- No new parallel memory systems or shadow backlogs.
+
+## Safety capsule
+
+- Local Docker scope by default; no deploy/production mutation without explicit operator request.
+- Preserve frozen measurement/eval evidence and nested-repo boundaries; no destructive
+  `reset`/`clean`/history rewrite.
+
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence
 
