@@ -41,8 +41,21 @@ Do not move HVAC logic or `OfferDTO` ownership into `gmail-agent`, Daszek, RAG o
 
 ## Gate A
 
-Before any commit run the deterministic checks appropriate to the changed layer
-(see `README.md` / `docs/` for the current canonical command); a change is not done
+**Full package gate (closeout):**
+
+```powershell
+npm run verify
+```
+
+Deterministic engine + PHP/JS harness checks without Playwright UI. Extended closeout with browser UI:
+
+```powershell
+npm run proof
+```
+
+(`proof` = `verify` + `verify:ui:critical` + `verify:ui:soft` per `package.json`.)
+
+Before any commit run the deterministic checks appropriate to the changed layer; a change is not done
 on code alone. Runtime/parity proof is required for runtime-affecting changes.
 
 ## Cross-repo
