@@ -80,6 +80,23 @@ if (!class_exists('TopInstal_OzcEngine')) {
 
         private const CLIMATE_HDD = array('PL_I' => 2800, 'PL_II' => 3200, 'PL_III' => 3600, 'PL_IV' => 4000, 'PL_V' => 4400);
 
+        private const CLIMATE_LOCATION_ZONE_MAP = array(
+            'PL_I' => 'PL_I',
+            'PL_II' => 'PL_II',
+            'PL_III' => 'PL_III',
+            'PL_IV' => 'PL_IV',
+            'PL_V' => 'PL_V',
+            'PL_STREFA_I' => 'PL_I',
+            'PL_STREFA_II' => 'PL_II',
+            'PL_STREFA_III' => 'PL_III',
+            'PL_STREFA_IV' => 'PL_IV',
+            'PL_STREFA_V' => 'PL_V',
+            'PL_GDANSK' => 'PL_I',
+            'PL_KUJAWSKOPOMORSKIE_BYDGOSZCZ' => 'PL_II',
+            'PL_DOLNOSLASKIE_WROCLAW' => 'PL_III',
+            'PL_ZAKOPANE' => 'PL_V',
+        );
+
         private const SURFACE_RESISTANCES = array(
             'wall' => array('Rsi' => 0.13, 'Rse' => 0.04),
             'roof' => array('Rsi' => 0.10, 'Rse' => 0.04),
@@ -358,20 +375,12 @@ if (!class_exists('TopInstal_OzcEngine')) {
             if (!is_string($location_id) || trim($location_id) === '') {
                 return 'PL_III';
             }
-            if (strpos($location_id, 'PL_III') !== false && strpos($location_id, 'PL_STREFA_III') === false) return 'PL_III';
-            if (strpos($location_id, 'PL_II') !== false && strpos($location_id, 'PL_STREFA_II') === false) return 'PL_II';
-            if (strpos($location_id, 'PL_IV') !== false && strpos($location_id, 'PL_STREFA_IV') === false) return 'PL_IV';
-            if (strpos($location_id, 'PL_V') !== false && strpos($location_id, 'PL_STREFA_V') === false) return 'PL_V';
-            if (strpos($location_id, 'PL_I') !== false && strpos($location_id, 'PL_STREFA_I') === false) return 'PL_I';
-            if (strpos($location_id, 'PL_STREFA_III') !== false) return 'PL_III';
-            if (strpos($location_id, 'PL_STREFA_II') !== false) return 'PL_II';
-            if (strpos($location_id, 'PL_STREFA_I') !== false) return 'PL_I';
-            if (strpos($location_id, 'PL_STREFA_IV') !== false) return 'PL_IV';
-            if (strpos($location_id, 'PL_STREFA_V') !== false) return 'PL_V';
-            if (strpos($location_id, 'PL_GDANSK') !== false) return 'PL_I';
-            if (strpos($location_id, 'PL_KUJAWSKOPOMORSKIE') !== false) return 'PL_II';
-            if (strpos($location_id, 'PL_DOLNOSLASKIE') !== false) return 'PL_III';
-            if (strpos($location_id, 'PL_ZAKOPANE') !== false) return 'PL_V';
+
+            $value = strtoupper(trim($location_id));
+            if (isset(self::CLIMATE_LOCATION_ZONE_MAP[$value])) {
+                return self::CLIMATE_LOCATION_ZONE_MAP[$value];
+            }
+
             return 'PL_III';
         }
 
